@@ -1,8 +1,8 @@
 class MEDIATHEQUE
 	--
-	-- Classe décrivant la médiathèque 
+	-- Classe décrivant la médiathèque
 	--
-	
+
 creation {ANY}
 	make
 
@@ -11,7 +11,7 @@ feature {}
 			-- Taille des tours
 
 	tower1, tower2, tower3: TOWER
-	      -- Les 3 tours du jeu
+	      -- Les 3 tours du jeu youpi
 
 feature {ANY}
 	make is
