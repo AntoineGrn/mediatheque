@@ -7,15 +7,13 @@ creation {ANY}
 	make
 
 feature {}
-	nb: INTEGER
-			-- Taille des tours
 
-	tower1, tower2, tower3: TOWER
-	      -- Les 3 tours du jeu youpi
+	media: MEDIA
+			-- un media
 
 feature {ANY}
 	make is
-			-- Creation du jeu et boucle principale
+			-- Creation d'une mediatheque
 		do
 			io.put_string("Hauteur des tours : ")
 			io.flush
