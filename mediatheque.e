@@ -1,19 +1,17 @@
 class MEDIATHEQUE
 	--
-	-- Classe décrivant la médiathèque
+	-- Classe décrivant la médiathèque 
 	--
-
+	
 creation {ANY}
 	make
 
 feature {}
-
-	media: MEDIA
-			-- un media
+	utilisateur:
 
 feature {ANY}
 	make is
-			-- Creation d'une mediatheque
+			-- Creation du jeu et boucle principale
 		do
 			io.put_string("Hauteur des tours : ")
 			io.flush
