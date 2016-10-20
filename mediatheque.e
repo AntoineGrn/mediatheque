@@ -7,25 +7,30 @@ creation {ANY}
 	make
 
 feature {}
-	utilisateur:
+	--utilisateurs: ARRAY[UTILISATEUR]
+	--path_to_user_file: STRING
 
 feature {ANY}
 	make is
-			-- Creation du jeu et boucle principale
+			-- Initialisation des Médias et des Utilisateurs
 		do
-			io.put_string("Hauteur des tours : ")
-			io.flush
-			io.read_integer
-			nb := io.last_integer
-
-			create tower1.full(nb)
-			create tower2.empty(nb)
-			create tower3.empty(nb)
-			io.put_string("Situation au depart :%N")
-			print_game
-			resolve(nb, tower1, tower2, tower3)
-			io.put_string("Situation a la fin :%N")
-			print_game
+			lire_fichier_utilisateurs
 		end
+
+	lire_fichier_utilisateurs is
+		local
+			--lecture_ok= FALSE
+			lecteur: TEXT_FILE_READ
+			ligne: STRING
+		do
+			create lecteur.connect_to("/comptes/E134887R/Documents/M1_MIAGE/GLO/Mediatheque/mediatheque/utilisateurs.txt")
+			from until lecteur.end_of_input loop
+				lecteur.read_line
+				ligne := lecteur.last_string
+				io.put_string(ligne + "%N")
+			end
+			lecteur.disconnect
+		--	Result:= TRUE
+		end	
 
 end -- class MEDIATHEQUE
