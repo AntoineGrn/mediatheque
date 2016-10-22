@@ -587,6 +587,10 @@ void _handle(se_handler_action_t action, void*data);
 #endif /* #ifndef _BASE_H */
 #define SE_GC_LIB 1
 /* C Header Pass 1: */
+typedef struct S48 T48;
+typedef struct S47 T47;
+typedef struct S40 T40;
+typedef struct S54 T54;
 typedef struct S123 T123;
 typedef struct S25 T25;
 typedef struct S7 T7;
@@ -597,7 +601,19 @@ typedef T3*T9;
 #define M9 NULL
 /* C Header Pass 3: */
 /* C Header Pass 4: */
+struct S48{Tid id;T9 _buffer;T2 _capacity;};
+extern T48 M48;
+void se_prinT48(FILE* file,T48**o);
+struct S47{Tid id;T0* _filter;T2 _buffer_position;T9 _buffer;T2 _capacity;};
+extern T47 M47;
+void se_prinT47(FILE* file,T47**o);
 void se_prinT124(FILE* file,T124*o);
+struct S40{Tid id;T0* _filter;T0* _output_filter;T0* _input_filter;};
+extern T40 M40;
+void se_prinT40(FILE* file,T40**o);
+struct S54{Tid id;T0* _filter;T0* _path;T6 _end_of_input;T3 _filtered_last_character;T8 _input_stream;T9 _buffer;T6 _end_reached;T2 _buffer_size;T2 _buffer_position;T2 _capacity;};
+extern T54 M54;
+void se_prinT54(FILE* file,T54**o);
 struct S123{Tid id;T124 _storage;T2 _capacity;T2 _upper;T2 _lower;};
 extern T123 M123;
 void se_prinT123(FILE* file,T123**o);
@@ -607,6 +623,15 @@ void se_prinT25(FILE* file,T25**o);
 void se_prinT9(FILE* file,T9*o);
 struct S7{Tid id;T9 _storage;T2 _count;T2 _capacity;};
 extern T7 M7;
+extern char*s25_10;
+extern char*s56_117797837;
+extern char*s25_262181241;
+extern char*s25_2198;
+extern char*s25_64246;
+extern char*s25_3185;
+extern char*s25_1331160622;
+extern char*s25_9785622;
+extern char*s25_672635980;
 /*
 -- ------------------------------------------------------------------------------------------------------------
 -- Copyright notice below. Please read.
@@ -899,12 +924,115 @@ fsoc* gc_fsoc_get1(void);
 fsoc* gc_fsoc_get2(void);
 
 int gc_memory_used(void);
+/*
+-- ------------------------------------------------------------------------------------------------------------
+-- Copyright notice below. Please read.
+--
+-- Copyright(C) 1994-2002: INRIA - LORIA (INRIA Lorraine) - ESIAL U.H.P.       - University of Nancy 1 - FRANCE
+-- Copyright(C) 2003-2005: INRIA - LORIA (INRIA Lorraine) - I.U.T. Charlemagne - University of Nancy 2 - FRANCE
+--
+-- Authors: Dominique COLNET, Philippe RIBET, Cyril ADRIAN, Vincent CROIZIER, Frederic MERIZEN
+--
+-- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+-- documentation files (the "Software"), to deal in the Software without restriction, including without
+-- limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+-- the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+-- conditions:
+--
+-- The above copyright notice and this permission notice shall be included in all copies or substantial
+-- portions of the Software.
+--
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+-- LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+-- EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+-- AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+-- OR OTHER DEALINGS IN THE SOFTWARE.
+--
+-- http://SmartEiffel.loria.fr - SmartEiffel@loria.fr
+-- ------------------------------------------------------------------------------------------------------------
+*/
+#include <errno.h>
+
+#define text_file_read_open(p) (fopen(((char*)(p)),"r"))
+#define text_file_write_open(p) (fopen(((char*)(p)),"w"))
+#define text_file_write_append(p) (fopen(((char*)(p)),"a"))
+#define text_file_read_write_open(p) (fopen(((char*)(p)),"r+"))
+#define text_file_read_write_append(p) (fopen(((char*)(p)),"a+"))
+#define binary_file_read_open(p) (fopen(((char*)(p)),"rb"))
+#define binary_file_write_open(p) (fopen(((char*)(p)),"wb"))
+#define binary_file_write_append(p) (fopen(((char*)(p)),"ab"))
+#define io_fclose(p) (fclose((FILE*)(p)))
+#define io_flush(p) (fflush((FILE*)(p)))
+#define io_getc(f) (getc(((FILE*)(f))))
+#define io_putc(b, f) (putc((b),((FILE*)(f))))
+#define io_fread(b, n, f) (fread((void *)(b),(size_t)(1), (size_t)(n),(FILE*)(f)))
+#define io_fwrite(b, n, f) (fwrite((void *)(b),(size_t)(1), (size_t)(n),(FILE*)(f)))
+#define io_feof(f) (feof(((FILE*)(f))))
+#define io_rename(o, n) (rename(((char*)(o)),((char*)(n))))
+#define io_remove(f) (remove(((char*)(f))))
+#define io_fseek(f, o) (fseek((FILE*)(f),(o),SEEK_SET))
+#define io_ftell(f) ((EIF_INTEGER_64)ftell((FILE*)(f)))
+
+#if defined __USE_POSIX || defined __unix__ || defined _POSIX_C_SOURCE
+#  define read_stdin(b, s) (read(STDIN_FILENO, b, s))
+#else
+   extern int read_stdin(EIF_CHARACTER *buffer, int size);
+#endif
+
+extern void io_copy(char*source, char*target);
+extern int io_file_exists(char*source);
+extern int io_same_physical_file(char*path1,char*path2);
 extern unsigned int fsoc_count_ceil;
 extern unsigned int rsoc_count_ceil;
+/*STD_INPUT*/void r48make(se_dump_stack*caller,T48* C);
+extern T0*oBC13std_output;
+extern int fBC13std_output;
+/*STD_OUTPUT*/T0* r47std_output(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/void r47se_atexit(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/void r47make(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/T6 r47is_filtered(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/void r47write_buffer(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/void r47put_character(se_dump_stack*caller,T47* C,T3 a1);
+/*STD_OUTPUT*/void r47flush(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/T6 r47can_put_character(se_dump_stack*caller,T47* C,T3 a1);
+/*STD_OUTPUT*/void r47filtered_flush(se_dump_stack*caller,T47* C);
+/*STD_OUTPUT*/void r47filtered_put_character(se_dump_stack*caller,T47* C,T3 a1);
 /*NATIVE_ARRAY[MEDIA]*/void r124clear_all(se_dump_stack*caller,T124 C,T2 a1);
 /*NATIVE_ARRAY[MEDIA]*/void r124set_all_with(se_dump_stack*caller,T124 C,T0* a1,T2 a2);
 /*NATIVE_ARRAY[MEDIA]*/T6 r124is_not_null(se_dump_stack*caller,T124 C);
 /*NATIVE_ARRAY[MEDIA]*/T6 r124all_default(se_dump_stack*caller,T124 C,T2 a1);
+/*INTEGER_16*/T6 r10is_equal(se_dump_stack*caller,T10 C,T10 a1);
+/*INTEGER_16*/T10 r10_ix_45(se_dump_stack*caller,T10 C,T10 a1);
+/*INTEGER_16*/T6 r10in_range(se_dump_stack*caller,T10 C,T10 a1,T10 a2);
+/*INTEGER_16*/T2 r10hash_code(se_dump_stack*caller,T10 C);
+/*INTEGER_16*/T1 r10to_integer_8(se_dump_stack*caller,T10 C);
+/*INTEGER_16*/T6 r10fit_integer_8(se_dump_stack*caller,T10 C);
+/*INTEGER_16*/T10 r10_ix_43(se_dump_stack*caller,T10 C,T10 a1);
+extern T0*oBC13std_input;
+extern int fBC13std_input;
+/*STD_INPUT_OUTPUT*/T0* r40std_input(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/T0* r40std_output(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/T6 r40input_is_filtered(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/T6 r40output_is_filtered(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/void r40make(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/T6 r40is_connected(se_dump_stack*caller,T40* C);
+/*STD_INPUT_OUTPUT*/void r40put_character(se_dump_stack*caller,T40* C,T3 a1);
+/*STD_INPUT_OUTPUT*/void r40put_string(se_dump_stack*caller,T40* C,T0* a1);
+/*STD_INPUT_OUTPUT*/T6 r40can_put_character(se_dump_stack*caller,T40* C,T3 a1);
+/*STD_INPUT_OUTPUT*/void r40filtered_put_character(se_dump_stack*caller,T40* C,T3 a1);
+extern se_frame_descriptor se_ifd40;
+T40*se_i40(se_dump_stack*caller,T40*C);
+/*TEXT_FILE_READ*/void r54read_line(se_dump_stack*caller,T54* C);
+extern T0*oBC44last_string;
+extern int fBC44last_string;
+/*TEXT_FILE_READ*/T0* r54last_string(se_dump_stack*caller,T54* C);
+/*TEXT_FILE_READ*/void r54connect_to(se_dump_stack*caller,T54* C,T0* a1);
+/*TEXT_FILE_READ*/T3 r54filtered_last_character(se_dump_stack*caller,T54* C);
+/*TEXT_FILE_READ*/void r54filtered_read_line_in(se_dump_stack*caller,T54* C,T0* a1);
+/*TEXT_FILE_READ*/T6 r54is_filtered(se_dump_stack*caller,T54* C);
+/*TEXT_FILE_READ*/T6 r54is_connected(se_dump_stack*caller,T54* C);
+/*TEXT_FILE_READ*/void r54fill_buffer(se_dump_stack*caller,T54* C);
+/*TEXT_FILE_READ*/void r54read_line_in(se_dump_stack*caller,T54* C,T0* a1);
 /*ARRAY[MEDIA]*/void r123clear_all(se_dump_stack*caller,T123* C);
 /*ARRAY[MEDIA]*/void r123set_all_with(se_dump_stack*caller,T123* C,T0* a1);
 /*ARRAY[MEDIA]*/void r123ensure_capacity_and_bounds(se_dump_stack*caller,T123* C,T2 a1,T2 a2,T2 a3);
@@ -915,29 +1043,128 @@ extern unsigned int rsoc_count_ceil;
 /*ARRAY[MEDIA]*/T6 r123all_default(se_dump_stack*caller,T123* C);
 extern se_frame_descriptor se_ifd123;
 T123*se_i123(se_dump_stack*caller,T123*C);
+/*POINTER*/T6 r8is_null(se_dump_stack*caller,T8 C);
 /*BOOLEAN*/T6 r6_ix_and(se_dump_stack*caller,T6 C,T6 a1);
 /*BOOLEAN*/T6 r6_px_not(se_dump_stack*caller,T6 C);
 /*BOOLEAN*/T6 r6_ix_or(se_dump_stack*caller,T6 C,T6 a1);
+/*INTEGER_8*/T6 r1is_equal(se_dump_stack*caller,T1 C,T1 a1);
+/*INTEGER_8*/T6 r1in_range(se_dump_stack*caller,T1 C,T1 a1,T1 a2);
+/*INTEGER_8*/T1 r1_ix_45(se_dump_stack*caller,T1 C,T1 a1);
+/*INTEGER_8*/T2 r1hash_code(se_dump_stack*caller,T1 C);
 /*INTEGER_32*/T6 r2is_equal(se_dump_stack*caller,T2 C,T2 a1);
+/*INTEGER_32*/T6 r2divisible(se_dump_stack*caller,T2 a1);
+/*INTEGER_32*/T2 r2_ix_42(se_dump_stack*caller,T2 C,T2 a1);
+/*INTEGER_32*/T2 r2compare(se_dump_stack*caller,T2 C,T2 a1);
+/*INTEGER_32*/T2 r2_px_45(se_dump_stack*caller,T2 C);
+/*INTEGER_32*/T6 r2in_range(se_dump_stack*caller,T2 C,T2 a1,T2 a2);
 /*INTEGER_32*/T2 r2_ix_45(se_dump_stack*caller,T2 C,T2 a1);
+/*INTEGER_32*/T2 r2min(se_dump_stack*caller,T2 C,T2 a1);
+/*INTEGER_32*/T2 r2max(se_dump_stack*caller,T2 C,T2 a1);
 /*INTEGER_32*/T2 r2hash_code(se_dump_stack*caller,T2 C);
+/*INTEGER_32*/void r2append_in(se_dump_stack*caller,T2 C,T0* a1);
+/*INTEGER_32*/T0* r2to_string(se_dump_stack*caller,T2 C);
+/*INTEGER_32*/T2 r2abs(se_dump_stack*caller,T2 C);
+/*INTEGER_32*/T3 r2decimal_digit(se_dump_stack*caller,T2 C);
 /*INTEGER_32*/T2 r2_ix_43(se_dump_stack*caller,T2 C,T2 a1);
+extern T0*oBC56string_buffer;
+extern int fBC56string_buffer;
+/*INTEGER_32*/T0* r2string_buffer(se_dump_stack*caller);
+extern T0*oBC13io;
+extern int fBC13io;
+/*MEDIATHEQUE*/T0* r25io(se_dump_stack*caller,T25* C);
+/*MEDIATHEQUE*/void r25readfilemedia(se_dump_stack*caller,T25* C);
 /*MEDIATHEQUE*/void r25make(se_dump_stack*caller,T25* C);
+/*CHARACTER*/T6 r3is_equal(se_dump_stack*caller,T3 C,T3 a1);
 /*CHARACTER*/T6 r3is_default(se_dump_stack*caller,T3 C);
 /*CHARACTER*/T3 r3default(se_dump_stack*caller);
+/*CHARACTER*/T6 r3_ix_6261(se_dump_stack*caller,T3 C,T3 a1);
+/*CHARACTER*/T6 r3_ix_60(se_dump_stack*caller,T3 C,T3 a1);
+/*CHARACTER*/T6 r3in_range(se_dump_stack*caller,T3 C,T3 a1,T3 a2);
+/*CHARACTER*/T6 r3_ix_6061(se_dump_stack*caller,T3 C,T3 a1);
+/*CHARACTER*/T2 r3hash_code(se_dump_stack*caller,T3 C);
+/*CHARACTER*/T3 r3to_upper(se_dump_stack*caller,T3 C);
+/*CHARACTER*/T6 r3is_digit(se_dump_stack*caller,T3 C);
+/*CHARACTER*/T1 r3value(se_dump_stack*caller,T3 C);
+/*CHARACTER*/T3 r3to_lower(se_dump_stack*caller,T3 C);
+/*CHARACTER*/T6 r3same_as(se_dump_stack*caller,T3 C,T3 a1);
 /*NATIVE_ARRAY[CHARACTER]*/void r9clear_all(se_dump_stack*caller,T9 C,T2 a1);
+/*NATIVE_ARRAY[CHARACTER]*/void r9clear(se_dump_stack*caller,T9 C,T2 a1,T2 a2);
+/*NATIVE_ARRAY[CHARACTER]*/T6 r9fast_has(se_dump_stack*caller,T9 C,T3 a1,T2 a2);
+/*NATIVE_ARRAY[CHARACTER]*/void r9copy_at(se_dump_stack*caller,T9 C,T2 a1,T9 a2,T2 a3);
+/*NATIVE_ARRAY[CHARACTER]*/T6 r9fast_memcmp(se_dump_stack*caller,T9 C,T9 a1,T2 a2);
+/*NATIVE_ARRAY[CHARACTER]*/void r9slice_copy(se_dump_stack*caller,T9 C,T2 a1,T9 a2,T2 a3,T2 a4);
 /*NATIVE_ARRAY[CHARACTER]*/T6 r9is_not_null(se_dump_stack*caller,T9 C);
+/*NATIVE_ARRAY[CHARACTER]*/T6 r9is_null(se_dump_stack*caller,T9 C);
+/*NATIVE_ARRAY[CHARACTER]*/T2 r9fast_index_of(se_dump_stack*caller,T9 C,T3 a1,T2 a2,T2 a3);
+/*NATIVE_ARRAY[CHARACTER]*/T2 r9fast_occurrences(se_dump_stack*caller,T9 C,T3 a1,T2 a2);
+/*NATIVE_ARRAY[CHARACTER]*/T9 r9realloc(se_dump_stack*caller,T9 C,T2 a1,T2 a2);
+/*NATIVE_ARRAY[CHARACTER]*/void r9copy_from(se_dump_stack*caller,T9 C,T9 a1,T2 a2);
 /*NATIVE_ARRAY[CHARACTER]*/T6 r9all_default(se_dump_stack*caller,T9 C,T2 a1);
+/*STRING*/T6 r7has_substring(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/T6 r7is_equal(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/T2 r7index_of(se_dump_stack*caller,T7* C,T3 a1,T2 a2);
+/*STRING*/void r7set_count(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/void r7copy(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/void r7clear_count(se_dump_stack*caller,T7* C);
+/*STRING*/T6 r7_ix_60(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/void r7extend(se_dump_stack*caller,T7* C,T3 a1);
+/*STRING*/void r7remove_last(se_dump_stack*caller,T7* C);
+/*STRING*/T6 r7has(se_dump_stack*caller,T7* C,T3 a1);
+/*STRING*/T2 r7hash_code(se_dump_stack*caller,T7* C);
+/*STRING*/T0* r7twin(se_dump_stack*caller,T7* C);
+/*STRING*/void r7add_last(se_dump_stack*caller,T7* C,T3 a1);
+/*STRING*/void r7resize(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/T2 r7substring_index(se_dump_stack*caller,T7* C,T0* a1,T2 a2);
+/*STRING*/void r7ensure_capacity(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/void r7make(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/T6 r7same_as(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/T8 r7to_external(se_dump_stack*caller,T7* C);
 /*STRING*/T2 r7count(se_dump_stack*caller,T7* C);
+/*STRING*/void r7swap(se_dump_stack*caller,T7* C,T2 a1,T2 a2);
 /*STRING*/T2 r7upper(se_dump_stack*caller,T7* C);
+/*STRING*/T3 r7last(se_dump_stack*caller,T7* C);
+/*STRING*/T6 r7valid_index(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/T6 r7is_empty(se_dump_stack*caller,T7* C);
+/*STRING*/T3 r7item(se_dump_stack*caller,T7* C,T2 a1);
+/*STRING*/T0* r7substring(se_dump_stack*caller,T7* C,T2 a1,T2 a2);
+/*STRING*/T2 r7occurrences(se_dump_stack*caller,T7* C,T3 a1);
+/*STRING*/void r7put(se_dump_stack*caller,T7* C,T3 a1,T2 a2);
+/*STRING*/T0* r7_ix_43(se_dump_stack*caller,T7* C,T0* a1);
+/*STRING*/void r7append(se_dump_stack*caller,T7* C,T0* a1);
 extern se_frame_descriptor se_ifd7;
 T7*se_i7(se_dump_stack*caller,T7*C);
+extern T0*ms56_117797837;
 T0*se_ms(int c,char*e);
 T0*se_string(char*e);
+void se_msi1(void);
 void manifest_string_mark1(void);
 void once_function_mark(void);
 void gc_start(void);
+typedef struct B48 gc48;
+struct B48{T48 object;union {void*flag;gc48*next;} header;};
+extern gc48*store48;
+extern int store_left48;
+extern fsoc*store_chunk48;
+extern gc48*gc_free48;
+typedef struct B47 gc47;
+struct B47{T47 object;union {void*flag;gc47*next;} header;};
+extern gc47*store47;
+extern int store_left47;
+extern fsoc*store_chunk47;
+extern gc47*gc_free47;
 extern na_env na_env124;
+typedef struct B40 gc40;
+struct B40{T40 object;union {void*flag;gc40*next;} header;};
+extern gc40*store40;
+extern int store_left40;
+extern fsoc*store_chunk40;
+extern gc40*gc_free40;
+typedef struct B54 gc54;
+struct B54{T54 object;union {void*flag;gc54*next;} header;};
+extern gc54*store54;
+extern int store_left54;
+extern fsoc*store_chunk54;
+extern gc54*gc_free54;
 typedef struct B123 gc123;
 struct B123{T123 object;union {void*flag;gc123*next;} header;};
 extern gc123*store123;
@@ -957,8 +1184,28 @@ extern gc7*store7;
 extern int store_left7;
 extern fsoc*store_chunk7;
 extern gc7*gc_free7;
+void gc_sweep48(fsoc*c);
+void gc_mark48(T48*o);
+void gc_align_mark48(fsoc*c,gc48*p);
+extern fsoc H48;
+T48*new48(void);
+void gc_sweep47(fsoc*c);
+void gc_mark47(T47*o);
+void gc_align_mark47(fsoc*c,gc47*p);
+extern fsoc H47;
+T47*new47(void);
 void gc_mark124(T124 o);
 T124 new124(unsigned int size);
+void gc_sweep40(fsoc*c);
+void gc_mark40(T40*o);
+void gc_align_mark40(fsoc*c,gc40*p);
+extern fsoc H40;
+T40*new40(void);
+void gc_sweep54(fsoc*c);
+void gc_mark54(T54*o);
+void gc_align_mark54(fsoc*c,gc54*p);
+extern fsoc H54;
+T54*new54(void);
 void gc_sweep123(fsoc*c);
 void gc_mark123(T123*o);
 void gc_align_mark123(fsoc*c,gc123*p);
@@ -979,12 +1226,13 @@ T7*new7(void);
 extern T25*eiffel_root_object;
 extern int se_argc;
 extern char**se_argv;
-#define SE_MAXID 125
+#define SE_MAXID 127
 extern T7*g[];
 extern T7*t[];
 extern char*p[];
-extern void(*se_prinT[125])(FILE*,void*);
+extern void(*se_prinT[127])(FILE*,void*);
 extern int se_strucT[];
+void se_atexit(void);
 void initialize_eiffel_runtime(int argc,char*argv[]);
 int main(int argc,char*argv[]);
 

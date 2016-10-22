@@ -74,6 +74,12 @@ class-path: "C:\SmartEiffel\lib\io\terminal\text_file_read.e"
 class-name: TEXT_FILE_READ
 assertion-level: all
 parent-count: 3 inherit: 55 42 insert: 31 
+c-type: T54 reference: yes
+ref-status: live id-field: yes 
+destination-graph-nodes: none
+run-time-set-count: 1
+run-time-set:
+	TEXT_FILE_READ (54)
 #
 37 "STD_ERROR" l
 class-path: "C:\SmartEiffel\lib\io\terminal\std_error.e"
@@ -86,6 +92,12 @@ class-path: "C:\SmartEiffel\lib\io\terminal\std_output.e"
 class-name: STD_OUTPUT
 assertion-level: all
 parent-count: 2 inherit: 38 insert: 39 
+c-type: T47 reference: yes
+ref-status: live id-field: yes 
+destination-graph-nodes: none
+run-time-set-count: 1
+run-time-set:
+	STD_OUTPUT (47)
 #
 55 "FILE" l
 class-path: "C:\SmartEiffel\lib\io\terminal\file.e"
@@ -98,12 +110,24 @@ class-path: "C:\SmartEiffel\lib\io\terminal\std_input.e"
 class-name: STD_INPUT
 assertion-level: all
 parent-count: 3 inherit: 42 insert: 31 39 
+c-type: T48 reference: yes
+ref-status: live id-field: yes 
+destination-graph-nodes: none
+run-time-set-count: 1
+run-time-set:
+	STD_INPUT (48)
 #
 40 "STD_INPUT_OUTPUT" l
 class-path: "C:\SmartEiffel\lib\io\terminal\std_input_output.e"
 class-name: STD_INPUT_OUTPUT
 assertion-level: all
 parent-count: 1 inherit: 41
+c-type: T40 reference: yes
+ref-status: live id-field: yes 
+destination-graph-nodes: none
+run-time-set-count: 1
+run-time-set:
+	STD_INPUT_OUTPUT (40)
 #
 |lib:abilities/
 33 "STORABLE" l
@@ -637,6 +661,10 @@ class-path: "C:\SmartEiffel\lib\io\filter_output_stream.e"
 class-name: FILTER_OUTPUT_STREAM
 assertion-level: all
 parent-count: 2 inherit: 26 insert: 58 
+c-type: T64 reference: yes
+ref-status: dead 
+destination-graph-nodes: none
+run-time-set-count: 0
 #
 58 "FILTER" l
 class-path: "C:\SmartEiffel\lib\io\filter.e"
@@ -661,6 +689,10 @@ class-path: "C:\SmartEiffel\lib\io\output_stream.e"
 class-name: OUTPUT_STREAM
 assertion-level: all
 parent-count: 3 inherit: 27 insert: 30 29 
+c-type: T26 reference: yes
+ref-status: dead 
+destination-graph-nodes: none
+run-time-set-count: 0
 #
 107 "DIRECTORY_NOTATION" l
 class-path: "C:\SmartEiffel\lib\io\directory_notation.e"
@@ -753,6 +785,18 @@ destination-graph-nodes: none
 run-time-set-count: 1
 run-time-set:
 	MEDIATHEQUE (25)
+#
+125 "DVD" l
+class-path: "C:\Users\Laureen LOISON\Documents\GLO\Projet Eiffel\mediatheque\dvd.e"
+class-name: DVD
+assertion-level: all
+parent-count: 1 insert: 13 
+#
+126 "LIVRE" l
+class-path: "C:\Users\Laureen LOISON\Documents\GLO\Projet Eiffel\mediatheque\livre.e"
+class-name: LIVRE
+assertion-level: all
+parent-count: 1 insert: 13 
 #
 |lib:storage/loadpath.se:low_level/
 124 "NATIVE_ARRAY[MEDIA]" l

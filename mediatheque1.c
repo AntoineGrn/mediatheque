@@ -148,10 +148,107 @@ void _handle(se_handler_action_t action, void*data) {
     handlers[i](action, data);
   }
 }
+T48 M48={48,(void*)0,0};
+
+void se_prinT48(FILE* file,T48**o){
+if(*o==NULL){
+   fprintf(file, "void");
+   return;}
+fprintf(file,"STD_INPUT");
+fprintf(file,"#%p",(void*)*o);
+fprintf(file,"\n\t[ ");
+fprintf(file,"buffer = ");
+se_prinT9(file,(&((*o)->_buffer)));
+fprintf(file,"\n\t  ");
+fprintf(file,"capacity = ");
+se_prinT2(file,(&((*o)->_capacity)));
+fprintf(file,"\n\t]");
+}/*--*/
+T47 M47={47,(void*)0,0,(void*)0,0};
+
+void se_prinT47(FILE* file,T47**o){
+if(*o==NULL){
+   fprintf(file, "void");
+   return;}
+fprintf(file,"STD_OUTPUT");
+fprintf(file,"#%p",(void*)*o);
+fprintf(file,"\n\t[ ");
+fprintf(file,"filter = ");
+se_prinT0(file,(T0**)(&((*o)->_filter)));
+fprintf(file,"\n\t  ");
+fprintf(file,"buffer_position = ");
+se_prinT2(file,(&((*o)->_buffer_position)));
+fprintf(file,"\n\t  ");
+fprintf(file,"buffer = ");
+se_prinT9(file,(&((*o)->_buffer)));
+fprintf(file,"\n\t  ");
+fprintf(file,"capacity = ");
+se_prinT2(file,(&((*o)->_capacity)));
+fprintf(file,"\n\t]");
+}/*--*/
 
 void se_prinT124(FILE* file,T124*o){
 fprintf(file,"NATIVE_ARRAY[MEDIA]");
 fprintf(file,"#%p",(void*)*o);
+}/*--*/
+T40 M40={40,(void*)0,(void*)0,(void*)0};
+
+void se_prinT40(FILE* file,T40**o){
+if(*o==NULL){
+   fprintf(file, "void");
+   return;}
+fprintf(file,"STD_INPUT_OUTPUT");
+fprintf(file,"#%p",(void*)*o);
+fprintf(file,"\n\t[ ");
+fprintf(file,"filter = ");
+se_prinT0(file,(T0**)(&((*o)->_filter)));
+fprintf(file,"\n\t  ");
+fprintf(file,"output_filter = ");
+se_prinT0(file,(T0**)(&((*o)->_output_filter)));
+fprintf(file,"\n\t  ");
+fprintf(file,"input_filter = ");
+se_prinT0(file,(T0**)(&((*o)->_input_filter)));
+fprintf(file,"\n\t]");
+}/*--*/
+T54 M54={54,(void*)0,(void*)0,0,0,(void*)0,(void*)0,0,0,0,0};
+
+void se_prinT54(FILE* file,T54**o){
+if(*o==NULL){
+   fprintf(file, "void");
+   return;}
+fprintf(file,"TEXT_FILE_READ");
+fprintf(file,"#%p",(void*)*o);
+fprintf(file,"\n\t[ ");
+fprintf(file,"filter = ");
+se_prinT0(file,(T0**)(&((*o)->_filter)));
+fprintf(file,"\n\t  ");
+fprintf(file,"path = ");
+se_prinT7(file,(EIF_STRING*)(&((*o)->_path)));
+fprintf(file,"\n\t  ");
+fprintf(file,"end_of_input = ");
+se_prinT6(file,(&((*o)->_end_of_input)));
+fprintf(file,"\n\t  ");
+fprintf(file,"filtered_last_character = ");
+se_prinT3(file,(&((*o)->_filtered_last_character)));
+fprintf(file,"\n\t  ");
+fprintf(file,"input_stream = ");
+se_prinT8(file,(&((*o)->_input_stream)));
+fprintf(file,"\n\t  ");
+fprintf(file,"buffer = ");
+se_prinT9(file,(&((*o)->_buffer)));
+fprintf(file,"\n\t  ");
+fprintf(file,"end_reached = ");
+se_prinT6(file,(&((*o)->_end_reached)));
+fprintf(file,"\n\t  ");
+fprintf(file,"buffer_size = ");
+se_prinT2(file,(&((*o)->_buffer_size)));
+fprintf(file,"\n\t  ");
+fprintf(file,"buffer_position = ");
+se_prinT2(file,(&((*o)->_buffer_position)));
+fprintf(file,"\n\t  ");
+fprintf(file,"capacity = ");
+se_prinT2(file,(&((*o)->_capacity)));
+fprintf(file,"\n\t]");
 }/*--*/
 T123 M123={123,(void*)0,0,0,0};
 
@@ -195,6 +292,15 @@ fprintf(file,"#%p",(void*)*o);
 }/*--*/
 T7 M7={7,(void*)0,0,0};
 /*Aliased storage area or unicode storage.*/
+char*s25_10="\n";
+char*s56_117797837="0123456789";
+char*s25_262181241="medias.txt";
+char*s25_2198="DVD";
+char*s25_64246="Livre";
+char*s25_3185="fin";
+char*s25_1331160622="mot line : ";
+char*s25_9785622="debut : ";
+char*s25_672635980="nombre de points virgules : ";
 /*
 -- ------------------------------------------------------------------------------------------------------------
 -- Copyright notice below. Please read.
@@ -2112,8 +2218,378 @@ void mark_stack_and_registers(void){
 }
 #endif
 
-unsigned int fsoc_count_ceil=32;
+/*
+-- ------------------------------------------------------------------------------------------------------------
+-- Copyright notice below. Please read.
+--
+-- Copyright(C) 1994-2002: INRIA - LORIA (INRIA Lorraine) - ESIAL U.H.P.       - University of Nancy 1 - FRANCE
+-- Copyright(C) 2003-2005: INRIA - LORIA (INRIA Lorraine) - I.U.T. Charlemagne - University of Nancy 2 - FRANCE
+--
+-- Authors: Dominique COLNET, Philippe RIBET, Cyril ADRIAN, Vincent CROIZIER, Frederic MERIZEN
+--
+-- Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+-- documentation files (the "Software"), to deal in the Software without restriction, including without
+-- limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+-- the Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+-- conditions:
+--
+-- The above copyright notice and this permission notice shall be included in all copies or substantial
+-- portions of the Software.
+--
+-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+-- LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+-- EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+-- AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+-- OR OTHER DEALINGS IN THE SOFTWARE.
+--
+-- http://SmartEiffel.loria.fr - SmartEiffel@loria.fr
+-- ------------------------------------------------------------------------------------------------------------
+*/
+#if defined __USE_POSIX || defined __unix__ || defined _POSIX_C_SOURCE
+/* macro read is used of read_stdin */
+
+void io_copy (char*source, char*target) {
+  /* We use the low-level descriptor functions rather than stream-oriented functions.
+   * This allows us to copy the file's permissions. */
+
+  int src;
+  int tgt;
+  struct stat info;
+  static char *buffer = NULL;
+  static int bufsize = 0;
+  int read_count, write_count, written;
+
+  src=open (source, O_RDONLY);
+  if (fstat (src, &info))
+    return; /* Ooops */
+  if (bufsize < info.st_blksize)
+    buffer=se_realloc (buffer, info.st_blksize);
+  tgt=creat (target, info.st_mode);
+  do {
+    read_count = read (src, buffer, info.st_blksize);
+    write_count = 0; written = 0;
+    while  ((write_count < read_count) && (written >= 0))
+      {
+	written = write (tgt, buffer + write_count, read_count - write_count);
+	write_count += written;
+      }
+  } while ((read_count > 0) && (written >= 0));
+  close (src);
+  close (tgt);
+}
+
+int io_same_physical_file(char*path1,char*path2) {
+  struct stat info1, info2;
+  if (stat(path1, &info1))
+    return 0; /* oops */
+  if (stat(path2, &info2))
+    return 0; /* oops */
+  return (info1.st_dev == info2.st_dev) && (info1.st_ino == info2.st_ino);
+}
+
+#else
+#define IO_COPY_BUFSIZE 4096
+
+int read_stdin(EIF_CHARACTER *buffer, int size) {
+  int c;
+  c = getc(stdin);
+  if (c==EOF)
+    return 0;
+  *buffer = (EIF_CHARACTER)c;
+  return 1;
+}
+
+void io_copy(char*source, char*target) {
+  static char *buffer = NULL;
+  int read_count;
+  FILE*src=fopen(source, "rb");
+  FILE*tgt=fopen(target, "wb");
+
+  if(!buffer)
+    buffer = (char*)se_malloc(IO_COPY_BUFSIZE);
+
+  while ((read_count = fread(buffer, 1, IO_COPY_BUFSIZE, src)), read_count) {
+    fwrite(buffer, 1, read_count, tgt);
+  }
+  fclose(src);
+  fclose(tgt);
+}
+
+int io_same_physical_file(char*path1,char*path2) {
+  /* default implementation returns true only if the paths are the same */
+  return !strcmp(path1, path2);
+}
+#endif
+
+int io_file_exists(char*source) {
+  FILE*src=fopen(source, "rb");
+  if (src!=NULL) {
+    fclose(src);
+    return 1;
+  }
+  else {
+    return (errno != ENOENT);
+  }
+}
+unsigned int fsoc_count_ceil=52;
 unsigned int rsoc_count_ceil=8;
+
+/*STD_INPUT*/void r48make(se_dump_stack*caller,T48* C){
+static se_frame_descriptor fd={"make"" STD_INPUT",1,0,"%R48%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06002904/*l41c2\std_input.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x06002B08/*l43c4\std_input.e*/);
+/*SFN*/(C->_buffer/*i2p*/)=new9(/*IC*/(T2)(INT16_C(4096)));
+(ds.p=0x06002C08/*l44c4\std_input.e*/);
+/*SFN*/(C->_capacity/*i2p*/)=/*IC*/(T2)(INT16_C(4096));
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+T0*oBC13std_output=(void*)0;
+int fBC13std_output=0;
+
+/*STD_OUTPUT*/T0* r47std_output(se_dump_stack*caller,T47* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"std_output"" STD_OUTPUT",1,1,"%R47%Result%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01A0B104/*l177c2\any.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC13std_output;
+set_dump_stack_top(&ds);/*link*/
+if(fBC13std_output==0){fBC13std_output=1;{
+(ds.p=0x01A0B408/*l180c4\any.e*/);
+tmp0=((T0*)(new47()));
+r47make(&ds,((T47*)tmp0));
+oBC13std_output=tmp0;
+}
+fBC13std_output=2;}
+else{
+(ds.p=0x01A0B104/*l177c2\any.e*/);
+ac_req(fBC13std_output==2, "Recursive once function.");
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A0B608/*l182c4\any.e*/);
+ac_ens((oBC13std_output)!=((void*)((void*)0)),"Result /= Void");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return oBC13std_output;
+}/*--*/
+
+/*STD_OUTPUT*/void r47se_atexit(se_dump_stack*caller,T47* C){
+static se_frame_descriptor fd={"se_atexit"" STD_OUTPUT",1,0,"%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01A18304/*l387c2\any.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x01A1871E/*l391c15\any.e*/);
+r47flush(&ds,((T47*)ci(47,r47std_output(&ds,C),0x01A18708/*l391c4\any.e*/)));
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/void r47make(se_dump_stack*caller,T47* C){
+static se_frame_descriptor fd={"make"" STD_OUTPUT",1,0,"%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05E02604/*l38c2\std_output.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x05E02808/*l40c4\std_output.e*/);
+/*SFN*/(C->_buffer/*i4p*/)=new9(/*IC*/(T2)(INT16_C(4096)));
+(ds.p=0x05E02908/*l41c4\std_output.e*/);
+/*SFN*/(C->_capacity/*i4p*/)=/*IC*/(T2)(INT16_C(4096));
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/T6 r47is_filtered(se_dump_stack*caller,T47* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_filtered"" STD_OUTPUT",1,1,"%R47%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03A01D04/*l29c2\filterable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x03A02008/*l32c4\filterable.e*/);
+R=((T6)(((/*RF2*/(C)->_filter/*i4p*/))!=((void*)((void*)0))));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_OUTPUT*/void r47write_buffer(se_dump_stack*caller,T47* C){
+static se_frame_descriptor fd={"write_buffer"" STD_OUTPUT",1,0,"%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05E07B04/*l123c2\std_output.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x05E07D2E/*l125c23\std_output.e*/),((int32_t)((/*RF2*/(C)->_buffer_position/*i4p*/)))>(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x05E07E0A/*l126c5\std_output.e*/);
+io_fwrite((/*RF2*/(C)->_buffer/*i4p*/),(/*RF2*/(C)->_buffer_position/*i4p*/),stdout);
+(ds.p=0x05E07F0A/*l127c5\std_output.e*/);
+/*SFN*/(C->_buffer_position/*i4p*/)=/*IC*/(T2)(INT8_C(0));
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/void r47put_character(se_dump_stack*caller,T47* C,T3 a1){
+void**locals[1];
+static se_frame_descriptor fd={"put_character"" STD_OUTPUT",1,1,"%R47%c%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03401304/*l19c2\output_stream.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03C00B08/*l11c4\output_stream_tools.e*/);
+ac_req(/*RF1is_connected*/1,"is_connected");
+(ds.p=0x03C00C28/*l12c20\output_stream_tools.e*/);
+ac_req((T6)((r6_px_not(&ds,(T6)(r47is_filtered(&ds,C))))&&((T6)(r47can_put_character(&ds,C,a1)))),"not is_filtered and then can_put_character(c)");
+fd.assertion_flag=1;
+}
+(ds.p=0x03401508/*l21c4\output_stream.e*/);
+r47filtered_put_character(&ds,C,a1);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/void r47flush(se_dump_stack*caller,T47* C){
+static se_frame_descriptor fd={"flush"" STD_OUTPUT",1,0,"%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03401804/*l24c2\output_stream.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03C01408/*l20c4\output_stream_tools.e*/);
+ac_req(/*RF1is_connected*/1,"is_connected");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x03401C0E/*l28c7\output_stream.e*/),((/*RF2*/(C)->_filter/*i4p*/))!=((void*)((void*)0)))){
+(ds.p=0x03401D18/*l29c12\output_stream.e*/);
+se_evobt((/*RF2*/(C)->_filter/*i4p*/),0x03401D0A/*l29c5\output_stream.e*/);
+}
+else{
+(ds.p=0x03401F0A/*l31c5\output_stream.e*/);
+r47filtered_flush(&ds,C);
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/T6 r47can_put_character(se_dump_stack*caller,T47* C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"can_put_character"" STD_OUTPUT",1,2,"%R47%c%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04C01104/*l17c2\terminal_output_stream.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04C01308/*l19c4\terminal_output_stream.e*/);
+R=((T6)(1));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_OUTPUT*/void r47filtered_flush(se_dump_stack*caller,T47* C){
+static se_frame_descriptor fd={"filtered_flush"" STD_OUTPUT",1,0,"%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05E03904/*l57c2\std_output.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03403A08/*l58c4\output_stream.e*/);
+ac_req(/*RF1is_connected*/1,"is_connected");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x05E03B2E/*l59c23\std_output.e*/),((int32_t)((/*RF2*/(C)->_buffer_position/*i4p*/)))>(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x05E03C0A/*l60c5\std_output.e*/);
+r47write_buffer(&ds,C);
+}
+(ds.p=0x05E03E08/*l62c4\std_output.e*/);
+io_flush(stdout);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_OUTPUT*/void r47filtered_put_character(se_dump_stack*caller,T47* C,T3 a1){
+void**locals[1];
+static se_frame_descriptor fd={"filtered_put_character"" STD_OUTPUT",1,1,"%R47%c%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05E02D04/*l45c2\std_output.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03403308/*l51c4\output_stream.e*/);
+ac_req(/*RF1is_connected*/1,"is_connected");
+(ds.p=0x03403408/*l52c4\output_stream.e*/);
+ac_req(r47can_put_character(&ds,C,a1),"can_put_character(c)");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x05E02F2E/*l47c23\std_output.e*/),((int32_t)((/*RF2*/(C)->_buffer_position/*i4p*/)))>=(/*IC*/(T2)(INT16_C(4096))))){
+(ds.p=0x05E0300A/*l48c5\std_output.e*/);
+r47write_buffer(&ds,C);
+}
+(ds.p=0x05E03216/*l50c11\std_output.e*/);
+((/*RF2*/(C)->_buffer/*i4p*/))[(/*RF2*/(C)->_buffer_position/*i4p*/)]=(a1);
+(ds.p=0x05E03308/*l51c4\std_output.e*/);
+/*SFN*/(C->_buffer_position/*i4p*/)=r2_ix_43(&ds,(/*RF2*/(C)->_buffer_position/*i4p*/),/*IC*/(T2)(INT8_C(1)));
+if(((ds.p=0x05E0340E/*l52c7\std_output.e*/),(a1)==(((T3)'\n')))){
+(ds.p=0x05E0350A/*l53c5\std_output.e*/);
+r47write_buffer(&ds,C);
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
 
 /*NATIVE_ARRAY[MEDIA]*/void r124clear_all(se_dump_stack*caller,T124 C,T2 a1){
 T0* _v=(void*)0;
@@ -2248,6 +2724,831 @@ _i=r2_ix_45(&ds,_i,/*IC*/(T2)(INT8_C(1)));
 }
 set_dump_stack_top(caller);/*unlink*/
 return R;
+}/*--*/
+
+/*INTEGER_16*/T6 r10is_equal(se_dump_stack*caller,T10 C,T10 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"is_equal"" INTEGER_16",1,2,"%E10%other%E10%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07031804/*l792c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A03608/*l54c4\any.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x07031A08/*l794c4\integer_general.e*/);
+R=((T6)((C)==(a1)));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A03972/*l57c57\any.e*/);
+ac_ens((T6)((!(((T0*)(t[10]))==((void*)((T0*)(t[10])))))||((T6)((R)==(r10is_equal(&ds,a1,C))))),"commutative");
+(ds.p=0x04601C16/*l28c11\hashable.e*/);
+ac_ens((T6)((!(R))||((T6)((r10hash_code(&ds,C))==(r10hash_code(&ds,a1))))),"Result implies hash_code = other.hash_code");
+(ds.p=0x04401320/*l19c16\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(r6_px_not(&ds,(T6)(((int16_t)(C))<(a1)))),(T6)(r6_px_not(&ds,(T6)(((int16_t)(a1))<(C)))))),"trichotomy");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T10 r10_ix_45(se_dump_stack*caller,T10 C,T10 a1){
+T10 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""-"" (""infix ""-"" INTEGER_16)",1,2,"%E10%other%E10%Result%E10%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07002404/*l36c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002658/*l38c44\integer_general.e*/);
+ac_req((T6)((!((((int16_t)(C))>(/*IC*/(T10)(INT8_C(0))))!=(((int16_t)(a1))>(/*IC*/(T10)(INT8_C(0))))))||((T6)((((int16_t)(((int16_t)(C))-(a1)))>(/*IC*/(T10)(INT8_C(0))))==(((int16_t)(C))>(/*IC*/(T10)(INT8_C(0))))))),"no_overflow");
+fd.assertion_flag=1;
+}
+(ds.p=0x07002808/*l40c4\integer_general.e*/);
+R=((int16_t)(C))-(a1);
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002A16/*l42c11\integer_general.e*/);
+ac_ens((((int16_t)(R))+(a1))==(C),"Result #+ other = Current");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T6 r10in_range(se_dump_stack*caller,T10 C,T10 a1,T10 a2){
+T6 R=0;
+void**locals[3];
+static se_frame_descriptor fd={"in_range"" INTEGER_16",1,3,"%E10%lower%E10%upper%E10%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04404504/*l69c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&a2;
+locals[2]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04404A08/*l74c4\comparable.e*/);
+R=((T6)((T6)((((int16_t)(C))>=(a1))&&((T6)(((int16_t)(C))<=(a2))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04404C08/*l76c4\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(((int16_t)(C))>=(a1)),(T6)(((int16_t)(C))<=(a2)))),"Result = (Current >= lower and Current <= upper)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T2 r10hash_code(se_dump_stack*caller,T10 C){
+T2 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"hash_code"" INTEGER_16",1,1,"%E10%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01406A04/*l106c2\integer_16.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x01406C08/*l108c4\integer_16.e*/);
+R=/*IC*/(T2)((C&/*0x7FFF*/INT16_C(32767)));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04601638/*l22c28\hashable.e*/);
+ac_ens(((int32_t)(R))>=(/*IC*/(T2)(INT8_C(0))),"good_hash_value");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T1 r10to_integer_8(se_dump_stack*caller,T10 C){
+T1 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"to_integer_8"" INTEGER_16",1,1,"%E10%Result%E1%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01401704/*l23c2\integer_16.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01401A08/*l26c4\integer_16.e*/);
+ac_req(r10fit_integer_8(&ds,C),"fit_integer_8");
+fd.assertion_flag=1;
+}
+R=((EIF_INTEGER_8)C);
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01401D18/*l29c12\integer_16.e*/);
+ac_ens(r10is_equal(&ds,C,/*IC*/(T10)(R)),"Current.is_equal(Result)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T6 r10fit_integer_8(se_dump_stack*caller,T10 C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"fit_integer_8"" INTEGER_16",1,1,"%E10%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01400D04/*l13c2\integer_16.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x0140101E/*l16c15\integer_16.e*/),((int16_t)(C))>=(/*IC*/(T10)(INT8_MIN)))){
+(ds.p=0x0140110A/*l17c5\integer_16.e*/);
+R=((T6)(((int16_t)(C))<=(/*IC*/(T10)(INT8_C(127)))));
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01401408/*l20c4\integer_16.e*/);
+ac_ens((R)==(r10in_range(&ds,C,/*IC*/(T10)(INT8_MIN),/*IC*/(T10)(INT8_C(127)))),"Result = Current.in_range(-128, 127)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_16*/T10 r10_ix_43(se_dump_stack*caller,T10 C,T10 a1){
+T10 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""+"" (""infix ""+"" INTEGER_16)",1,2,"%E10%other%E10%Result%E10%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07001B04/*l27c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07001D56/*l29c43\integer_general.e*/);
+ac_req((T6)((!((((int16_t)(C))>(/*IC*/(T10)(INT8_C(0))))==(((int16_t)(a1))>(/*IC*/(T10)(INT8_C(0))))))||((T6)((((int16_t)(((int16_t)(C))+(a1)))>(/*IC*/(T10)(INT8_C(0))))==(((int16_t)(C))>(/*IC*/(T10)(INT8_C(0))))))),"no_overflow");
+fd.assertion_flag=1;
+}
+(ds.p=0x07001F08/*l31c4\integer_general.e*/);
+R=((int16_t)(C))+(a1);
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002116/*l33c11\integer_general.e*/);
+ac_ens((((int16_t)(R))-(a1))==(C),"Result #- other = Current");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+T0*oBC13std_input=(void*)0;
+int fBC13std_input=0;
+
+/*STD_INPUT_OUTPUT*/T0* r40std_input(se_dump_stack*caller,T40* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"std_input"" STD_INPUT_OUTPUT",1,1,"%R40%Result%R48%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01A0A904/*l169c2\any.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC13std_input;
+set_dump_stack_top(&ds);/*link*/
+if(fBC13std_input==0){fBC13std_input=1;{
+(ds.p=0x01A0AC08/*l172c4\any.e*/);
+tmp0=((T0*)(new48()));
+r48make(&ds,((T48*)tmp0));
+oBC13std_input=tmp0;
+}
+fBC13std_input=2;}
+else{
+(ds.p=0x01A0A904/*l169c2\any.e*/);
+ac_req(fBC13std_input==2, "Recursive once function.");
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A0AE08/*l174c4\any.e*/);
+ac_ens((oBC13std_input)!=((void*)((void*)0)),"Result /= Void");
+fd.assertion_flag=1;
+}
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return oBC13std_input;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/T0* r40std_output(se_dump_stack*caller,T40* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"std_output"" STD_INPUT_OUTPUT",1,1,"%R40%Result%R47%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01A0B104/*l177c2\any.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC13std_output;
+set_dump_stack_top(&ds);/*link*/
+if(fBC13std_output==0){fBC13std_output=1;{
+(ds.p=0x01A0B408/*l180c4\any.e*/);
+tmp0=((T0*)(new47()));
+r47make(&ds,((T47*)tmp0));
+oBC13std_output=tmp0;
+}
+fBC13std_output=2;}
+else{
+(ds.p=0x01A0B104/*l177c2\any.e*/);
+ac_req(fBC13std_output==2, "Recursive once function.");
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A0B608/*l182c4\any.e*/);
+ac_ens((oBC13std_output)!=((void*)((void*)0)),"Result /= Void");
+fd.assertion_flag=1;
+}
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return oBC13std_output;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/T6 r40input_is_filtered(se_dump_stack*caller,T40* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_filtered"" STD_INPUT_OUTPUT",1,1,"%R40%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03A01D04/*l29c2\filterable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x03A02008/*l32c4\filterable.e*/);
+R=((T6)(((/*RF2*/(C)->_input_filter/*i3p*/))!=((void*)((void*)0))));
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/T6 r40output_is_filtered(se_dump_stack*caller,T40* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_filtered"" STD_INPUT_OUTPUT",1,1,"%R40%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03A01D04/*l29c2\filterable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x03A02008/*l32c4\filterable.e*/);
+R=((T6)(((/*RF2*/(C)->_output_filter/*i3p*/))!=((void*)((void*)0))));
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/void r40make(se_dump_stack*caller,T40* C){
+static se_frame_descriptor fd={"make"" STD_INPUT_OUTPUT",1,0,"%R40%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05000F04/*l15c2\std_input_output.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/T6 r40is_connected(se_dump_stack*caller,T40* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_connected"" STD_INPUT_OUTPUT",1,1,"%R40%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05001404/*l20c2\std_input_output.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x05001808/*l24c4\std_input_output.e*/);
+R=((T6)((T6)(((T6)(((r40std_input(&ds,C))!=((void*)((void*)0)))&&((T6)(((/*UT*/(void)(((T48*)ci(48,r40std_input(&ds,C),0x05001852/*l24c41\std_input_output.e*/)))),/*RF1is_connected*/1)))))&&((T6)((T6)(((r40std_output(&ds,C))!=((void*)((void*)0)))&&((T6)(((/*UT*/(void)(((T47*)ci(47,r40std_output(&ds,C),0x05001956/*l25c43\std_input_output.e*/)))),/*RF1is_connected*/1)))))))));
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/void r40put_character(se_dump_stack*caller,T40* C,T3 a1){
+void**locals[1];
+static se_frame_descriptor fd={"put_character"" STD_INPUT_OUTPUT",1,1,"%R40%c%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03401304/*l19c2\output_stream.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03C00B08/*l11c4\output_stream_tools.e*/);
+ac_req(r40is_connected(&ds,C),"is_connected");
+(ds.p=0x03C00C28/*l12c20\output_stream_tools.e*/);
+ac_req((T6)((r6_px_not(&ds,(T6)(r40output_is_filtered(&ds,C))))&&((T6)(r40can_put_character(&ds,C,a1)))),"not is_filtered and then can_put_character(c)");
+fd.assertion_flag=1;
+}
+(ds.p=0x03401508/*l21c4\output_stream.e*/);
+r40filtered_put_character(&ds,C,a1);
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/void r40put_string(se_dump_stack*caller,T40* C,T0* a1){
+T2 _i=0;
+T2 _count=0;
+void**locals[3];
+static se_frame_descriptor fd={"put_string"" STD_INPUT_OUTPUT",1,3,"%R40%s%R7%i%E2%count%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03C02504/*l37c2\output_stream_tools.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&_i;
+locals[2]=(void**)&_count;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03C02808/*l40c4\output_stream_tools.e*/);
+ac_req(r40is_connected(&ds,C),"is_connected");
+(ds.p=0x03C02908/*l41c4\output_stream_tools.e*/);
+ac_req(r6_px_not(&ds,(T6)(r40output_is_filtered(&ds,C))),"not is_filtered");
+(ds.p=0x03C02A08/*l42c4\output_stream_tools.e*/);
+ac_req((a1)!=((void*)((void*)0)),"s /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x03C02F0A/*l47c5\output_stream_tools.e*/);
+_i=/*IC*/(T2)(INT8_C(1));
+(ds.p=0x03C0300A/*l48c5\output_stream_tools.e*/);
+_count=r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x03C0301C/*l48c14\output_stream_tools.e*/))));
+while (!(((ds.p=0x03C0320E/*l50c7\output_stream_tools.e*/),((int32_t)(_i))>(_count))))
+{
+(ds.p=0x03C0340A/*l52c5\output_stream_tools.e*/);
+r40put_character(&ds,C,r7item(&ds,se_i7(&ds,((T7*)ci(7,a1,0x03C03426/*l52c19\output_stream_tools.e*/))),_i));
+(ds.p=0x03C0350A/*l53c5\output_stream_tools.e*/);
+_i=r2_ix_43(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+}
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/T6 r40can_put_character(se_dump_stack*caller,T40* C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"can_put_character"" STD_INPUT_OUTPUT",1,2,"%R40%c%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04C01104/*l17c2\terminal_output_stream.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04C01308/*l19c4\terminal_output_stream.e*/);
+R=((T6)(1));
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*STD_INPUT_OUTPUT*/void r40filtered_put_character(se_dump_stack*caller,T40* C,T3 a1){
+void**locals[1];
+static se_frame_descriptor fd={"filtered_put_character"" STD_INPUT_OUTPUT",1,1,"%R40%c%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05003E04/*l62c2\std_input_output.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x03403308/*l51c4\output_stream.e*/);
+ac_req(r40is_connected(&ds,C),"is_connected");
+(ds.p=0x03403408/*l52c4\output_stream.e*/);
+ac_req(r40can_put_character(&ds,C,a1),"can_put_character(c)");
+fd.assertion_flag=1;
+}
+(ds.p=0x0500401E/*l64c15\std_input_output.e*/);
+r47put_character(&ds,((T47*)ci(47,r40std_output(&ds,C),0x05004008/*l64c4\std_input_output.e*/)),a1);
+if(se_rci(caller,C))se_i40(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+se_frame_descriptor se_ifd40={"invariant STD_INPUT_OUTPUT",1,0,"%R40%",1};
+
+T40*se_i40(se_dump_stack*caller,T40*C){
+se_dump_stack ds;
+ds.fd=&se_ifd40;
+ds.current=((void*)&C);
+ds.p=0x05005902/*l89c1\std_input_output.e*/;
+ds.caller=caller;
+ds.exception_origin=NULL;
+ds.locals=NULL;
+se_dst=&ds;/*link*/
+if(ds.fd->assertion_flag){
+ds.fd->assertion_flag=0;
+(ds.p=0x05005A4C/*l90c38\std_input_output.e*/);
+ac_inv(r6_ix_and(&ds,(T6)(r6_px_not(&ds,(T6)(r40input_is_filtered(&ds,C)))),(T6)(r6_px_not(&ds,(T6)(r40output_is_filtered(&ds,C))))),"not_filtered");
+(ds.p=0x05203904/*l57c2\terminal_input_output_stream.e*/);
+ac_inv(((/*RF2*/(C)->_filter/*i3p*/))==((void*)((void*)0)),"filter = Void");
+ds.fd->assertion_flag=1;
+}
+se_dst=caller;/*unlink*/
+return C;
+}/*--*/
+
+/*TEXT_FILE_READ*/void r54read_line(se_dump_stack*caller,T54* C){
+static se_frame_descriptor fd={"read_line"" TEXT_FILE_READ",1,0,"%R54%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x0581A304/*l419c2\input_stream_tools.e*/;
+ds.caller=caller;
+ds.locals=NULL;
+ds.exception_origin=NULL;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0581AA08/*l426c4\input_stream_tools.e*/);
+ac_req(r54is_connected(&ds,C),"is_connected");
+(ds.p=0x0581AB08/*l427c4\input_stream_tools.e*/);
+ac_req(r6_px_not(&ds,(T6)(r54is_filtered(&ds,C))),"not is_filtered");
+fd.assertion_flag=1;
+}
+(ds.p=0x0581AD20/*l429c16\input_stream_tools.e*/);
+r7clear_count(&ds,se_i7(&ds,((T7*)ci(7,r54last_string(&ds,C),0x0581AD08/*l429c4\input_stream_tools.e*/))));
+(ds.p=0x0581AE08/*l430c4\input_stream_tools.e*/);
+r54read_line_in(&ds,C,r54last_string(&ds,C));
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+T0*oBC44last_string=(void*)0;
+int fBC44last_string=0;
+
+/*TEXT_FILE_READ*/T0* r54last_string(se_dump_stack*caller,T54* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"last_string"" TEXT_FILE_READ",1,1,"%R54%Result%R7%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05819B04/*l411c2\input_stream_tools.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC44last_string;
+set_dump_stack_top(&ds);/*link*/
+if(fBC44last_string==0){fBC44last_string=1;{
+(ds.p=0x0581A008/*l416c4\input_stream_tools.e*/);
+tmp0=((T0*)(new7()));
+r7make(&ds,((T7*)tmp0),/*IC*/(T2)(INT16_C(1024)));
+oBC44last_string=tmp0;
+se_i7(&ds,((T7*)(oBC44last_string)));}
+fBC44last_string=2;}
+else{
+(ds.p=0x05819B04/*l411c2\input_stream_tools.e*/);
+ac_req(fBC44last_string==2, "Recursive once function.");
+}
+set_dump_stack_top(caller);/*unlink*/
+return oBC44last_string;
+}/*--*/
+
+/*TEXT_FILE_READ*/void r54connect_to(se_dump_stack*caller,T54* C,T0* a1){
+T8 _p=(void*)0;
+void**locals[2];
+static se_frame_descriptor fd={"connect_to"" TEXT_FILE_READ",1,2,"%R54%new_path%R7%p%E8%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06C01B04/*l27c2\text_file_read.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&_p;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x06E01B08/*l27c4\file.e*/);
+ac_req(r6_px_not(&ds,(T6)(r54is_connected(&ds,C))),"not is_connected");
+(ds.p=0x06E01C30/*l28c24\file.e*/);
+ac_req(r6_px_not(&ds,(T6)(r7is_empty(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06E01C38/*l28c28\file.e*/)))))),"not_malformed_path");
+fd.assertion_flag=1;
+}
+(ds.p=0x06C02108/*l33c4\text_file_read.e*/);
+_p=r7to_external(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C02112/*l33c9\text_file_read.e*/))));
+(ds.p=0x06C02208/*l34c4\text_file_read.e*/);
+/*SFN*/(C->_input_stream/*i10p*/)=text_file_read_open(_p);
+if(((ds.p=0x06C02328/*l35c20\text_file_read.e*/),(NULL!=(/*RF2*/(C)->_input_stream/*i10p*/)))){
+(ds.p=0x06C0240A/*l36c5\text_file_read.e*/);
+/*SFN*/(C->_end_of_input/*i10p*/)=((T6)(0));
+if(((ds.p=0x06C02510/*l37c8\text_file_read.e*/),((/*RF2*/(C)->_path/*i10p*/))==((void*)((void*)0)))){
+(ds.p=0x06C0260C/*l38c6\text_file_read.e*/);
+/*SFN*/(C->_path/*i10p*/)=r7twin(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C0261C/*l38c14\text_file_read.e*/))));
+}
+else{
+(ds.p=0x06C02816/*l40c11\text_file_read.e*/);
+r7copy(&ds,se_i7(&ds,((T7*)ci(7,(/*RF2*/(C)->_path/*i10p*/),0x06C0280C/*l40c6\text_file_read.e*/))),a1);
+}
+if(((ds.p=0x06C02A10/*l42c8\text_file_read.e*/),((/*RF2*/(C)->_capacity/*i10p*/))==(INT8_C(0)))){
+(ds.p=0x06C02B0C/*l43c6\text_file_read.e*/);
+/*SFN*/(C->_buffer/*i10p*/)=new9(/*IC*/(T2)(INT16_C(4096)));
+(ds.p=0x06C02C0C/*l44c6\text_file_read.e*/);
+/*SFN*/(C->_capacity/*i10p*/)=/*IC*/(T2)(INT16_C(4096));
+}
+(ds.p=0x06C02E0A/*l46c5\text_file_read.e*/);
+/*SFN*/(C->_end_reached/*i10p*/)=((T6)(0));
+(ds.p=0x06C02F0A/*l47c5\text_file_read.e*/);
+/*SFN*/(C->_buffer_position/*i10p*/)=/*IC*/(T2)(INT8_C(0));
+(ds.p=0x06C0300A/*l48c5\text_file_read.e*/);
+/*SFN*/(C->_buffer_size/*i10p*/)=/*IC*/(T2)(INT8_C(0));
+(ds.p=0x06C0310A/*l49c5\text_file_read.e*/);
+/*SFN*/(C->_filtered_last_character/*i10p*/)=((T3)'\000');
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x06C03422/*l52c17\text_file_read.e*/);
+ac_ens((T6)((!(r54is_connected(&ds,C)))||((T6)(r6_px_not(&ds,(T6)((/*RF2*/(C)->_end_of_input/*i10p*/)))))),"is_connected implies not end_of_input");
+(ds.p=0x06E01F22/*l31c17\file.e*/);
+ac_ens((T6)((!(r54is_connected(&ds,C)))||((T6)(r7same_as(&ds,se_i7(&ds,((T7*)ci(7,(/*RF2*/(C)->_path/*i10p*/),0x06E01F32/*l31c25\file.e*/))),a1)))),"is_connected implies path.same_as(new_path)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*TEXT_FILE_READ*/T3 r54filtered_last_character(se_dump_stack*caller,T54* C){
+T3 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"filtered_last_character"" TEXT_FILE_READ",1,1,"%R54%Result%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06C05704/*l87c2\text_file_read.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x05604E08/*l78c4\input_stream.e*/);
+ac_req(r54is_connected(&ds,C),"is_connected");
+(ds.p=0x05604F08/*l79c4\input_stream.e*/);
+ac_req(/*RF1valid_last_character*/1,"valid_last_character");
+fd.assertion_flag=1;
+}
+R=C->_filtered_last_character/*i10p*/;
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*TEXT_FILE_READ*/void r54filtered_read_line_in(se_dump_stack*caller,T54* C,T0* a1){
+T2 _i=0;
+T6 _stop=0;
+T2 _old_count=0;
+T2 _new_count=0;
+T2 _initial_count=0;
+void**locals[6];
+static se_frame_descriptor fd={"filtered_read_line_in"" TEXT_FILE_READ",1,6,"%R54%str%R7%i%E2%stop%E6%old_count%E2%new_count%E2%initial_count%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06C05904/*l89c2\text_file_read.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&_i;
+locals[2]=(void**)&_stop;
+locals[3]=(void**)&_old_count;
+locals[4]=(void**)&_new_count;
+locals[5]=(void**)&_initial_count;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x05606B08/*l107c4\input_stream.e*/);
+ac_req(r54is_connected(&ds,C),"is_connected");
+(ds.p=0x05606C08/*l108c4\input_stream.e*/);
+ac_req((a1)!=((void*)((void*)0)),"str /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x06C05E0A/*l94c5\text_file_read.e*/);
+_initial_count=r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C05E2C/*l94c22\text_file_read.e*/))));
+while (!(((ds.p=0x06C0600A/*l96c5\text_file_read.e*/),_stop)))
+{
+(ds.p=0x06C0640C/*l100c6\text_file_read.e*/);
+_i=(/*RF2*/(C)->_buffer_position/*i10p*/);
+while (!(((ds.p=0x06C0662E/*l102c23\text_file_read.e*/),(T6)((((int32_t)(_i))>=((/*RF2*/(C)->_buffer_size/*i10p*/)))||((T6)((((/*RF2*/(C)->_buffer/*i10p*/))[_i])==(((T3)'\n'))))))))
+{
+(ds.p=0x06C0680C/*l104c6\text_file_read.e*/);
+_i=r2_ix_43(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+}
+if(((ds.p=0x06C06B14/*l107c10\text_file_read.e*/),((int32_t)(_i))>((/*RF2*/(C)->_buffer_position/*i10p*/)))){
+(ds.p=0x06C06C0C/*l108c6\text_file_read.e*/);
+_old_count=r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C06C26/*l108c19\text_file_read.e*/))));
+(ds.p=0x06C06D0C/*l109c6\text_file_read.e*/);
+_new_count=r2_ix_45(&ds,r2_ix_43(&ds,_old_count,_i),(/*RF2*/(C)->_buffer_position/*i10p*/));
+if(((ds.p=0x06C06E2C/*l110c22\text_file_read.e*/),((int32_t)((/*RF2*/(se_i7(&ds,((T7*)ci(7,a1,0x06C06E12/*l110c9\text_file_read.e*/))))->_capacity/*i3p*/)))<(_new_count))){
+(ds.p=0x06C06F16/*l111c11\text_file_read.e*/);
+r7resize(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C06F0E/*l111c7\text_file_read.e*/))),r2max(&ds,r2_ix_42(&ds,_old_count,/*IC*/(T2)(INT8_C(2))),_new_count));
+}
+(ds.p=0x06C07124/*l113c18\text_file_read.e*/);
+r9slice_copy(&ds,(/*RF2*/(se_i7(&ds,((T7*)ci(7,a1,0x06C0710C/*l113c6\text_file_read.e*/))))->_storage/*i3p*/),_old_count,(/*RF2*/(C)->_buffer/*i10p*/),(/*RF2*/(C)->_buffer_position/*i10p*/),r2_ix_45(&ds,_i,/*IC*/(T2)(INT8_C(1))));
+(ds.p=0x06C07214/*l114c10\text_file_read.e*/);
+r7set_count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C0720C/*l114c6\text_file_read.e*/))),_new_count);
+}
+if(((ds.p=0x06C07530/*l117c24\text_file_read.e*/),(T6)((((int32_t)(_i))<((/*RF2*/(C)->_buffer_size/*i10p*/)))&&((T6)((((/*RF2*/(C)->_buffer/*i10p*/))[_i])==(((T3)'\n'))))))){
+(ds.p=0x06C0760C/*l118c6\text_file_read.e*/);
+_stop=((T6)(1));
+(ds.p=0x06C0770C/*l119c6\text_file_read.e*/);
+/*SFN*/(C->_buffer_position/*i10p*/)=r2_ix_43(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+if(((ds.p=0x06C07846/*l120c35\text_file_read.e*/),(T6)((((int32_t)(r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C07812/*l120c9\text_file_read.e*/))))))>(_initial_count))&&((T6)((r7last(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C07858/*l120c44\text_file_read.e*/)))))==(((T3)'\015'))))))){
+(ds.p=0x06C07916/*l121c11\text_file_read.e*/);
+r7remove_last(&ds,se_i7(&ds,((T7*)ci(7,a1,0x06C0790E/*l121c7\text_file_read.e*/))));
+}
+}
+else{
+if(((ds.p=0x06C08012/*l128c9\text_file_read.e*/),r6_px_not(&ds,(T6)((/*RF2*/(C)->_end_reached/*i10p*/))))){
+(ds.p=0x06C0810E/*l129c7\text_file_read.e*/);
+r54fill_buffer(&ds,C);
+}
+(ds.p=0x06C0830C/*l131c6\text_file_read.e*/);
+_stop=((T6)((/*RF2*/(C)->_end_reached/*i10p*/)));
+}
+}
+(ds.p=0x06C08608/*l134c4\text_file_read.e*/);
+/*SFN*/(C->_end_of_input/*i10p*/)=((T6)((/*RF2*/(C)->_end_reached/*i10p*/)));
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*TEXT_FILE_READ*/T6 r54is_filtered(se_dump_stack*caller,T54* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_filtered"" TEXT_FILE_READ",1,1,"%R54%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03A01D04/*l29c2\filterable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x03A02008/*l32c4\filterable.e*/);
+R=((T6)(((/*RF2*/(C)->_filter/*i10p*/))!=((void*)((void*)0))));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*TEXT_FILE_READ*/T6 r54is_connected(se_dump_stack*caller,T54* C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_connected"" TEXT_FILE_READ",1,1,"%R54%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06E01004/*l16c2\file.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x06E01308/*l19c4\file.e*/);
+R=((T6)(((/*RF2*/(C)->_path/*i10p*/))!=((void*)((void*)0))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x06E01520/*l21c16\file.e*/);
+ac_ens((R)==(((/*RF2*/(C)->_path/*i10p*/))!=((void*)((void*)0))),"definition");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*TEXT_FILE_READ*/void r54fill_buffer(se_dump_stack*caller,T54* C){
+T3 _last=0;
+void**locals[1];
+static se_frame_descriptor fd={"fill_buffer"" TEXT_FILE_READ",1,1,"%R54%last%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x06C0F304/*l243c2\text_file_read.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&_last;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x06C0F726/*l247c19\text_file_read.e*/),((int32_t)((/*RF2*/(C)->_buffer_size/*i10p*/)))>(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x06C0F80A/*l248c5\text_file_read.e*/);
+_last=((/*RF2*/(C)->_buffer/*i10p*/))[r2_ix_45(&ds,(/*RF2*/(C)->_buffer_size/*i10p*/),/*IC*/(T2)(INT8_C(1)))];
+}
+(ds.p=0x06C0FA08/*l250c4\text_file_read.e*/);
+/*SFN*/(C->_buffer_size/*i10p*/)=io_fread((/*RF2*/(C)->_buffer/*i10p*/),(/*RF2*/(C)->_capacity/*i10p*/),(/*RF2*/(C)->_input_stream/*i10p*/));
+(ds.p=0x06C0FB08/*l251c4\text_file_read.e*/);
+/*SFN*/(C->_buffer_position/*i10p*/)=/*IC*/(T2)(INT8_C(0));
+if(((ds.p=0x06C0FC26/*l252c19\text_file_read.e*/),((int32_t)((/*RF2*/(C)->_buffer_size/*i10p*/)))<=(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x06C0FD0A/*l253c5\text_file_read.e*/);
+/*SFN*/(C->_end_reached/*i10p*/)=((T6)(1));
+(ds.p=0x06C0FE18/*l254c12\text_file_read.e*/);
+((/*RF2*/(C)->_buffer/*i10p*/))[/*IC*/(T2)(INT8_C(0))]=(_last);
+(ds.p=0x06C1010A/*l257c5\text_file_read.e*/);
+/*SFN*/(C->_buffer_size/*i10p*/)=/*IC*/(T2)(INT8_C(1));
+(ds.p=0x06C1020A/*l258c5\text_file_read.e*/);
+/*SFN*/(C->_buffer_position/*i10p*/)=/*IC*/(T2)(INT8_C(1));
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*TEXT_FILE_READ*/void r54read_line_in(se_dump_stack*caller,T54* C,T0* a1){
+void**locals[1];
+static se_frame_descriptor fd={"read_line_in"" TEXT_FILE_READ",1,1,"%R54%buffer%R7%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x05601C04/*l28c2\input_stream.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x05801508/*l21c4\input_stream_tools.e*/);
+ac_req(r54is_connected(&ds,C),"is_connected");
+(ds.p=0x05801628/*l22c20\input_stream_tools.e*/);
+ac_req((T6)((r6_px_not(&ds,(T6)(r54is_filtered(&ds,C))))&&((T6)(/*RF1can_read_line*/1))),"not is_filtered and then can_read_line");
+(ds.p=0x05801708/*l23c4\input_stream_tools.e*/);
+ac_req((a1)!=((void*)((void*)0)),"buffer /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x05601E08/*l30c4\input_stream.e*/);
+r54filtered_read_line_in(&ds,C,a1);
+set_dump_stack_top(caller);/*unlink*/
 }/*--*/
 
 /*ARRAY[MEDIA]*/void r123clear_all(se_dump_stack*caller,T123* C){
@@ -2530,6 +3831,25 @@ se_dst=caller;/*unlink*/
 return C;
 }/*--*/
 
+/*POINTER*/T6 r8is_null(se_dump_stack*caller,T8 C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_null"" POINTER",1,1,"%E8%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01001504/*l21c2\pointer.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x01001808/*l24c4\pointer.e*/);
+R=((T6)(r6_px_not(&ds,(T6)((NULL!=C)))));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
 /*BOOLEAN*/T6 r6_ix_and(se_dump_stack*caller,T6 C,T6 a1){
 T6 R=0;
 void**locals[2];
@@ -2589,6 +3909,126 @@ set_dump_stack_top(caller);/*unlink*/
 return R;
 }/*--*/
 
+/*INTEGER_8*/T6 r1is_equal(se_dump_stack*caller,T1 C,T1 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"is_equal"" INTEGER_8",1,2,"%E1%other%E1%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07031804/*l792c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A03608/*l54c4\any.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x07031A08/*l794c4\integer_general.e*/);
+R=((T6)((C)==(a1)));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A03972/*l57c57\any.e*/);
+ac_ens((T6)((!(((T0*)(t[1]))==((void*)((T0*)(t[1])))))||((T6)((R)==(r1is_equal(&ds,a1,C))))),"commutative");
+(ds.p=0x04601C16/*l28c11\hashable.e*/);
+ac_ens((T6)((!(R))||((T6)((r1hash_code(&ds,C))==(r1hash_code(&ds,a1))))),"Result implies hash_code = other.hash_code");
+(ds.p=0x04401320/*l19c16\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(r6_px_not(&ds,(T6)(((int8_t)(C))<(a1)))),(T6)(r6_px_not(&ds,(T6)(((int8_t)(a1))<(C)))))),"trichotomy");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_8*/T6 r1in_range(se_dump_stack*caller,T1 C,T1 a1,T1 a2){
+T6 R=0;
+void**locals[3];
+static se_frame_descriptor fd={"in_range"" INTEGER_8",1,3,"%E1%lower%E1%upper%E1%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04404504/*l69c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&a2;
+locals[2]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04404A08/*l74c4\comparable.e*/);
+R=((T6)((T6)((((int8_t)(C))>=(a1))&&((T6)(((int8_t)(C))<=(a2))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04404C08/*l76c4\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(((int8_t)(C))>=(a1)),(T6)(((int8_t)(C))<=(a2)))),"Result = (Current >= lower and Current <= upper)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_8*/T1 r1_ix_45(se_dump_stack*caller,T1 C,T1 a1){
+T1 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""-"" (""infix ""-"" INTEGER_8)",1,2,"%E1%other%E1%Result%E1%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07002404/*l36c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002658/*l38c44\integer_general.e*/);
+ac_req((T6)((!((((int8_t)(C))>(INT8_C(0)))!=(((int8_t)(a1))>(INT8_C(0)))))||((T6)((((int8_t)(((int8_t)(C))-(a1)))>(INT8_C(0)))==(((int8_t)(C))>(INT8_C(0)))))),"no_overflow");
+fd.assertion_flag=1;
+}
+(ds.p=0x07002808/*l40c4\integer_general.e*/);
+R=((int8_t)(C))-(a1);
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002A16/*l42c11\integer_general.e*/);
+ac_ens((((int8_t)(R))+(a1))==(C),"Result #+ other = Current");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_8*/T2 r1hash_code(se_dump_stack*caller,T1 C){
+T2 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"hash_code"" INTEGER_8",1,1,"%E1%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00205404/*l84c2\integer_8.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x00205608/*l86c4\integer_8.e*/);
+R=/*IC*/(T2)((C&/*0x7F*/INT8_C(127)));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04601638/*l22c28\hashable.e*/);
+ac_ens(((int32_t)(R))>=(/*IC*/(T2)(INT8_C(0))),"good_hash_value");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
 /*INTEGER_32*/T6 r2is_equal(se_dump_stack*caller,T2 C,T2 a1){
 T6 R=0;
 void**locals[2];
@@ -2619,6 +4059,162 @@ ac_ens((T6)((!(((T0*)(t[2]))==((void*)((T0*)(t[2])))))||((T6)((R)==(r2is_equal(&
 ac_ens((T6)((!(R))||((T6)((r2hash_code(&ds,C))==(r2hash_code(&ds,a1))))),"Result implies hash_code = other.hash_code");
 (ds.p=0x04401320/*l19c16\comparable.e*/);
 ac_ens((R)==(r6_ix_and(&ds,(T6)(r6_px_not(&ds,(T6)(((int32_t)(C))<(a1)))),(T6)(r6_px_not(&ds,(T6)(((int32_t)(a1))<(C)))))),"trichotomy");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T6 r2divisible(se_dump_stack*caller,T2 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"divisible"" INTEGER_32",0,2,"other%E2%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)0;
+ds.p=0x07031304/*l787c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07203008/*l48c4\numeric.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x07031508/*l789c4\integer_general.e*/);
+R=((T6)((a1)!=(INT8_C(0))));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T2 r2_ix_42(se_dump_stack*caller,T2 C,T2 a1){
+T2 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""*"" (""infix ""*"" INTEGER_32)",1,2,"%E2%other%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07002D04/*l45c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07002F44/*l47c34\integer_general.e*/);
+ac_req((T6)((!(r2divisible(&ds,a1)))||((T6)((((int32_t)(((int32_t)(C))*(a1)))/(a1))==(C)))),"no_overflow");
+fd.assertion_flag=1;
+}
+(ds.p=0x07003108/*l49c4\integer_general.e*/);
+R=((int32_t)(C))*(a1);
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07003340/*l51c32\integer_general.e*/);
+ac_ens((T6)((!(r6_ix_and(&ds,(T6)((C)!=(INT8_C(0))),(T6)((a1)!=(INT8_C(0))))))||((T6)((R)!=(INT8_C(0))))),"Current /= 0 and other /= 0 implies Result /= 0");
+(ds.p=0x07003420/*l52c16\integer_general.e*/);
+ac_ens((T6)((!((R)!=(INT8_C(0))))||((T6)((((int32_t)(R))/(a1))==(C)))),"Result /= 0 implies Result #// other = Current");
+(ds.p=0x07003520/*l53c16\integer_general.e*/);
+ac_ens((T6)((!((R)!=(INT8_C(0))))||((T6)((((int32_t)(R))%(a1))==(INT8_C(0))))),"Result /= 0 implies Result #\\\\ other = 0");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T2 r2compare(se_dump_stack*caller,T2 C,T2 a1){
+T2 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"compare"" INTEGER_32",1,2,"%E2%other%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04404F04/*l79c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04405524/*l85c18\comparable.e*/);
+ac_req((a1,1),"other_exists");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x0440571E/*l87c15\comparable.e*/),((int32_t)(C))<(a1))){
+(ds.p=0x0440580A/*l88c5\comparable.e*/);
+R=/*IC*/(T2)(INT8_C(-1));
+}
+else if(((ds.p=0x04405922/*l89c17\comparable.e*/),((int32_t)(a1))<(C))){
+(ds.p=0x04405A0A/*l90c5\comparable.e*/);
+R=/*IC*/(T2)(INT8_C(1));
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04405D20/*l93c16\comparable.e*/);
+ac_ens(((R)==(INT8_C(0)))==(r2is_equal(&ds,C,a1)),"equal_zero");
+(ds.p=0x04405E2C/*l94c22\comparable.e*/);
+ac_ens(((R)==(INT8_C(-1)))==(((int32_t)(C))<(a1)),"smaller_negative");
+(ds.p=0x04405F2C/*l95c22\comparable.e*/);
+ac_ens(((R)==(INT8_C(1)))==(((int32_t)(C))>(a1)),"greater_positive");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T2 r2_px_45(se_dump_stack*caller,T2 C){
+T2 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"prefix ""-"" (""prefix ""-"" INTEGER_32)",1,1,"%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x0700CE14/*l206c10\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0700D046/*l208c35\integer_general.e*/);
+ac_req((T6)((!(((int32_t)(C))<(/*IC*/(T2)(INT8_C(0)))))||((T6)(((int32_t)(/*IC*/(T2)(INT8_C(0))))<(-(C))))),"not_minimum_value");
+fd.assertion_flag=1;
+}
+(ds.p=0x0700D208/*l210c4\integer_general.e*/);
+R=-(C);
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T6 r2in_range(se_dump_stack*caller,T2 C,T2 a1,T2 a2){
+T6 R=0;
+void**locals[3];
+static se_frame_descriptor fd={"in_range"" INTEGER_32",1,3,"%E2%lower%E2%upper%E2%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04404504/*l69c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&a2;
+locals[2]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04404A08/*l74c4\comparable.e*/);
+R=((T6)((T6)((((int32_t)(C))>=(a1))&&((T6)(((int32_t)(C))<=(a2))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04404C08/*l76c4\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(((int32_t)(C))>=(a1)),(T6)(((int32_t)(C))<=(a2)))),"Result = (Current >= lower and Current <= upper)");
 fd.assertion_flag=1;
 }
 set_dump_stack_top(caller);/*unlink*/
@@ -2657,6 +4253,86 @@ set_dump_stack_top(caller);/*unlink*/
 return R;
 }/*--*/
 
+/*INTEGER_32*/T2 r2min(se_dump_stack*caller,T2 C,T2 a1){
+T2 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"min"" INTEGER_32",1,2,"%E2%other%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04406204/*l98c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04406708/*l103c4\comparable.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x0440691E/*l105c15\comparable.e*/),((int32_t)(C))<=(a1))){
+(ds.p=0x04406A0A/*l106c5\comparable.e*/);
+R=C;
+}
+else{
+(ds.p=0x04406C0A/*l108c5\comparable.e*/);
+R=a1;
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04406F2C/*l111c22\comparable.e*/);
+ac_ens((T6)((((int32_t)(R))<=(C))&&((T6)(((int32_t)(R))<=(a1)))),"Result <= Current and then Result <= other");
+(ds.p=0x04407030/*l112c24\comparable.e*/);
+ac_ens((T6)(((r2compare(&ds,C,R))==(INT8_C(0)))||((T6)((r2compare(&ds,a1,R))==(INT8_C(0))))),"compare(Result) = 0 or else other.compare(Result) = 0");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T2 r2max(se_dump_stack*caller,T2 C,T2 a1){
+T2 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"max"" INTEGER_32",1,2,"%E2%other%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04407304/*l115c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04407808/*l120c4\comparable.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x04407A1E/*l122c15\comparable.e*/),((int32_t)(C))>=(a1))){
+(ds.p=0x04407B0A/*l123c5\comparable.e*/);
+R=C;
+}
+else{
+(ds.p=0x04407D0A/*l125c5\comparable.e*/);
+R=a1;
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0440802C/*l128c22\comparable.e*/);
+ac_ens((T6)((((int32_t)(R))>=(C))&&((T6)(((int32_t)(R))>=(a1)))),"Result >= Current and then Result >= other");
+(ds.p=0x04408130/*l129c24\comparable.e*/);
+ac_ens((T6)(((r2compare(&ds,C,R))==(INT8_C(0)))||((T6)((r2compare(&ds,a1,R))==(INT8_C(0))))),"compare(Result) = 0 or else other.compare(Result) = 0");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
 /*INTEGER_32*/T2 r2hash_code(se_dump_stack*caller,T2 C){
 T2 R=0;
 void**locals[1];
@@ -2676,6 +4352,178 @@ if(fd.assertion_flag){
 fd.assertion_flag=0;
 (ds.p=0x04601638/*l22c28\hashable.e*/);
 ac_ens(((int32_t)(R))>=(/*IC*/(T2)(INT8_C(0))),"good_hash_value");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/void r2append_in(se_dump_stack*caller,T2 C,T0* a1){
+T2 _val=0;
+T2 _i=0;
+T2 _idx=0;
+void**locals[4];
+static se_frame_descriptor fd={"append_in"" INTEGER_32",1,4,"%E2%buffer%R7%val%E2%i%E2%idx%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07012C04/*l300c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&_val;
+locals[2]=(void**)&_i;
+locals[3]=(void**)&_idx;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07013308/*l307c4\integer_general.e*/);
+ac_req((a1)!=((void*)((void*)0)),"buffer /= Void");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x0701370E/*l311c7\integer_general.e*/),(C)==(INT8_C(0)))){
+(ds.p=0x07013818/*l312c12\integer_general.e*/);
+r7extend(&ds,se_i7(&ds,((T7*)ci(7,a1,0x0701380A/*l312c5\integer_general.e*/))),((T3)'0'));
+}
+else{
+if(((ds.p=0x07013B22/*l315c17\integer_general.e*/),((int32_t)(C))>(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x07013C0E/*l316c7\integer_general.e*/);
+_val=C;
+(ds.p=0x07013E0E/*l318c7\integer_general.e*/);
+_i=r2_ix_43(&ds,r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x07013E18/*l318c12\integer_general.e*/)))),/*IC*/(T2)(INT8_C(1)));
+}
+else{
+(ds.p=0x0701401C/*l320c14\integer_general.e*/);
+r7extend(&ds,se_i7(&ds,((T7*)ci(7,a1,0x0701400E/*l320c7\integer_general.e*/))),((T3)'\055'));
+(ds.p=0x0701420E/*l322c7\integer_general.e*/);
+_i=r2_ix_43(&ds,r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x07014218/*l322c12\integer_general.e*/)))),/*IC*/(T2)(INT8_C(1)));
+(ds.p=0x0701440E/*l324c7\integer_general.e*/);
+_val=((int32_t)(C))%(/*IC*/(T2)(INT8_C(10)));
+if(((ds.p=0x0701451C/*l325c14\integer_general.e*/),((int32_t)(_val))<=(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x0701461E/*l326c15\integer_general.e*/);
+r7extend(&ds,se_i7(&ds,((T7*)ci(7,a1,0x07014610/*l326c8\integer_general.e*/))),r2decimal_digit(&ds,r2_px_45(&ds,_val)));
+(ds.p=0x07014710/*l327c8\integer_general.e*/);
+_val=r2_px_45(&ds,((int32_t)(C))/(/*IC*/(T2)(INT8_C(10))));
+}
+else{
+(ds.p=0x0701491E/*l329c15\integer_general.e*/);
+r7extend(&ds,se_i7(&ds,((T7*)ci(7,a1,0x07014910/*l329c8\integer_general.e*/))),r2decimal_digit(&ds,r2_ix_43(&ds,r2_px_45(&ds,_val),/*IC*/(T2)(INT8_C(10)))));
+(ds.p=0x07014A10/*l330c8\integer_general.e*/);
+_val=r2_ix_45(&ds,r2_px_45(&ds,((int32_t)(C))/(/*IC*/(T2)(INT8_C(10)))),/*IC*/(T2)(INT8_C(1)));
+}
+(ds.p=0x07014D18/*l333c12\integer_general.e*/);
+ac_civ(((int32_t)(_val))>=(/*IC*/(T2)(INT8_C(0))),"val >= 0");
+}
+while (!(((ds.p=0x0701510C/*l337c6\integer_general.e*/),(_val)==(INT8_C(0)))))
+{
+(ds.p=0x0701531A/*l339c13\integer_general.e*/);
+r7extend(&ds,se_i7(&ds,((T7*)ci(7,a1,0x0701530C/*l339c6\integer_general.e*/))),r2decimal_digit(&ds,((int32_t)(_val))%(/*IC*/(T2)(INT8_C(10)))));
+(ds.p=0x0701540C/*l340c6\integer_general.e*/);
+_val=((int32_t)(_val))/(/*IC*/(T2)(INT8_C(10)));
+}
+(ds.p=0x0701580C/*l344c6\integer_general.e*/);
+_idx=r7count(&ds,se_i7(&ds,((T7*)ci(7,a1,0x0701581A/*l344c13\integer_general.e*/))));
+while (!(((ds.p=0x07015A10/*l346c8\integer_general.e*/),((int32_t)(_i))>=(_idx))))
+{
+(ds.p=0x07015C1A/*l348c13\integer_general.e*/);
+r7swap(&ds,se_i7(&ds,((T7*)ci(7,a1,0x07015C0C/*l348c6\integer_general.e*/))),_i,_idx);
+(ds.p=0x07015D0C/*l349c6\integer_general.e*/);
+_idx=r2_ix_45(&ds,_idx,/*IC*/(T2)(INT8_C(1)));
+(ds.p=0x07015E0C/*l350c6\integer_general.e*/);
+_i=r2_ix_43(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+}
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*INTEGER_32*/T0* r2to_string(se_dump_stack*caller,T2 C){
+T0* R=(void*)0;
+void**locals[1];
+static se_frame_descriptor fd={"to_string"" INTEGER_32",1,1,"%E2%Result%R7%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x07010504/*l261c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x07010B24/*l267c18\integer_general.e*/);
+r7clear_count(&ds,se_i7(&ds,((T7*)ci(7,r2string_buffer(&ds),0x07010B08/*l267c4\integer_general.e*/))));
+(ds.p=0x07010C08/*l268c4\integer_general.e*/);
+r2append_in(&ds,C,r2string_buffer(&ds));
+(ds.p=0x07010D08/*l269c4\integer_general.e*/);
+R=r7twin(&ds,se_i7(&ds,((T7*)ci(7,r2string_buffer(&ds),0x07010D1C/*l269c14\integer_general.e*/))));
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T2 r2abs(se_dump_stack*caller,T2 C){
+T2 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"abs"" INTEGER_32",1,1,"%E2%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x0700AB04/*l171c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0700AE46/*l174c35\integer_general.e*/);
+ac_req((T6)((!(((int32_t)(C))<(/*IC*/(T2)(INT8_C(0)))))||((T6)(((int32_t)(/*IC*/(T2)(INT8_C(0))))<(-(C))))),"not_minimum_value");
+fd.assertion_flag=1;
+}
+if(((ds.p=0x0700B01E/*l176c15\integer_general.e*/),((int32_t)(C))<(/*IC*/(T2)(INT8_C(0))))){
+(ds.p=0x0700B10A/*l177c5\integer_general.e*/);
+R=r2_px_45(&ds,C);
+}
+else{
+(ds.p=0x0700B30A/*l179c5\integer_general.e*/);
+R=C;
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0700B616/*l182c11\integer_general.e*/);
+ac_ens(((int32_t)(R))>=(/*IC*/(T2)(INT8_C(0))),"Result >= 0");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*INTEGER_32*/T3 r2decimal_digit(se_dump_stack*caller,T2 C){
+T3 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"decimal_digit"" INTEGER_32",1,1,"%E2%Result%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00406604/*l102c2\integer_32.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07020C08/*l524c4\integer_general.e*/);
+ac_req(r2in_range(&ds,C,/*IC*/(T2)(INT8_C(0)),/*IC*/(T2)(INT8_C(9))),"in_range(0, 9)");
+fd.assertion_flag=1;
+}
+(ds.p=0x00406808/*l104c4\integer_32.e*/);
+R=((T3)(r2_ix_43(&ds,C,/*IC*/(T2)(T3code(((T3)'0'))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x07020F30/*l527c24\integer_general.e*/);
+ac_ens(r7has(&ds,((T7*)ms56_117797837),R),"(once \"0123456789\").has(Result)");
+(ds.p=0x07021018/*l528c12\integer_general.e*/);
+ac_ens(r2is_equal(&ds,C,/*IC*/(T2)(r3value(&ds,R))),"Current.is_equal(Result.value)");
 fd.assertion_flag=1;
 }
 set_dump_stack_top(caller);/*unlink*/
@@ -2713,6 +4561,171 @@ fd.assertion_flag=1;
 set_dump_stack_top(caller);/*unlink*/
 return R;
 }/*--*/
+T0*oBC56string_buffer=(void*)0;
+int fBC56string_buffer=0;
+
+/*INTEGER_32*/T0* r2string_buffer(se_dump_stack*caller){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"string_buffer"" INTEGER_32",0,1,"Result%R7%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)0;
+ds.p=0x07033704/*l823c2\integer_general.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC56string_buffer;
+set_dump_stack_top(&ds);/*link*/
+if(fBC56string_buffer==0){fBC56string_buffer=1;{
+(ds.p=0x07033908/*l825c4\integer_general.e*/);
+tmp0=((T0*)(new7()));
+r7make(&ds,((T7*)tmp0),/*IC*/(T2)(INT16_C(128)));
+oBC56string_buffer=tmp0;
+se_i7(&ds,((T7*)(oBC56string_buffer)));}
+fBC56string_buffer=2;}
+else{
+(ds.p=0x07033704/*l823c2\integer_general.e*/);
+ac_req(fBC56string_buffer==2, "Recursive once function.");
+}
+set_dump_stack_top(caller);/*unlink*/
+return oBC56string_buffer;
+}/*--*/
+T0*oBC13io=(void*)0;
+int fBC13io=0;
+
+/*MEDIATHEQUE*/T0* r25io(se_dump_stack*caller,T25* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+void**locals[1];
+static se_frame_descriptor fd={"io"" MEDIATHEQUE",1,1,"%R25%Result%R40%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x01A09F04/*l159c2\any.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&oBC13io;
+set_dump_stack_top(&ds);/*link*/
+if(fBC13io==0){fBC13io=1;{
+(ds.p=0x01A0A408/*l164c4\any.e*/);
+tmp0=((T0*)(new40()));
+r40make(&ds,((T40*)tmp0));
+oBC13io=tmp0;
+se_i40(&ds,((T40*)(oBC13io)));}
+fBC13io=2;}
+else{
+(ds.p=0x01A09F04/*l159c2\any.e*/);
+ac_req(fBC13io==2, "Recursive once function.");
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A0A608/*l166c4\any.e*/);
+ac_ens((oBC13io)!=((void*)((void*)0)),"Result /= Void");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return oBC13io;
+}/*--*/
+
+/*MEDIATHEQUE*/void r25readfilemedia(se_dump_stack*caller,T25* C){
+/*[INTERNAL_C_LOCAL list*/
+T0* tmp0;
+/*INTERNAL_C_LOCAL list]*/
+T0* _file=(void*)0;
+T0* _line=(void*)0;
+T2 _nbr_separation_inline=0;
+T2 _i=0;
+T6 _is_book=0;
+T6 _is_dvd=0;
+T2 _index_premier_point_virgule=0;
+T0* _premier_terme=(void*)0;
+T2 _index_pointvirguleprecedent=0;
+T2 _index_point_virgule_suivant=0;
+T0* _terme=(void*)0;
+void**locals[11];
+static se_frame_descriptor fd={"readfilemedia"" MEDIATHEQUE",1,11,"%R25%file%R54%line%R7%nbr_separation_inline%E2%i%E2%is_book%E6%is_dvd%E6%index_premier_point_virgule%E2%premier_terme%R7%index_pointvirguleprecedent%E2%index_point_virgule_suivant%E2%terme%R7%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x03202004/*l32c2\mediatheque.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&_file;
+locals[1]=(void**)&_line;
+locals[2]=(void**)&_nbr_separation_inline;
+locals[3]=(void**)&_i;
+locals[4]=(void**)&_is_book;
+locals[5]=(void**)&_is_dvd;
+locals[6]=(void**)&_index_premier_point_virgule;
+locals[7]=(void**)&_premier_terme;
+locals[8]=(void**)&_index_pointvirguleprecedent;
+locals[9]=(void**)&_index_point_virgule_suivant;
+locals[10]=(void**)&_terme;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x03203106/*l49c3\mediatheque.e*/);
+tmp0=((T0*)(new54()));
+r54connect_to(&ds,((T54*)tmp0),se_ms(10,s25_262181241));
+_file=tmp0;
+while (!(((ds.p=0x03203226/*l50c19\mediatheque.e*/),(/*RF2*/(((T54*)ci(54,_file,0x0320321C/*l50c14\mediatheque.e*/)))->_end_of_input/*i10p*/))))
+{
+(ds.p=0x03203412/*l52c9\mediatheque.e*/);
+r54read_line(&ds,((T54*)ci(54,_file,0x03203408/*l52c4\mediatheque.e*/)));
+(ds.p=0x03203508/*l53c4\mediatheque.e*/);
+_line=r54last_string(&ds,((T54*)ci(54,_file,0x03203518/*l53c12\mediatheque.e*/)));
+if(((ds.p=0x03203618/*l54c12\mediatheque.e*/),r7has_substring(&ds,se_i7(&ds,((T7*)ci(7,_line,0x0320360E/*l54c7\mediatheque.e*/))),se_ms(5,s25_64246)))){
+(ds.p=0x0320370A/*l55c5\mediatheque.e*/);
+_is_book=((T6)(1));
+}
+if(((ds.p=0x03203A18/*l58c12\mediatheque.e*/),r7has_substring(&ds,se_i7(&ds,((T7*)ci(7,_line,0x03203A0E/*l58c7\mediatheque.e*/))),se_ms(3,s25_2198)))){
+(ds.p=0x03203B0A/*l59c5\mediatheque.e*/);
+_is_dvd=((T6)(1));
+}
+(ds.p=0x03203E08/*l62c4\mediatheque.e*/);
+_nbr_separation_inline=r7occurrences(&ds,se_i7(&ds,((T7*)ci(7,_line,0x03203E3A/*l62c29\mediatheque.e*/))),((T3)'\073'));
+(ds.p=0x0320400E/*l64c7\mediatheque.e*/);
+r40put_string(&ds,se_i40(&ds,((T40*)ci(40,r25io(&ds,C),0x03204008/*l64c4\mediatheque.e*/))),r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r7_ix_43(&ds,((T7*)se_ms(28,s25_672635980)),r2to_string(&ds,_nbr_separation_inline)),0x03204062/*l64c49\mediatheque.e*/))),se_ms(1,s25_10)));
+(ds.p=0x03204208/*l66c4\mediatheque.e*/);
+_index_premier_point_virgule=r7index_of(&ds,se_i7(&ds,((T7*)ci(7,_line,0x03204246/*l66c35\mediatheque.e*/))),((T3)'\073'),/*IC*/(T2)(INT8_C(1)));
+(ds.p=0x03204308/*l67c4\mediatheque.e*/);
+_index_pointvirguleprecedent=_index_premier_point_virgule;
+(ds.p=0x03204408/*l68c4\mediatheque.e*/);
+_premier_terme=r7substring(&ds,se_i7(&ds,((T7*)ci(7,_line,0x0320442A/*l68c21\mediatheque.e*/))),/*IC*/(T2)(INT8_C(1)),_index_premier_point_virgule);
+if(((ds.p=0x0320462A/*l70c21\mediatheque.e*/),r7is_equal(&ds,se_i7(&ds,((T7*)ci(7,_premier_terme,0x0320460E/*l70c7\mediatheque.e*/))),se_ms(3,s25_2198)))){
+(ds.p=0x0320470A/*l71c5\mediatheque.e*/);
+_is_dvd=((T6)(1));
+}
+if(((ds.p=0x0320492A/*l73c21\mediatheque.e*/),r7is_equal(&ds,se_i7(&ds,((T7*)ci(7,_premier_terme,0x0320490E/*l73c7\mediatheque.e*/))),se_ms(5,s25_64246)))){
+(ds.p=0x03204A0A/*l74c5\mediatheque.e*/);
+_is_book=((T6)(1));
+}
+(ds.p=0x03204C0E/*l76c7\mediatheque.e*/);
+r40put_string(&ds,se_i40(&ds,((T40*)ci(40,r25io(&ds,C),0x03204C08/*l76c4\mediatheque.e*/))),r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r2to_string(&ds,_nbr_separation_inline),0x03204C50/*l76c40\mediatheque.e*/))),se_ms(1,s25_10)));
+(ds.p=0x03204D12/*l77c9\mediatheque.e*/);
+_i=/*IC*/(T2)(INT8_C(1));
+while (!(((ds.p=0x03204D30/*l77c24\mediatheque.e*/),((int32_t)(_i))>(_nbr_separation_inline))))
+{
+(ds.p=0x03204F12/*l79c9\mediatheque.e*/);
+r40put_string(&ds,se_i40(&ds,((T40*)ci(40,r25io(&ds,C),0x03204F0C/*l79c6\mediatheque.e*/))),r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r7_ix_43(&ds,((T7*)se_ms(8,s25_9785622)),r2to_string(&ds,_index_pointvirguleprecedent)),0x03204F3E/*l79c31\mediatheque.e*/))),se_ms(3,s25_3185)),0x03204F8E/*l79c71\mediatheque.e*/))),r2to_string(&ds,_index_point_virgule_suivant)),0x03204F9E/*l79c79\mediatheque.e*/))),se_ms(1,s25_10)));
+(ds.p=0x0320500A/*l80c5\mediatheque.e*/);
+_index_point_virgule_suivant=r7index_of(&ds,se_i7(&ds,((T7*)ci(7,_line,0x03205048/*l80c36\mediatheque.e*/))),((T3)'\073'),_index_pointvirguleprecedent);
+(ds.p=0x0320510A/*l81c5\mediatheque.e*/);
+_terme=r7substring(&ds,se_i7(&ds,((T7*)ci(7,_line,0x0320511C/*l81c14\mediatheque.e*/))),_index_pointvirguleprecedent,_index_point_virgule_suivant);
+(ds.p=0x0320520A/*l82c5\mediatheque.e*/);
+_index_pointvirguleprecedent=r2_ix_43(&ds,_index_point_virgule_suivant,/*IC*/(T2)(INT8_C(1)));
+(ds.p=0x03205312/*l83c9\mediatheque.e*/);
+r40put_string(&ds,se_i40(&ds,((T40*)ci(40,r25io(&ds,C),0x0320530C/*l83c6\mediatheque.e*/))),r7_ix_43(&ds,se_i7(&ds,((T7*)ci(7,r7_ix_43(&ds,((T7*)se_ms(11,s25_1331160622)),_terme),0x03205344/*l83c34\mediatheque.e*/))),se_ms(1,s25_10)));
+(ds.p=0x0320540A/*l84c5\mediatheque.e*/);
+_i=r2_ix_43(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+}
+}
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
 
 /*MEDIATHEQUE*/void r25make(se_dump_stack*caller,T25* C){
 /*[INTERNAL_C_LOCAL list*/
@@ -2722,16 +4735,54 @@ static se_frame_descriptor fd={"make"" MEDIATHEQUE",1,0,"%R25%",1};
 se_dump_stack ds;
 ds.fd=&fd;
 ds.current=(void*)&C;
-ds.p=0x03200F04/*l15c2\mediatheque.e*/;
+ds.p=0x03201004/*l16c2\mediatheque.e*/;
 ds.caller=caller;
 ds.locals=NULL;
 ds.exception_origin=NULL;
 set_dump_stack_top(&ds);/*link*/
-(ds.p=0x0320130E/*l19c7\mediatheque.e*/);
+(ds.p=0x0320140E/*l20c7\mediatheque.e*/);
 tmp0=((T0*)(new123()));
 r123with_capacity(&ds,((T123*)tmp0),/*IC*/(T2)(INT8_C(0)),/*IC*/(T2)(INT8_C(0)));
 /*SFN*/(C->_liste_medias/*ip*/)=tmp0;
-se_i123(&ds,((T123*)(/*SFN*/(C->_liste_medias/*ip*/))));set_dump_stack_top(caller);/*unlink*/
+se_i123(&ds,((T123*)(/*SFN*/(C->_liste_medias/*ip*/))));(ds.p=0x03201608/*l22c4\mediatheque.e*/);
+r25readfilemedia(&ds,C);
+set_dump_stack_top(caller);/*unlink*/
+}/*--*/
+
+/*CHARACTER*/T6 r3is_equal(se_dump_stack*caller,T3 C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"is_equal"" CHARACTER",1,2,"%E3%other%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04400F04/*l15c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x01A03608/*l54c4\any.e*/);
+ac_req((a1,1),"other /= Void");
+fd.assertion_flag=1;
+}
+(ds.p=0x04401108/*l17c4\comparable.e*/);
+R=((T6)((T6)((r6_px_not(&ds,(T6)(r3_ix_60(&ds,C,a1))))&&((T6)(r6_px_not(&ds,(T6)(r3_ix_60(&ds,a1,C))))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04401320/*l19c16\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(r6_px_not(&ds,(T6)(r3_ix_60(&ds,C,a1)))),(T6)(r6_px_not(&ds,(T6)(r3_ix_60(&ds,a1,C)))))),"trichotomy");
+(ds.p=0x01A03972/*l57c57\any.e*/);
+ac_ens((T6)((!(((T0*)(t[3]))==((void*)((T0*)(t[3])))))||((T6)((R)==(r3is_equal(&ds,a1,C))))),"commutative");
+(ds.p=0x04601C16/*l28c11\hashable.e*/);
+ac_ens((T6)((!(R))||((T6)((r3hash_code(&ds,C))==(r3hash_code(&ds,a1))))),"Result implies hash_code = other.hash_code");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
 }/*--*/
 
 /*CHARACTER*/T6 r3is_default(se_dump_stack*caller,T3 C){
@@ -2770,1100 +4821,363 @@ set_dump_stack_top(caller);/*unlink*/
 return R;
 }/*--*/
 
-/*NATIVE_ARRAY[CHARACTER]*/void r9clear_all(se_dump_stack*caller,T9 C,T2 a1){
-T3 _v=0;
-T2 _i=0;
-void**locals[3];
-static se_frame_descriptor fd={"clear_all"" NATIVE_ARRAY[CHARACTER]",1,3,"%E9%upper%E2%v%E3%i%E2%",1};
-se_dump_stack ds;
-ds.fd=&fd;
-ds.current=(void*)&C;
-ds.p=0x07621D04/*l541c2\native_array.e*/;
-ds.caller=caller;
-ds.locals=locals;
-ds.exception_origin=NULL;
-locals[0]=(void**)&a1;
-locals[1]=(void**)&_v;
-locals[2]=(void**)&_i;
-set_dump_stack_top(&ds);/*link*/
-if(fd.assertion_flag){
-fd.assertion_flag=0;
-(ds.p=0x07622014/*l544c10\native_array.e*/);
-ac_req(((int32_t)(a1))>=(/*IC*/(T2)(INT8_C(-1))),"upper >= -1");
-fd.assertion_flag=1;
-}
-(ds.p=0x0762250A/*l549c5\native_array.e*/);
-_i=a1;
-while (!(((ds.p=0x0762270E/*l551c7\native_array.e*/),((int32_t)(_i))<(/*IC*/(T2)(INT8_C(0))))))
-{
-(ds.p=0x0762290A/*l553c5\native_array.e*/);
-(C)[_i]=(_v);
-(ds.p=0x07622A0A/*l554c5\native_array.e*/);
-_i=r2_ix_45(&ds,_i,/*IC*/(T2)(INT8_C(1)));
-}
-if(fd.assertion_flag){
-fd.assertion_flag=0;
-(ds.p=0x07622D08/*l557c4\native_array.e*/);
-ac_ens(r9all_default(&ds,C,a1),"all_default(upper)");
-fd.assertion_flag=1;
-}
-set_dump_stack_top(caller);/*unlink*/
-}/*--*/
-
-/*NATIVE_ARRAY[CHARACTER]*/T6 r9is_not_null(se_dump_stack*caller,T9 C){
+/*CHARACTER*/T6 r3_ix_6261(se_dump_stack*caller,T3 C,T3 a1){
 T6 R=0;
-void**locals[1];
-static se_frame_descriptor fd={"is_not_null"" NATIVE_ARRAY[CHARACTER]",1,1,"%E9%Result%E6%",1};
+void**locals[2];
+static se_frame_descriptor fd={"infix "">="" (""infix "">="" CHARACTER)",1,2,"%E3%other%E3%Result%E6%",1};
 se_dump_stack ds;
 ds.fd=&fd;
 ds.current=(void*)&C;
-ds.p=0x07631804/*l792c2\native_array.e*/;
-ds.caller=caller;
-ds.locals=locals;
-ds.exception_origin=NULL;
-locals[0]=(void**)&R;
-set_dump_stack_top(&ds);/*link*/
-(ds.p=0x07631A08/*l794c4\native_array.e*/);
-R=((T6)((NULL!=((void*)(C)))));
-set_dump_stack_top(caller);/*unlink*/
-return R;
-}/*--*/
-
-/*NATIVE_ARRAY[CHARACTER]*/T6 r9all_default(se_dump_stack*caller,T9 C,T2 a1){
-T6 R=0;
-T2 _i=0;
-T3 _v=0;
-void**locals[4];
-static se_frame_descriptor fd={"all_default"" NATIVE_ARRAY[CHARACTER]",1,4,"%E9%upper%E2%Result%E6%i%E2%v%E3%",1};
-se_dump_stack ds;
-ds.fd=&fd;
-ds.current=(void*)&C;
-ds.p=0x0762DF04/*l735c2\native_array.e*/;
+ds.p=0x00603F04/*l63c2\character.e*/;
 ds.caller=caller;
 ds.locals=locals;
 ds.exception_origin=NULL;
 locals[0]=(void**)&a1;
 locals[1]=(void**)&R;
-locals[2]=(void**)&_i;
-locals[3]=(void**)&_v;
 set_dump_stack_top(&ds);/*link*/
 if(fd.assertion_flag){
 fd.assertion_flag=0;
-(ds.p=0x0762E314/*l739c10\native_array.e*/);
-ac_req(((int32_t)(a1))>=(/*IC*/(T2)(INT8_C(-1))),"upper >= -1");
+(ds.p=0x04403E24/*l62c18\comparable.e*/);
+ac_req((a1,1),"other_exists");
 fd.assertion_flag=1;
 }
-(ds.p=0x0762E80A/*l744c5\native_array.e*/);
+(ds.p=0x00604208/*l66c4\character.e*/);
+R=((T6)(((int16_t)(T3code(C)))>=(T3code(a1))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04404220/*l66c16\comparable.e*/);
+ac_ens((R)==(r3_ix_6061(&ds,a1,C)),"definition");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T6 r3_ix_60(se_dump_stack*caller,T3 C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""<"" (""infix ""<"" CHARACTER)",1,2,"%E3%other%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00602B04/*l43c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04401B24/*l27c18\comparable.e*/);
+ac_req((a1,1),"other_exists");
+fd.assertion_flag=1;
+}
+(ds.p=0x00602E08/*l46c4\character.e*/);
+R=((T6)(((int16_t)(T3code(C)))<(T3code(a1))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x00603008/*l48c4\character.e*/);
+ac_ens((R)==(((int16_t)(T3code(C)))<(T3code(a1))),"Result = (code < other.code)");
+(ds.p=0x04401E2E/*l30c23\comparable.e*/);
+ac_ens((T6)((!(R))||((T6)(r6_px_not(&ds,(T6)(r3_ix_60(&ds,a1,C)))))),"asymmetric");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T6 r3in_range(se_dump_stack*caller,T3 C,T3 a1,T3 a2){
+T6 R=0;
+void**locals[3];
+static se_frame_descriptor fd={"in_range"" CHARACTER",1,3,"%E3%lower%E3%upper%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x04404504/*l69c2\comparable.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&a2;
+locals[2]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x04404A08/*l74c4\comparable.e*/);
+R=((T6)((T6)((r3_ix_6261(&ds,C,a1))&&((T6)(r3_ix_6061(&ds,C,a2))))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04404C08/*l76c4\comparable.e*/);
+ac_ens((R)==(r6_ix_and(&ds,(T6)(r3_ix_6261(&ds,C,a1)),(T6)(r3_ix_6061(&ds,C,a2)))),"Result = (Current >= lower and Current <= upper)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T6 r3_ix_6061(se_dump_stack*caller,T3 C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"infix ""<="" (""infix ""<="" CHARACTER)",1,2,"%E3%other%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00603304/*l51c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04402624/*l38c18\comparable.e*/);
+ac_req((a1,1),"other_exists");
+fd.assertion_flag=1;
+}
+(ds.p=0x00603608/*l54c4\character.e*/);
+R=((T6)(((int16_t)(T3code(C)))<=(T3code(a1))));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04402A20/*l42c16\comparable.e*/);
+ac_ens((R)==(r6_ix_or(&ds,(T6)(r3_ix_60(&ds,C,a1)),(T6)(r3is_equal(&ds,C,a1)))),"definition");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T2 r3hash_code(se_dump_stack*caller,T3 C){
+T2 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"hash_code"" CHARACTER",1,1,"%E3%Result%E2%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00615B04/*l347c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+(ds.p=0x00615D08/*l349c4\character.e*/);
+R=/*IC*/(T2)(T3code(C));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x04601638/*l22c28\hashable.e*/);
+ac_ens(((int32_t)(R))>=(/*IC*/(T2)(INT8_C(0))),"good_hash_value");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T3 r3to_upper(se_dump_stack*caller,T3 C){
+T3 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"to_upper"" CHARACTER",1,1,"%E3%Result%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00608804/*l136c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x00608B18/*l139c12\character.e*/),((int16_t)(T3code(C)))<(/*IC*/(T10)(INT8_C(97))))){
+(ds.p=0x00608C0A/*l140c5\character.e*/);
+R=C;
+}
+else if(((ds.p=0x00608D20/*l141c16\character.e*/),((int16_t)(T3code(C)))>(/*IC*/(T10)(INT8_C(122))))){
+(ds.p=0x00608E0A/*l142c5\character.e*/);
+R=C;
+}
+else{
+(ds.p=0x0060900A/*l144c5\character.e*/);
+R=((T3)(r10_ix_45(&ds,T3code(C),/*IC*/(T10)(INT8_C(32)))));
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T6 r3is_digit(se_dump_stack*caller,T3 C){
+T6 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"is_digit"" CHARACTER",1,1,"%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x0060AC04/*l172c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x0060B11E/*l177c15\character.e*/),r3_ix_6261(&ds,C,((T3)'0')))){
+(ds.p=0x0060B20A/*l178c5\character.e*/);
+R=((T6)(r3_ix_6061(&ds,C,((T3)'9'))));
+}
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x0060B508/*l181c4\character.e*/);
+ac_ens((R)==(r3in_range(&ds,C,((T3)'0'),((T3)'9'))),"Result = in_range(\'%/48/\', \'%/57/\')");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T1 r3value(se_dump_stack*caller,T3 C){
+T1 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"value"" CHARACTER",1,1,"%E3%Result%E1%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00604504/*l69c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x00604808/*l72c4\character.e*/);
+ac_req(r3is_digit(&ds,C),"is_digit");
+fd.assertion_flag=1;
+}
+(ds.p=0x00604A08/*l74c4\character.e*/);
+R=r1_ix_45(&ds,r10to_integer_8(&ds,T3code(C)),INT8_C(48));
+if(fd.assertion_flag){
+fd.assertion_flag=0;
+(ds.p=0x00604C16/*l76c11\character.e*/);
+ac_ens(r1in_range(&ds,R,INT8_C(0),INT8_C(9)),"Result.in_range(0, 9)");
+fd.assertion_flag=1;
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T3 r3to_lower(se_dump_stack*caller,T3 C){
+T3 R=0;
+void**locals[1];
+static se_frame_descriptor fd={"to_lower"" CHARACTER",1,1,"%E3%Result%E3%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00609404/*l148c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x00609718/*l151c12\character.e*/),((int16_t)(T3code(C)))<(/*IC*/(T10)(INT8_C(65))))){
+(ds.p=0x0060980A/*l152c5\character.e*/);
+R=C;
+}
+else if(((ds.p=0x00609920/*l153c16\character.e*/),((int16_t)(T3code(C)))>(/*IC*/(T10)(INT8_C(90))))){
+(ds.p=0x00609A0A/*l154c5\character.e*/);
+R=C;
+}
+else{
+(ds.p=0x00609C0A/*l156c5\character.e*/);
+R=((T3)(r10_ix_43(&ds,T3code(C),/*IC*/(T10)(INT8_C(32)))));
+}
+set_dump_stack_top(caller);/*unlink*/
+return R;
+}/*--*/
+
+/*CHARACTER*/T6 r3same_as(se_dump_stack*caller,T3 C,T3 a1){
+T6 R=0;
+void**locals[2];
+static se_frame_descriptor fd={"same_as"" CHARACTER",1,2,"%E3%other%E3%Result%E6%",1};
+se_dump_stack ds;
+ds.fd=&fd;
+ds.current=(void*)&C;
+ds.p=0x00607404/*l116c2\character.e*/;
+ds.caller=caller;
+ds.locals=locals;
+ds.exception_origin=NULL;
+locals[0]=(void**)&a1;
+locals[1]=(void**)&R;
+set_dump_stack_top(&ds);/*link*/
+if(((ds.p=0x0060780E/*l120c7\character.e*/),(C)==(a1))){
+(ds.p=0x0060790A/*l121c5\character.e*/);
 R=((T6)(1));
-(ds.p=0x0762E90A/*l745c5\native_array.e*/);
-_i=a1;
-while (!(((ds.p=0x0762EB16/*l747c11\native_array.e*/),(T6)((((int32_t)(_i))<(/*IC*/(T2)(INT8_C(0))))||((T6)(r6_px_not(&ds,(T6)(R))))))))
-{
-(ds.p=0x0762ED0A/*l749c5\native_array.e*/);
-_v=(C)[_i];
-if(((ds.p=0x0762EE10/*l750c8\native_array.e*/),(_v,1))){
-(ds.p=0x0762EF0C/*l751c6\native_array.e*/);
-R=((T6)(r3is_default(&ds,_v)));
 }
-(ds.p=0x0762F10A/*l753c5\native_array.e*/);
-_i=r2_ix_45(&ds,_i,/*IC*/(T2)(INT8_C(1)));
+else{
+/*[INSPECT*/
+{int inspect_tmp_1=((ds.p=0x00607C0C/*l124c6\character.e*/),T3code(C));
+switch(inspect_tmp_1){
+case 65:
+case 66:
+case 67:
+case 68:
+case 69:
+case 70:
+case 71:
+case 72:
+case 73:
+case 74:
+case 75:
+case 76:
+case 77:
+case 78:
+case 79:
+case 80:
+case 81:
+case 82:
+case 83:
+case 84:
+case 85:
+case 86:
+case 87:
+case 88:
+case 89:
+case 90:
+(ds.p=0x00607E0C/*l126c6\character.e*/);
+R=((T6)((T3code(C))==(r10_ix_45(&ds,T3code(a1),/*IC*/(T10)(INT8_C(32))))));
+break;
+case 97:
+case 98:
+case 99:
+case 100:
+case 101:
+case 102:
+case 103:
+case 104:
+case 105:
+case 106:
+case 107:
+case 108:
+case 109:
+case 110:
+case 111:
+case 112:
+case 113:
+case 114:
+case 115:
+case 116:
+case 117:
+case 118:
+case 119:
+case 120:
+case 121:
+case 122:
+(ds.p=0x0060800C/*l128c6\character.e*/);
+R=((T6)((T3code(C))==(r10_ix_43(&ds,T3code(a1),/*IC*/(T10)(INT8_C(32))))));
+break;
 }
-set_dump_stack_top(caller);/*unlink*/
-return R;
-}/*--*/
-
-/*STRING*/T2 r7count(se_dump_stack*caller,T7* C){
-T2 R=0;
-void**locals[1];
-static se_frame_descriptor fd={"count"" STRING",1,1,"%R7%Result%E2%",1};
-se_dump_stack ds;
-ds.fd=&fd;
-ds.current=(void*)&C;
-ds.p=0x00E02904/*l41c2\string.e*/;
-ds.caller=caller;
-ds.locals=locals;
-ds.exception_origin=NULL;
-locals[0]=(void**)&R;
-set_dump_stack_top(&ds);/*link*/
-R=C->_count/*i3p*/;
+}/*INSPECT]*/
+}
 if(fd.assertion_flag){
 fd.assertion_flag=0;
-(ds.p=0x04003620/*l54c16\traversable.e*/);
-ac_ens((R)==(r2_ix_43(&ds,r2_ix_45(&ds,r7upper(&ds,C),/*RF1lower*/INT32_C(1)),/*IC*/(T2)(INT8_C(1)))),"definition");
+(ds.p=0x00608516/*l133c11\character.e*/);
+ac_ens((T6)((!(R))||((T6)(r6_ix_or(&ds,(T6)((r3to_lower(&ds,C))==(a1)),(T6)((r3to_upper(&ds,C))==(a1)))))),"Result implies to_lower = other or to_upper = other");
 fd.assertion_flag=1;
 }
-if(se_rci(caller,C))se_i7(&ds,C);
 set_dump_stack_top(caller);/*unlink*/
 return R;
-}/*--*/
-
-/*STRING*/T2 r7upper(se_dump_stack*caller,T7* C){
-T2 R=0;
-void**locals[1];
-static se_frame_descriptor fd={"upper"" STRING",1,1,"%R7%Result%E2%",1};
-se_dump_stack ds;
-ds.fd=&fd;
-ds.current=(void*)&C;
-ds.p=0x00E03704/*l55c2\string.e*/;
-ds.caller=caller;
-ds.locals=locals;
-ds.exception_origin=NULL;
-locals[0]=(void**)&R;
-set_dump_stack_top(&ds);/*link*/
-(ds.p=0x00E03D08/*l61c4\string.e*/);
-R=(/*RF2*/(C)->_count/*i3p*/);
-if(fd.assertion_flag){
-fd.assertion_flag=0;
-(ds.p=0x00E03F08/*l63c4\string.e*/);
-ac_ens((R)==((/*RF2*/(C)->_count/*i3p*/)),"Result = count");
-fd.assertion_flag=1;
-}
-if(se_rci(caller,C))se_i7(&ds,C);
-set_dump_stack_top(caller);/*unlink*/
-return R;
-}/*--*/
-se_frame_descriptor se_ifd7={"invariant STRING",1,0,"%R7%",1};
-
-T7*se_i7(se_dump_stack*caller,T7*C){
-se_dump_stack ds;
-ds.fd=&se_ifd7;
-ds.current=((void*)&C);
-ds.p=0x00E8AD02/*l2221c1\string.e*/;
-ds.caller=caller;
-ds.exception_origin=NULL;
-ds.locals=NULL;
-se_dst=&ds;/*link*/
-if(ds.fd->assertion_flag){
-ds.fd->assertion_flag=0;
-(ds.p=0x00E8AE08/*l2222c4\string.e*/);
-ac_inv(((int32_t)(/*IC*/(T2)(INT8_C(0))))<=((/*RF2*/(C)->_count/*i3p*/)),"0 <= count");
-(ds.p=0x00E8AF10/*l2223c8\string.e*/);
-ac_inv(((int32_t)((/*RF2*/(C)->_count/*i3p*/)))<=((/*RF2*/(C)->_capacity/*i3p*/)),"count <= capacity");
-(ds.p=0x00E8B01E/*l2224c15\string.e*/);
-ac_inv((T6)((!(((int32_t)((/*RF2*/(C)->_capacity/*i3p*/)))>(/*IC*/(T2)(INT8_C(0)))))||((T6)(r9is_not_null(&ds,(/*RF2*/(C)->_storage/*i3p*/))))),"capacity > 0 implies storage.is_not_null");
-ds.fd->assertion_flag=1;
-}
-se_dst=caller;/*unlink*/
-return C;
-}/*--*/
-
-T0*se_ms(int c,char*e){
-/* Allocate a Manifest STRING.*/
-T7*s=new7();
-s->_count=c;
-s->_capacity=c+1;
-s->_storage=((T9)new9(c+1));
-memcpy(s->_storage,e,c+1);
-return((T0*)s);}/*--*/
-
-T0*se_string(char*e){
-/* Allocate an Eiffel STRING by copying C char*e */
-int c=strlen(e);
-T7*s=new7();
-s->_count=c;
-s->_capacity=c+1;
-s->_storage=((T9)new9(c+1));
-memcpy(s->_storage,e,c+1);
-return((T0*)s);}/*--*/
-
-void manifest_string_mark1(void){
-}/*--*/
-
-void once_function_mark(void){
-/*NON_VOID_NO_DISPATCH:*/
-/*Ordinary once functions:*/
-}/*--*/
-
-void gc_start(void){
-if(gc_is_off)return;
-if(garbage_delayed())return;
-handle(SE_HANDLE_ENTER_GC,NULL);
-gcmt_tail_addr=(((char*)(gcmt[gcmt_used-1]))+(gcmt[gcmt_used-1])->size);
-((gc25*)eiffel_root_object)->header.flag=FSOH_UNMARKED;
-if(na_env124.store_left>0){
-na_env124.store->header.size=na_env124.store_left;
-na_env124.store->header.magic_flag=RSOH_FREE;
-na_env124.store_left=0;
-}
-na_env124.chunk_list=NULL;
-na_env124.store_chunk=NULL;
-gc_free123=(void*)0;
-gc_free25=(void*)0;
-if(na_env9.store_left>0){
-na_env9.store->header.size=na_env9.store_left;
-na_env9.store->header.magic_flag=RSOH_FREE;
-na_env9.store_left=0;
-}
-na_env9.chunk_list=NULL;
-na_env9.store_chunk=NULL;
-gc_free7=(void*)0;
-gc_mark25(eiffel_root_object);
-manifest_string_mark1();
-once_function_mark();
-{int i=SE_MAXID-1;
-while(i>=0){
-if(g[i]!=NULL)gc_mark7(g[i]);
-i--;}
-}
-{int i=SE_MAXID-1;
-while(i>=0){
-if(t[i]!=NULL)gc_mark7(t[i]);
-i--;}
-}
-mark_stack_and_registers();
-gc_sweep();
-collector_counter++;
-handle(SE_HANDLE_EXIT_GC,NULL);
-}/*--*/
-na_env na_env124={0,NULL,NULL,NULL,(void(*)(T0*))gc_mark124};
-gc123*store123=(void*)0;
-int store_left123=0;
-fsoc*store_chunk123=(void*)0;
-gc123*gc_free123=(void*)0;
-gc25*store25=(void*)0;
-int store_left25=0;
-fsoc*store_chunk25=(void*)0;
-gc25*gc_free25=(void*)0;
-na_env na_env9={0,NULL,NULL,NULL,(void(*)(T0*))gc_mark9};
-gc7*store7=(void*)0;
-int store_left7=0;
-fsoc*store_chunk7=(void*)0;
-gc7*gc_free7=(void*)0;
-
-void gc_mark124(T124 o){
-if(NULL==gc_find_chunk(o))
-return; /* external NA */
-{rsoh*h=((rsoh*)o)-1;
- if((h->header.magic_flag)==RSOH_UNMARKED){
-    h->header.magic_flag=RSOH_MARKED;
-    {T0* e;
-T0**p=((void*)(o+((((h->header.size)-sizeof(rsoh))/sizeof(e))-1)));
-for(;((void*)p)>=((void*)o);p--){
-e=*p;
-}}}}
-}/*--*/
-
-T124 new124(unsigned int size){
-size=(size*sizeof(T0*))+sizeof(rsoh);
-size=((size+(sizeof(double)-1))&~(sizeof(double)-1));
-if (size<=(na_env124.store_left)){
-rsoh*r=na_env124.store;
-na_env124.store_left-=size;
-if(na_env124.store_left>sizeof(rsoh)){
-r->header.size=size;
-na_env124.store=((rsoh*)(((char*)(na_env124.store))+size));
-}
-else {
-r->header.size=size+na_env124.store_left;
-na_env124.store_left=0;
-}
-(r->header.magic_flag)=RSOH_UNMARKED;
-((void)memset((r+1),0,r->header.size-sizeof(rsoh)));
-return((T124)(r+1));
-}
-return((T124)new_na(&na_env124,size));
-}/*--*/
-
-void gc_sweep123(fsoc*c){
-gc123*o1,*o2;
-o1=((gc123*)(&(c->first_object)));
-if(c->header.state_type==FSO_STORE_CHUNK){
-for(;o1<store123;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-}
-else{
-o1->header.next=gc_free123;
-gc_free123=o1;
-}
-}
-}
-else{
-int dead=1;
-gc123* old_gc_free = gc_free123;
-o2=o1+c->count_minus_one;
-for(;o1<=o2;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-dead=0;}
-else{
-o1->header.next=gc_free123;
-gc_free123=o1;
-}
-}
-if (dead){
-gc_free123 = old_gc_free;
-c->next=fsocfl;
-fsocfl=c;
-c->header.state_type=FSO_FREE_CHUNK;
-}
-}
-}/*--*/
-
-void gc_mark123(T123*o){
-se_gc_check_id(o,123);
-{
-if(((gc123*)o)->header.flag==FSOH_UNMARKED){
-((gc123*)o)->header.flag=FSOH_MARKED;
-/*i4p*/{
-T124 na=o->_storage;
-if(gc_find_chunk(na)!=NULL){/* non external NA */
-   rsoh*h=((rsoh*)na)-1;
-   if((h->header.magic_flag)==RSOH_UNMARKED){
-      h->header.magic_flag=RSOH_MARKED;
-r123mark_native_arrays(NULL,o);
-}
-}
-}}
-}
-}/*--*/
-
-void gc_align_mark123(fsoc*c,gc123*p){
-gc123*b=((gc123*)(&(c->first_object)));
-if((c->header.state_type==FSO_STORE_CHUNK)&&(((char*)p)>=((char*)store123)))return;
-if(((char*)p)>((char*)(b+(c->count_minus_one))))return;
-if(((char*)p)<((char*)b))return;
-if(((((char*)p)-((char*)b))%sizeof(*p))==0){
-if(p->header.flag==FSOH_UNMARKED){
-T123*o=(&(p->object));
-((gc123*)o)->header.flag=FSOH_MARKED;
-/*i4p*/{
-T124 na=o->_storage;
-if(gc_find_chunk(na)!=NULL){/* non external NA */
-   rsoh*h=((rsoh*)na)-1;
-   if((h->header.magic_flag)==RSOH_UNMARKED){
-      h->header.magic_flag=RSOH_MARKED;
-r123mark_native_arrays(NULL,o);
-}
-}
-}}
-}
-}/*--*/
-fsoc H123={{FSOC_SIZE,FSO_STORE_CHUNK,
-(void(*)(mch*,void*))gc_align_mark123,
-(void(*)(mch*))gc_sweep123},NULL,(((FSOC_SIZE-sizeof(fsoc)+sizeof(double))/sizeof(gc123))-1)};
-
-T123*new123(void){
-gc123*n;
-fsoc*c;
-if(store_left123>1){
-store_left123--;
-n=store123++;
-}
-else if(gc_free123!=NULL){
-n=gc_free123;
-gc_free123=n->header.next;
-}
-else if(store_left123==1){
-store_left123=0;
-store_chunk123->header.state_type=FSO_USED_CHUNK;
-n=store123++;
-}
-else{
-c=gc_fsoc_get1();
-if(gc_free123!=NULL){
-n=gc_free123;
-gc_free123=n->header.next;
-}
-else{
-if(c==NULL)c=gc_fsoc_get2();
-store_chunk123=c;
-*store_chunk123=H123;
-store123=((gc123*)(&(store_chunk123->first_object)));
-store_left123=H123.count_minus_one;
-n=store123++;
-}
-}
-n->header.flag=FSOH_UNMARKED;
-n->object=M123;
-return((T123*)n);
-}/*--*/
-
-void gc_sweep25(fsoc*c){
-gc25*o1,*o2;
-o1=((gc25*)(&(c->first_object)));
-if(c->header.state_type==FSO_STORE_CHUNK){
-for(;o1<store25;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-}
-else{
-o1->header.next=gc_free25;
-gc_free25=o1;
-}
-}
-}
-else{
-int dead=1;
-gc25* old_gc_free = gc_free25;
-o2=o1+c->count_minus_one;
-for(;o1<=o2;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-dead=0;}
-else{
-o1->header.next=gc_free25;
-gc_free25=o1;
-}
-}
-if (dead){
-gc_free25 = old_gc_free;
-c->next=fsocfl;
-fsocfl=c;
-c->header.state_type=FSO_FREE_CHUNK;
-}
-}
-}/*--*/
-
-void gc_mark25(T25*o){
-se_gc_check_id(o,25);
-{
-if(((gc25*)o)->header.flag==FSOH_UNMARKED){
-((gc25*)o)->header.flag=FSOH_MARKED;
-/*ip*/if(NULL!=o->_liste_medias)gc_mark123((T123*)(o->_liste_medias));
-}
-}
-}/*--*/
-
-void gc_align_mark25(fsoc*c,gc25*p){
-gc25*b=((gc25*)(&(c->first_object)));
-if((c->header.state_type==FSO_STORE_CHUNK)&&(((char*)p)>=((char*)store25)))return;
-if(((char*)p)>((char*)(b+(c->count_minus_one))))return;
-if(((char*)p)<((char*)b))return;
-if(((((char*)p)-((char*)b))%sizeof(*p))==0){
-if(p->header.flag==FSOH_UNMARKED){
-T25*o=(&(p->object));
-((gc25*)o)->header.flag=FSOH_MARKED;
-/*ip*/if(NULL!=o->_liste_medias)gc_mark123((T123*)(o->_liste_medias));
-}
-}
-}/*--*/
-fsoc H25={{FSOC_SIZE,FSO_STORE_CHUNK,
-(void(*)(mch*,void*))gc_align_mark25,
-(void(*)(mch*))gc_sweep25},NULL,(((FSOC_SIZE-sizeof(fsoc)+sizeof(double))/sizeof(gc25))-1)};
-
-T25*new25(void){
-gc25*n;
-fsoc*c;
-if(store_left25>1){
-store_left25--;
-n=store25++;
-}
-else if(gc_free25!=NULL){
-n=gc_free25;
-gc_free25=n->header.next;
-}
-else if(store_left25==1){
-store_left25=0;
-store_chunk25->header.state_type=FSO_USED_CHUNK;
-n=store25++;
-}
-else{
-c=gc_fsoc_get1();
-if(gc_free25!=NULL){
-n=gc_free25;
-gc_free25=n->header.next;
-}
-else{
-if(c==NULL)c=gc_fsoc_get2();
-store_chunk25=c;
-*store_chunk25=H25;
-store25=((gc25*)(&(store_chunk25->first_object)));
-store_left25=H25.count_minus_one;
-n=store25++;
-}
-}
-n->header.flag=FSOH_UNMARKED;
-n->object=M25;
-return((T25*)n);
-}/*--*/
-
-void gc_mark9(T9 o){
-if(NULL==gc_find_chunk(o))
-return; /* external NA */
-(((rsoh*)o)-1)->header.magic_flag=RSOH_MARKED;
-}/*--*/
-
-T9 new9(unsigned int size){
-size=(size*sizeof(T3))+sizeof(rsoh);
-size=((size+(sizeof(double)-1))&~(sizeof(double)-1));
-if (size<=(na_env9.store_left)){
-rsoh*r=na_env9.store;
-na_env9.store_left-=size;
-if(na_env9.store_left>sizeof(rsoh)){
-r->header.size=size;
-na_env9.store=((rsoh*)(((char*)(na_env9.store))+size));
-}
-else {
-r->header.size=size+na_env9.store_left;
-na_env9.store_left=0;
-}
-(r->header.magic_flag)=RSOH_UNMARKED;
-((void)memset((r+1),0,r->header.size-sizeof(rsoh)));
-return((T9)(r+1));
-}
-return((T9)new_na(&na_env9,size));
-}/*--*/
-
-void gc_sweep7(fsoc*c){
-gc7*o1,*o2;
-o1=((gc7*)(&(c->first_object)));
-if(c->header.state_type==FSO_STORE_CHUNK){
-for(;o1<store7;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-}
-else{
-o1->header.next=gc_free7;
-gc_free7=o1;
-}
-}
-}
-else{
-int dead=1;
-gc7* old_gc_free = gc_free7;
-o2=o1+c->count_minus_one;
-for(;o1<=o2;o1++){
-if((o1->header.flag)==FSOH_MARKED){
-o1->header.flag=FSOH_UNMARKED;
-dead=0;}
-else{
-o1->header.next=gc_free7;
-gc_free7=o1;
-}
-}
-if (dead){
-gc_free7 = old_gc_free;
-c->next=fsocfl;
-fsocfl=c;
-c->header.state_type=FSO_FREE_CHUNK;
-}
-}
-}/*--*/
-
-void gc_mark7(T7*o){
-se_gc_check_id(o,7);
-{
-if(((gc7*)o)->header.flag==FSOH_UNMARKED){
-((gc7*)o)->header.flag=FSOH_MARKED;
-/*i3p*/if(NULL!=o->_storage)gc_mark9((o->_storage));
-}
-}
-}/*--*/
-
-void gc_align_mark7(fsoc*c,gc7*p){
-gc7*b=((gc7*)(&(c->first_object)));
-if((c->header.state_type==FSO_STORE_CHUNK)&&(((char*)p)>=((char*)store7)))return;
-if(((char*)p)>((char*)(b+(c->count_minus_one))))return;
-if(((char*)p)<((char*)b))return;
-if(((((char*)p)-((char*)b))%sizeof(*p))==0){
-if(p->header.flag==FSOH_UNMARKED){
-T7*o=(&(p->object));
-((gc7*)o)->header.flag=FSOH_MARKED;
-/*i3p*/if(NULL!=o->_storage)gc_mark9((o->_storage));
-}
-}
-}/*--*/
-fsoc H7={{FSOC_SIZE,FSO_STORE_CHUNK,
-(void(*)(mch*,void*))gc_align_mark7,
-(void(*)(mch*))gc_sweep7},NULL,(((FSOC_SIZE-sizeof(fsoc)+sizeof(double))/sizeof(gc7))-1)};
-
-T7*new7(void){
-gc7*n;
-fsoc*c;
-if(store_left7>1){
-store_left7--;
-n=store7++;
-}
-else if(gc_free7!=NULL){
-n=gc_free7;
-gc_free7=n->header.next;
-}
-else if(store_left7==1){
-store_left7=0;
-store_chunk7->header.state_type=FSO_USED_CHUNK;
-n=store7++;
-}
-else{
-c=gc_fsoc_get1();
-if(gc_free7!=NULL){
-n=gc_free7;
-gc_free7=n->header.next;
-}
-else{
-if(c==NULL)c=gc_fsoc_get2();
-store_chunk7=c;
-*store_chunk7=H7;
-store7=((gc7*)(&(store_chunk7->first_object)));
-store_left7=H7.count_minus_one;
-n=store7++;
-}
-}
-n->header.flag=FSOH_UNMARKED;
-n->object=M7;
-return((T7*)n);
-}/*--*/
-T25*eiffel_root_object=(void*)0;
-int se_argc;
-char**se_argv;
-T7*g[125];
-T7*t[125];
-char*p[125];
-void(*se_prinT[125])(FILE*,void*);
-int se_strucT[125]={0,sizeof(T1),sizeof(T2),sizeof(T3),0,0,sizeof(T6),sizeof(T7),sizeof(T8),sizeof(T9),0,0,0,0,0,0,0,0,0,
-0,
-0,
-0,
-0,
-0,
-0,
-sizeof(T25),
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-0,
-sizeof(T123),
-sizeof(T124)};
-
-void initialize_eiffel_runtime(int argc,char*argv[]){
-/*[INTERNAL_C_LOCAL list*/
-T0* tmp0;
-/*INTERNAL_C_LOCAL list]*/
-se_frame_descriptor irfd={"<runtime init>",0,0,"",1};
-se_dump_stack ds = {NULL,NULL,0,NULL,NULL};
-ds.fd=&irfd;
-set_dump_stack_top(&ds);/*link*/
-se_argc=argc;
-se_argv=argv;
-gcmt=((mch**)se_malloc((gcmt_max+1)*sizeof(void*)));
-#ifdef FIXED_STACK_BOTTOM
-if (!stack_bottom) stack_bottom=((void**)(void*)(&argc));
-#endif
-p[0]="???";
-p[25]="C:\\Users\\Laureen LOISON\\Documents\\GLO\\Projet Eiffel\\mediatheque\\mediatheque.e";
-p[49]="C:\\Users\\Laureen LOISON\\Documents\\GLO\\Projet Eiffel\\mediatheque\\media.e";
-p[101]="C:\\SmartEiffel\\lib\\kernel\\procedure.e";
-p[95]="C:\\SmartEiffel\\lib\\kernel\\memory.e";
-p[15]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[16]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[69]="C:\\SmartEiffel\\lib\\kernel\\routine.e";
-p[17]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[18]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[19]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[20]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[21]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[22]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[23]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[14]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[24]="C:\\SmartEiffel\\lib\\kernel\\tuple.e";
-p[8]="C:\\SmartEiffel\\lib\\kernel\\pointer.e";
-p[100]="C:\\SmartEiffel\\lib\\kernel\\reference.e";
-p[68]="C:\\SmartEiffel\\lib\\kernel\\function.e";
-p[6]="C:\\SmartEiffel\\lib\\kernel\\boolean.e";
-p[60]="C:\\SmartEiffel\\lib\\kernel\\safe_equal.e";
-p[13]="C:\\SmartEiffel\\lib\\kernel\\any.e";
-p[102]="C:\\SmartEiffel\\lib\\kernel\\weak_reference.e";
-p[36]="C:\\SmartEiffel\\lib\\kernel\\platform.e";
-p[74]="C:\\SmartEiffel\\lib\\kernel\\internal\\internals_handler.e";
-p[86]="C:\\SmartEiffel\\lib\\kernel\\internal\\native_array_internals.e";
-p[45]="C:\\SmartEiffel\\lib\\kernel\\internal\\typed_internals.e";
-p[52]="C:\\SmartEiffel\\lib\\kernel\\internal\\native_array_collector.e";
-p[46]="C:\\SmartEiffel\\lib\\kernel\\internal\\internals.e";
-p[51]="C:\\SmartEiffel\\lib\\storage\\collection.e";
-p[82]="C:\\SmartEiffel\\lib\\storage\\collection\\fast_array.e";
-p[50]="C:\\SmartEiffel\\lib\\storage\\collection\\array.e";
-p[103]="C:\\SmartEiffel\\lib\\storage\\collection\\ring_array.e";
-p[59]="C:\\SmartEiffel\\lib\\storage\\low_level\\native_array.e";
-p[94]="C:\\SmartEiffel\\lib\\storage\\low_level\\recycling_pool.e";
-p[53]="C:\\SmartEiffel\\lib\\storage\\internal\\arrayed_collection.e";
-p[107]="C:\\SmartEiffel\\lib\\io\\directory_notation.e";
-p[58]="C:\\SmartEiffel\\lib\\io\\filter.e";
-p[26]="C:\\SmartEiffel\\lib\\io\\output_stream.e";
-p[114]="C:\\SmartEiffel\\lib\\io\\path_name.e";
-p[72]="C:\\SmartEiffel\\lib\\io\\filter_input_stream.e";
-p[38]="C:\\SmartEiffel\\lib\\io\\terminal_output_stream.e";
-p[105]="C:\\SmartEiffel\\lib\\io\\file_tools.e";
-p[42]="C:\\SmartEiffel\\lib\\io\\terminal_input_stream.e";
-p[41]="C:\\SmartEiffel\\lib\\io\\terminal_input_output_stream.e";
-p[64]="C:\\SmartEiffel\\lib\\io\\filter_output_stream.e";
-p[43]="C:\\SmartEiffel\\lib\\io\\input_stream.e";
-p[27]="C:\\SmartEiffel\\lib\\io\\stream.e";
-p[55]="C:\\SmartEiffel\\lib\\io\\terminal\\file.e";
-p[54]="C:\\SmartEiffel\\lib\\io\\terminal\\text_file_read.e";
-p[40]="C:\\SmartEiffel\\lib\\io\\terminal\\std_input_output.e";
-p[37]="C:\\SmartEiffel\\lib\\io\\terminal\\std_error.e";
-p[48]="C:\\SmartEiffel\\lib\\io\\terminal\\std_input.e";
-p[47]="C:\\SmartEiffel\\lib\\io\\terminal\\std_output.e";
-p[44]="C:\\SmartEiffel\\lib\\io\\low_level\\input_stream_tools.e";
-p[30]="C:\\SmartEiffel\\lib\\io\\low_level\\output_stream_tools.e";
-p[39]="C:\\SmartEiffel\\lib\\io\\low_level\\redirection_tools.e";
-p[106]="C:\\SmartEiffel\\lib\\io\\low_level\\basic_directory.e";
-p[116]="C:\\SmartEiffel\\lib\\io\\internal\\unixish_path_name.e";
-p[29]="C:\\SmartEiffel\\lib\\io\\internal\\filterable.e";
-p[113]="C:\\SmartEiffel\\lib\\io\\internal\\path_joiner.e";
-p[115]="C:\\SmartEiffel\\lib\\io\\path_name\\posix_path_name.e";
-p[112]="C:\\SmartEiffel\\lib\\io\\path_name\\path_name_notation.e";
-p[110]="C:\\SmartEiffel\\lib\\io\\path_name\\macintosh_directory_notation.e";
-p[118]="C:\\SmartEiffel\\lib\\io\\path_name\\openvms_directory_notation.e";
-p[121]="C:\\SmartEiffel\\lib\\io\\path_name\\microsoft_path_name.e";
-p[120]="C:\\SmartEiffel\\lib\\io\\path_name\\windows_directory_notation.e";
-p[111]="C:\\SmartEiffel\\lib\\io\\path_name\\unix_directory_notation.e";
-p[119]="C:\\SmartEiffel\\lib\\io\\path_name\\amiga_directory_notation.e";
-p[122]="C:\\SmartEiffel\\lib\\io\\path_name\\cygwin_directory_notation.e";
-p[108]="C:\\SmartEiffel\\lib\\unicode\\unicode_string_handler.e";
-p[67]="C:\\SmartEiffel\\lib\\iterator\\iterator.e";
-p[75]="C:\\SmartEiffel\\lib\\iterator\\internal\\iterator_on_traversable.e";
-p[83]="C:\\SmartEiffel\\lib\\iterator\\internal\\iterator_on_unicode_string.e";
-p[71]="C:\\SmartEiffel\\lib\\iterator\\internal\\iterator_on_string.e";
-p[85]="C:\\SmartEiffel\\lib\\misc\\mini_parser_buffer.e";
-p[84]="C:\\SmartEiffel\\lib\\sequencer\\events_set.e";
-p[65]="C:\\SmartEiffel\\lib\\sequencer\\event_descriptor.e";
-p[73]="C:\\SmartEiffel\\lib\\sequencer\\events\\can_read_data_from_stream.e";
-p[99]="C:\\SmartEiffel\\lib\\sequencer\\events\\network_connection_occurred.e";
-p[66]="C:\\SmartEiffel\\lib\\sequencer\\events\\can_write_data_to_stream.e";
-p[28]="C:\\SmartEiffel\\lib\\abilities\\recyclable.e";
-p[93]="C:\\SmartEiffel\\lib\\abilities\\disposable.e";
-p[32]="C:\\SmartEiffel\\lib\\abilities\\traversable.e";
-p[35]="C:\\SmartEiffel\\lib\\abilities\\hashable.e";
-p[33]="C:\\SmartEiffel\\lib\\abilities\\storable.e";
-p[34]="C:\\SmartEiffel\\lib\\abilities\\comparable.e";
-p[12]="C:\\SmartEiffel\\lib\\numeric\\real_extended.e";
-p[61]="C:\\SmartEiffel\\lib\\numeric\\real_general.e";
-p[2]="C:\\SmartEiffel\\lib\\numeric\\integer_32.e";
-p[62]="C:\\SmartEiffel\\lib\\numeric\\number.e";
-p[4]="C:\\SmartEiffel\\lib\\numeric\\real_32.e";
-p[1]="C:\\SmartEiffel\\lib\\numeric\\integer_8.e";
-p[78]="C:\\SmartEiffel\\lib\\numeric\\mutable_big_integer.e";
-p[11]="C:\\SmartEiffel\\lib\\numeric\\integer_64.e";
-p[70]="C:\\SmartEiffel\\lib\\numeric\\number_tools.e";
-p[56]="C:\\SmartEiffel\\lib\\numeric\\integer_general.e";
-p[5]="C:\\SmartEiffel\\lib\\numeric\\real_64.e";
-p[57]="C:\\SmartEiffel\\lib\\numeric\\numeric.e";
-p[10]="C:\\SmartEiffel\\lib\\numeric\\integer_16.e";
-p[79]="C:\\SmartEiffel\\lib\\numeric\\internal\\fraction_with_big_integer_number.e";
-p[76]="C:\\SmartEiffel\\lib\\numeric\\internal\\integer_64_number.e";
-p[77]="C:\\SmartEiffel\\lib\\numeric\\internal\\integer_general_number.e";
-p[80]="C:\\SmartEiffel\\lib\\numeric\\internal\\fraction_general_number.e";
-p[81]="C:\\SmartEiffel\\lib\\numeric\\internal\\big_integer_number.e";
-p[63]="C:\\SmartEiffel\\lib\\string\\unicode_string.e";
-p[3]="C:\\SmartEiffel\\lib\\string\\character.e";
-p[7]="C:\\SmartEiffel\\lib\\string\\string.e";
-p[31]="C:\\SmartEiffel\\lib\\string\\low_level\\string_handler.e";
-p[109]="C:\\SmartEiffel\\lib\\time\\time_formatter.e";
-p[91]="C:\\SmartEiffel\\lib\\time\\time.e";
-p[87]="C:\\SmartEiffel\\lib\\time\\microsecond_time.e";
-p[96]="C:\\SmartEiffel\\lib\\net\\access.e";
-p[98]="C:\\SmartEiffel\\lib\\net\\socket_input_output_stream.e";
-p[88]="C:\\SmartEiffel\\lib\\net\\low_level\\socket_server.e";
-p[104]="C:\\SmartEiffel\\lib\\net\\low_level\\client_socket_input_output_stream.e";
-p[97]="C:\\SmartEiffel\\lib\\net\\low_level\\server_socket_input_output_stream.e";
-p[89]="C:\\SmartEiffel\\lib\\net\\low_level\\socket_plug_in.e";
-p[90]="C:\\SmartEiffel\\lib\\net\\low_level\\socket_handler.e";
-p[92]="C:\\SmartEiffel\\lib\\net\\low_level\\socket.e";
-p[117]="C:\\SmartEiffel\\lib\\exec\\system.e";
-se_prinT[124]=((void(*)(FILE*,void*))se_prinT124);
-p[124]=p[59];
-se_prinT[123]=((void(*)(FILE*,void*))se_prinT123);
-p[123]=p[50];
-se_prinT[25]=((void(*)(FILE*,void*))se_prinT25);
-se_prinT[9]=((void(*)(FILE*,void*))se_prinT9);
-p[9]=p[59];
-se_prinT[8]=((void(*)(FILE*,void*))se_prinT8);
-se_prinT[7]=((void(*)(FILE*,void*))se_prinT7);
-se_prinT[6]=((void(*)(FILE*,void*))se_prinT6);
-se_prinT[3]=((void(*)(FILE*,void*))se_prinT3);
-se_prinT[2]=((void(*)(FILE*,void*))se_prinT2);
-se_prinT[1]=((void(*)(FILE*,void*))se_prinT1);
-g[25]=(T7*)se_string("MEDIATHEQUE");
-g[49]=(T7*)se_string("MEDIA");
-g[101]=(T7*)se_string("PROCEDURE");
-g[95]=(T7*)se_string("MEMORY");
-g[15]=(T7*)se_string("TUPLE 1");
-g[16]=(T7*)se_string("TUPLE 2");
-g[69]=(T7*)se_string("ROUTINE");
-g[17]=(T7*)se_string("TUPLE 3");
-g[18]=(T7*)se_string("TUPLE 4");
-g[19]=(T7*)se_string("TUPLE 5");
-g[20]=(T7*)se_string("TUPLE 6");
-g[21]=(T7*)se_string("TUPLE 7");
-g[22]=(T7*)se_string("TUPLE 8");
-g[23]=(T7*)se_string("TUPLE 9");
-g[14]=(T7*)se_string("TUPLE");
-g[24]=(T7*)se_string("TUPLE 10");
-g[8]=(T7*)se_string("POINTER");
-g[100]=(T7*)se_string("REFERENCE");
-g[68]=(T7*)se_string("FUNCTION");
-g[6]=(T7*)se_string("BOOLEAN");
-g[60]=(T7*)se_string("SAFE_EQUAL");
-g[13]=(T7*)se_string("ANY");
-g[102]=(T7*)se_string("WEAK_REFERENCE");
-g[36]=(T7*)se_string("PLATFORM");
-g[74]=(T7*)se_string("INTERNALS_HANDLER");
-g[86]=(T7*)se_string("NATIVE_ARRAY_INTERNALS");
-g[45]=(T7*)se_string("TYPED_INTERNALS");
-g[52]=(T7*)se_string("NATIVE_ARRAY_COLLECTOR");
-g[46]=(T7*)se_string("INTERNALS");
-g[51]=(T7*)se_string("COLLECTION");
-g[82]=(T7*)se_string("FAST_ARRAY");
-g[50]=(T7*)se_string("ARRAY");
-g[103]=(T7*)se_string("RING_ARRAY");
-g[59]=(T7*)se_string("NATIVE_ARRAY");
-g[94]=(T7*)se_string("RECYCLING_POOL");
-g[53]=(T7*)se_string("ARRAYED_COLLECTION");
-g[107]=(T7*)se_string("DIRECTORY_NOTATION");
-g[58]=(T7*)se_string("FILTER");
-g[26]=(T7*)se_string("OUTPUT_STREAM");
-g[114]=(T7*)se_string("PATH_NAME");
-g[72]=(T7*)se_string("FILTER_INPUT_STREAM");
-g[38]=(T7*)se_string("TERMINAL_OUTPUT_STREAM");
-g[105]=(T7*)se_string("FILE_TOOLS");
-g[42]=(T7*)se_string("TERMINAL_INPUT_STREAM");
-g[41]=(T7*)se_string("TERMINAL_INPUT_OUTPUT_STREAM");
-g[64]=(T7*)se_string("FILTER_OUTPUT_STREAM");
-g[43]=(T7*)se_string("INPUT_STREAM");
-g[27]=(T7*)se_string("STREAM");
-g[55]=(T7*)se_string("FILE");
-g[54]=(T7*)se_string("TEXT_FILE_READ");
-g[40]=(T7*)se_string("STD_INPUT_OUTPUT");
-g[37]=(T7*)se_string("STD_ERROR");
-g[48]=(T7*)se_string("STD_INPUT");
-g[47]=(T7*)se_string("STD_OUTPUT");
-g[44]=(T7*)se_string("INPUT_STREAM_TOOLS");
-g[30]=(T7*)se_string("OUTPUT_STREAM_TOOLS");
-g[39]=(T7*)se_string("REDIRECTION_TOOLS");
-g[106]=(T7*)se_string("BASIC_DIRECTORY");
-g[116]=(T7*)se_string("UNIXISH_PATH_NAME");
-g[29]=(T7*)se_string("FILTERABLE");
-g[113]=(T7*)se_string("PATH_JOINER");
-g[115]=(T7*)se_string("POSIX_PATH_NAME");
-g[112]=(T7*)se_string("PATH_NAME_NOTATION");
-g[110]=(T7*)se_string("MACINTOSH_DIRECTORY_NOTATION");
-g[118]=(T7*)se_string("OPENVMS_DIRECTORY_NOTATION");
-g[121]=(T7*)se_string("MICROSOFT_PATH_NAME");
-g[120]=(T7*)se_string("WINDOWS_DIRECTORY_NOTATION");
-g[111]=(T7*)se_string("UNIX_DIRECTORY_NOTATION");
-g[119]=(T7*)se_string("AMIGA_DIRECTORY_NOTATION");
-g[122]=(T7*)se_string("CYGWIN_DIRECTORY_NOTATION");
-g[108]=(T7*)se_string("UNICODE_STRING_HANDLER");
-g[67]=(T7*)se_string("ITERATOR");
-g[75]=(T7*)se_string("ITERATOR_ON_TRAVERSABLE");
-g[83]=(T7*)se_string("ITERATOR_ON_UNICODE_STRING");
-g[71]=(T7*)se_string("ITERATOR_ON_STRING");
-g[85]=(T7*)se_string("MINI_PARSER_BUFFER");
-g[84]=(T7*)se_string("EVENTS_SET");
-g[65]=(T7*)se_string("EVENT_DESCRIPTOR");
-g[73]=(T7*)se_string("CAN_READ_DATA_FROM_STREAM");
-g[99]=(T7*)se_string("NETWORK_CONNECTION_OCCURRED");
-g[66]=(T7*)se_string("CAN_WRITE_DATA_TO_STREAM");
-g[28]=(T7*)se_string("RECYCLABLE");
-g[93]=(T7*)se_string("DISPOSABLE");
-g[32]=(T7*)se_string("TRAVERSABLE");
-g[35]=(T7*)se_string("HASHABLE");
-g[33]=(T7*)se_string("STORABLE");
-g[34]=(T7*)se_string("COMPARABLE");
-g[12]=(T7*)se_string("REAL_EXTENDED");
-g[61]=(T7*)se_string("REAL_GENERAL");
-g[2]=(T7*)se_string("INTEGER_32");
-g[62]=(T7*)se_string("NUMBER");
-g[4]=(T7*)se_string("REAL_32");
-g[1]=(T7*)se_string("INTEGER_8");
-g[78]=(T7*)se_string("MUTABLE_BIG_INTEGER");
-g[11]=(T7*)se_string("INTEGER_64");
-g[70]=(T7*)se_string("NUMBER_TOOLS");
-g[56]=(T7*)se_string("INTEGER_GENERAL");
-g[5]=(T7*)se_string("REAL_64");
-g[57]=(T7*)se_string("NUMERIC");
-g[10]=(T7*)se_string("INTEGER_16");
-g[79]=(T7*)se_string("FRACTION_WITH_BIG_INTEGER_NUMBER");
-g[76]=(T7*)se_string("INTEGER_64_NUMBER");
-g[77]=(T7*)se_string("INTEGER_GENERAL_NUMBER");
-g[80]=(T7*)se_string("FRACTION_GENERAL_NUMBER");
-g[81]=(T7*)se_string("BIG_INTEGER_NUMBER");
-g[63]=(T7*)se_string("UNICODE_STRING");
-g[3]=(T7*)se_string("CHARACTER");
-g[7]=(T7*)se_string("STRING");
-g[31]=(T7*)se_string("STRING_HANDLER");
-g[109]=(T7*)se_string("TIME_FORMATTER");
-g[91]=(T7*)se_string("TIME");
-g[87]=(T7*)se_string("MICROSECOND_TIME");
-g[96]=(T7*)se_string("ACCESS");
-g[98]=(T7*)se_string("SOCKET_INPUT_OUTPUT_STREAM");
-g[88]=(T7*)se_string("SOCKET_SERVER");
-g[104]=(T7*)se_string("CLIENT_SOCKET_INPUT_OUTPUT_STREAM");
-g[97]=(T7*)se_string("SERVER_SOCKET_INPUT_OUTPUT_STREAM");
-g[89]=(T7*)se_string("SOCKET_PLUG_IN");
-g[90]=(T7*)se_string("SOCKET_HANDLER");
-g[92]=(T7*)se_string("SOCKET");
-g[117]=(T7*)se_string("SYSTEM");
-g[124]=g[59];
-g[123]=g[50];
-g[9]=g[59];
-t[124]=(T7*)se_string("NATIVE_ARRAY[MEDIA]");
-t[123]=(T7*)se_string("ARRAY[MEDIA]");
-t[25]=g[25];
-t[9]=(T7*)se_string("NATIVE_ARRAY[CHARACTER]");
-t[8]=g[8];
-t[7]=g[7];
-t[6]=g[6];
-t[3]=g[3];
-t[2]=g[2];
-t[1]=g[1];
-#ifdef SIGINT
-signal(SIGINT,se_signal_handler);
-#endif
-#ifdef SIGTERM
-signal(SIGTERM,se_signal_handler);
-#endif
-#ifdef SIGQUIT
-signal(SIGQUIT,se_signal_handler);
-#endif
-#ifdef SIGILL
-signal(SIGILL,se_signal_handler);
-#endif
-#ifdef SIGABRT
-signal(SIGABRT,se_signal_handler);
-#endif
-#ifdef SIGFPE
-signal(SIGFPE,se_signal_handler);
-#endif
-#ifdef SIGSEGV
-signal(SIGSEGV,se_signal_handler);
-#endif
-#ifdef SIGBUS
-signal(SIGBUS,se_signal_handler);
-#endif
-#ifdef SIGSYS
-signal(SIGSYS,se_signal_handler);
-#endif
-#ifdef SIGTRAP
-signal(SIGTRAP,se_signal_handler);
-#endif
-#ifdef SIGXCPU
-signal(SIGXCPU,se_signal_handler);
-#endif
-#ifdef SIGXFSZ
-signal(SIGXFSZ,se_signal_handler);
-#endif
-gc_is_off=0;
-tmp0=((T0*)(new25()));
-eiffel_root_object=((T25*)tmp0);
-set_dump_stack_top((void*)0);/*unlink*/
-}/*--*/
-
-int main(int argc,char*argv[]){
-/*[INTERNAL_C_LOCAL list*/
-T0* tmp0;
-/*INTERNAL_C_LOCAL list]*/
-se_frame_descriptor root={"<system root>",1,0,"%R25%",1};
-se_dump_stack ds;
-stack_bottom=((void**)(void*)(&argc));
-initialize_eiffel_runtime(argc,argv);
-tmp0=((T0*)eiffel_root_object);
-ds.fd=&root;
-ds.current=((void*)(&tmp0));
-ds.p=0x03200F04/*l15c2\mediatheque.e*/;
-ds.caller=NULL;
-ds.exception_origin=NULL;
-ds.locals=NULL;
-set_dump_stack_top(&ds);/*link*/
-r25make(&ds,((T25*)tmp0));
-handle(SE_HANDLE_NORMAL_EXIT, NULL);
-set_dump_stack_top(NULL);/*unlink*/
-exit(0);
-return 0;
 }/*--*/
 
 #ifdef __cplusplus
