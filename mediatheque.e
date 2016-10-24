@@ -18,9 +18,9 @@ feature {ANY}
 			-- Initialisation des Médias et des Utilisateurs
 		do
 			-- Initialisations
-      create liste_medias.with_capacity(0, 0)
+      --create liste_medias.with_capacity(0, 0)
       --create liste_utilisateurs.with_capacity(0,0)
-			readfilemedia
+			--readfilemedia
 			lire_fichier_utilisateurs
 		end
 
@@ -91,10 +91,12 @@ feature {ANY}
 					-- tester chaque attribut de livre et creer livre
 				end
 			end
-	end
+
+		end -- end loop
+	end -- end readfile do
 
 
-	lire_fichier_utilisateurs is
+		lire_fichier_utilisateurs is
 		local
 			--lecture_ok= FALSE
 			lecteur: TEXT_FILE_READ
@@ -107,7 +109,6 @@ feature {ANY}
 			from until lecteur.end_of_input loop
 				lecteur.read_line
 				ligne := lecteur.last_string
-				io.put_string(ligne + "%N")
 				nb_mot := ligne.occurrences(';')
 				debut_champ := 1
 				fin_champ := 0
@@ -137,8 +138,8 @@ feature {ANY}
 					end
 
 					if(ligne.substring(debut_champ, fin_champ).has_substring("Admin")) then
-						valeur:= ligne.substring(debut_champ, fin_champ)
-						admin_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+							valeur:= ligne.substring(debut_champ, fin_champ)
+							admin_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
 						if admin_lu.is_equal("OUI") then
 							admin_oui := True
 						end
@@ -148,14 +149,11 @@ feature {ANY}
 					mot := mot+1
 					debut_champ := fin_champ + 1
 
-				end
-				create utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
-				--AJOUTER utilisateur au tableau des utilisateurs
-
-			end
-			lecteur.disconnect
-		--	Result:= TRUE
-		end
-	end
-
-end -- class MEDIATHEQUE
+					create utilisateur.create_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
+					--AJOUTER utilisateur au tableau des utilisateurs
+				end --end loop
+			end --end loop
+				lecteur.disconnect
+				--	Result:= TRUE
+		end --end do
+end --CLASS

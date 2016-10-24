@@ -4,20 +4,19 @@ class UTILISATEUR
 	--
 
 creation {ANY}
-	make_utilisateur
+	create_utilisateur
 
 feature {}
 	nom, prenom, identifiant: STRING
 	administrateur: BOOLEAN
 
 feature {ANY}
-	make_utilisateur (nv_nom: STRING, nv_prenom: STRING, nv_id: STRING, nv_admin: BOOLEAN) is
+	create_utilisateur (nv_nom: STRING; nv_prenom: STRING; nv_id: STRING; nv_admin: BOOLEAN) is
 			-- Creation d'un utilisateur
 		do
 			nom := ""
 			prenom := ""
 			identifiant := ""
-			administrateur := FALSE
 			nom.copy(nv_nom)
 			prenom.copy(nv_prenom)
 			identifiant.copy(nv_id)
@@ -29,7 +28,7 @@ feature {ANY}
 	      -------------
 
 			--*GETTERS*--
-	
+
 	get_nom: STRING is
 		do
 			Result:= nom
@@ -39,19 +38,19 @@ feature {ANY}
 		do
 			Result:= prenom
 		end
-	
+
 	get_identifiant: STRING is
 		do
 			Result:= identifiant
 		end
 
-	is_admin: BOOLEAN is
+	get_admin: BOOLEAN is
 		do
 			Result:= administrateur
 		end
 
 			--*SETTERS*--
-	
+
 	set_nom (nv_nom: STRING) is
 		do
 			nom.copy(nv_nom)
@@ -74,7 +73,7 @@ feature {ANY}
 
 	is_admin: BOOLEAN is
 		do
-			Result:= admin = True
+			Result:= administrateur = True
 		end
 
 	user_exist(utilisateur: UTILISATEUR): BOOLEAN is
@@ -84,7 +83,7 @@ feature {ANY}
 
 	display_user : STRING is
 		do
-			Resultat:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: %N" + identifiant + "%N " + "Administrateur? : %N" + admin
-		end	
-			
+			Result:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: %N" + identifiant + "%N " + "Administrateur? : %N" + administrateur.to_string
+		end
+
 end -- class UTILISATEUR
