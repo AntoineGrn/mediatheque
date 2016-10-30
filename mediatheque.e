@@ -18,9 +18,9 @@ feature {ANY}
 			-- Initialisation des Médias et des Utilisateurs
 		do
 			-- Initialisations
-      create liste_medias.with_capacity(0, 0)
+      --create liste_medias.with_capacity(0, 0)
       --create liste_utilisateurs.with_capacity(0,0)
-			readfilemedia
+			--readfilemedia
 			lire_fichier_utilisateurs
 		end
 
@@ -110,7 +110,6 @@ feature {ANY}
 					if (terme.has_substring("Nombre")) then
 					  nombre_dvd := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
-					create dvd.make_dvd(nom_lu, prenom_lu, id_lu, admin_oui)
 				end
 			end
 			if premier_terme.is_equal("Livre ;") then
@@ -135,10 +134,11 @@ feature {ANY}
 					end
 				end
 			end
-	end
-end
 
-lire_fichier_utilisateurs is
+		end -- end loop
+	end -- end readfile do
+
+  lire_fichier_utilisateurs is
   local
     --lecture_ok= FALSE
     lecteur: TEXT_FILE_READ

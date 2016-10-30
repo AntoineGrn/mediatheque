@@ -45,7 +45,7 @@ feature {ANY}
 			Result:= identifiant
 		end
 
-	is_admin: BOOLEAN is
+	get_admin: BOOLEAN is
 		do
 			Result:= True
 		end
@@ -70,6 +70,11 @@ feature {ANY}
 	set_administrateur (nv_admin: BOOLEAN) is
 		do
 			administrateur.copy(nv_admin)
+		end
+
+	is_admin: BOOLEAN is
+		do
+			Result:= administrateur = True
 		end
 
 	user_exist(utilisateur: UTILISATEUR): BOOLEAN is

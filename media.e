@@ -48,7 +48,7 @@ feature {ANY}
   do
 		io.put_string("MEDIA : %N")
     io.put_string("Titre : " + titre + "%N%N")
-		io.put_string("Nombre : " + nombre + "%N%N")
+		io.put_string("Nombre : " + nombre.to_string + "%N%N")
   end
 
   ---------------------------------------
