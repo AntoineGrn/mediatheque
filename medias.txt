@@ -11,7 +11,7 @@ Livre ; Titre<The lord of the rings> ; Auteur<J.R.R. Tolkien>
 Livre ; Titre<The lord of the rings> ; Auteur<J.R.R. Tolkien>
 Livre ; Titre<Harry Potter> ; Auteur<J.K. Rowling>
 DVD ; Titre<The lord of the rings> ; Annee<2004> ; Realisateur<Peter Jackson>; Acteur<Elijah Wood>; Type<Coffret> ; Nombre<2>
-DVD ; Titre<Harry Potter> ; Annee<2012> ; Realisateur<Chris Colombus> ; Realisateur<David Yates> ; Acteur<Daniel Radcliffe> ; Acteur<Emma Watson> ; Acteur <Rupert Grint> ; Type<Coffret>
+DVD ; Titre<Harry Potter> ; Annee<2012> ; Realisateur<Chris Colombus> ; Realisateur<David Yates> ; Acteur<Daniel Radcliffe> ; Acteur<Emma Watson> ; Acteur<Rupert Grint> ; Type<Coffret>
 DVD ; Titre<Star Wars IV-V-VI> ; Annee<2004> ; Realisateur<George Lucas>; Acteur<Mark Hamill> ; Acteur<Harrison Ford>
 DVD ; Titre<Star Wars I-III> ; Annee<2005> ; Realisateur<George Lucas>; Acteur<Hayden Christensen> ; Acteur<Ewan McGregor> ; Acteur<Nathalie Portman> ; Type<Coffret>
 DVD ; Titre<Indiana Jones 1-3> ; Annee<2004> ; Realisateur<Steven Spielberg>; Acteur<Harrison Ford> ; Type<Coffret>
