@@ -86,5 +86,9 @@ feature {ANY}
 		do
 			Result:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: %N" + identifiant + "%N " + "Administrateur? : %N" + administrateur.to_string
 		end
+	user_connection_ok(id : STRING) : BOOLEAN is
+	do
+		Result := identifiant.is_equal(id)
+	end
 
 end -- class UTILISATEUR
