@@ -110,6 +110,7 @@ feature {ANY}
 					if (terme.has_substring("Nombre")) then
 					  nombre_dvd := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
+					create dvd.make_dvd(titre_dvd, annee_dvd, nombre_dvd, acteurs_dvd, realisateurs_dvd)
 				end
 			end
 			if premier_terme.is_equal("Livre ;") then
@@ -132,6 +133,7 @@ feature {ANY}
 					if (terme.has_substring("Nombre")) then
 					  nombre_livre := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
+					create livre.make_livre(titre_livre, auteur_livre, nombre_livre)
 				end
 			end
 

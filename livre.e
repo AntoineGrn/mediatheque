@@ -13,10 +13,12 @@ feature {ANY}
 	--variables
 	auteur : STRING
 
-	make is
+	make_livre (nv_titre: STRING; nv_auteur: STRING, nv_nombre: INTEGER) is
 			-- Creation d'un livre
 		do
-
+			titre.copy(nv_titre)
+			auteur.copy(nv_auteur)
+			nombre.copy(nv_nombre)
 		end
 
 		---------------------------------------

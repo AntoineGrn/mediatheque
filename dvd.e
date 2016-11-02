@@ -12,14 +12,18 @@ feature {}
 feature {ANY}
 	--variables
 	annee : STRING
-	acteur : STRING
-	realisateur : STRING
+	acteurs : ARRAY[STRING]
+	realisateurs : ARRAY[STRING]
 	type : STRING
 
-	make_dvd (nv_titre: STRING; nv_annee: STRING; nv_nombre: STRING; nv_acteur: STRING; nv_realisateur: STRING) is
+	make_dvd (nv_titre: STRING; nv_annee: STRING; nv_nombre: INTEGER; nv_acteurs: ARRAY[STRING]; nv_realisateurs: ARRAY[STRING]) is
 			-- Creation d'un DVD
 		do
-
+			titre.copy(nv_titre)
+			annee.copy(nv_annee)
+			nombre.copy(nv_nombre)
+			acteurs.copy(nv_acteurs)
+			realisateurs.copy(nv_realisateurs)
 		end
 
 		---------------------------------------

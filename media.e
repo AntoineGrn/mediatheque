@@ -12,7 +12,7 @@ feature {ANY}
   titre: STRING
 	nombre : INTEGER
 
-	make is
+	make_media is
 			-- Creation d'un media
 		do
 
