@@ -1,10 +1,10 @@
-class LIVRE
+class LIVRE inherit MEDIA redefine to_string end
 	--
 	-- Classe décrivant les livres
 	--
 
 creation {ANY}
-	make
+	make_livre
 
 feature {}
 
@@ -13,12 +13,14 @@ feature {ANY}
 	--variables
 	auteur : STRING
 
-	make_livre (nv_titre: STRING; nv_auteur: STRING, nv_nombre: INTEGER) is
+	make_livre (nv_titre: STRING; nv_auteur: STRING; nv_nombre: INTEGER) is
 			-- Creation d'un livre
 		do
+			titre := ""
+			auteur := ""
 			titre.copy(nv_titre)
 			auteur.copy(nv_auteur)
-			nombre.copy(nv_nombre)
+			nombre := nv_nombre
 		end
 
 		---------------------------------------
@@ -31,7 +33,7 @@ feature {ANY}
 
 	  set_auteur(valeur: STRING) is
 	  do
-	    auteur.copy(auteur)
+	    auteur.copy(valeur)
 	  end
 
 	  ---------------------------------------
@@ -42,6 +44,5 @@ feature {ANY}
 			io.put_string("MEDIA : %N")
 	    io.put_string("Auteur : " + auteur + "%N%N")
 	  end
-
 
 end -- class LIVRE
