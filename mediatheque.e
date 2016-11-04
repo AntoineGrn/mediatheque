@@ -9,22 +9,48 @@ creation {ANY}
 feature {}
 
 	liste_medias: ARRAY[MEDIA] -- liste des médias
-	--liste_utilisateurs: ARRAY[UTILISATEUR] -- liste des utilisateurs
+	liste_utilisateurs: ARRAY[UTILISATEUR] -- liste des utilisateurs
 	--utilisateurs: ARRAY[UTILISATEUR]
 	--path_to_user_file: STRING
 
 feature {ANY}
 	make is
 		-- Initialisation des Médias et des Utilisateurs
-	do
-		-- Initialisations
-    create liste_medias.with_capacity(0, 0)
-    --create liste_utilisateurs.with_capacity(0,0)
-		readfilemedia
-		lire_fichier_utilisateurs
-		lister_medias(liste_medias)
-	end
 
+		local
+			quitter : BOOLEAN
+			identifiant : STRING
+			index : INTEGER
+			user_connected : UTILISATEUR
+			connection_autorise : BOOLEAN
+			-- Initialisation des Médias et des Utilisateurs
+		do
+			-- Initialisations
+      --create liste_medias.with_capacity(0, 0)
+      create liste_utilisateurs.with_capacity(0,0)
+			readfilemedia
+			lire_fichier_utilisateurs
+			lister_medias(liste_medias)
+
+		--Programme
+			from until quitter loop
+				print("Entrer votre identifiant pour pouvoir vous connecter sur l'application de gestion de la médiathèque : %N")
+				io.flush
+				io.read_line
+				identifiant := io.last_string
+				from index := 0 until index > liste_utilisateurs.count-1 or quitter = True loop
+					if liste_utilisateurs.item(index).user_connection_ok(identifiant) then
+						user_connected:= liste_utilisateurs.item(index)
+						connection_autorise := True
+						quitter := False
+					else
+						connection_autorise := False
+						quitter := True
+					end
+					index := index + 1
+				end
+			end
+		end
 	---------------------------------------
 	-- LISTER LES MEDIAS
 	---------------------------------------
@@ -165,10 +191,11 @@ feature {ANY}
 		end -- end loop
 	end -- end readfile do
 
-	---------------------------------------
-	-- LIRE FICHIER DES UTILISATEURS
-	---------------------------------------
-  lire_fichier_utilisateurs is
+
+			----------------------------
+	      --FICHIER DES UTILISATEURS--
+	      ----------------------------
+	lire_fichier_utilisateurs is
   local
     --lecture_ok= FALSE
     lecteur: TEXT_FILE_READ
@@ -223,11 +250,33 @@ feature {ANY}
 
       end
       create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
-      --AJOUTER utilisateur au tableau des utilisateurs
+      ajouter_un_utilisateur(utilisateur)
 
     end
     lecteur.disconnect
   --	Result:= TRUE
-  end
+		end
+
+	ajouter_un_utilisateur(user: UTILISATEUR) is
+		local
+			index: INTEGER
+			user_exist, user_find: BOOLEAN
+		do
+			user_find:= False
+			user_exist := False
+			from index := 0 until index > liste_utilisateurs.count-1 or user_find = True loop
+				user_exist := liste_utilisateurs.item(index).user_exist(user)
+				if (user_exist) then
+					user_find := True
+				end
+				index := index +1
+			end
+			if user_find = False then
+				liste_utilisateurs.add_last(user)
+				io.put_string("Utilisateur ajouté.%N")
+			else
+				io.put_string("L'utilisateur existe déjà")
+			end
+		end
 
 end -- class MEDIATHEQUE
