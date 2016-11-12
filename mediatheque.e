@@ -17,7 +17,7 @@ feature {ANY}
 	make is
 		local
 			quitter : BOOLEAN
-			identifiant : STRING
+			identifiant, action : STRING
 			index : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
@@ -30,21 +30,47 @@ feature {ANY}
 		lire_fichier_utilisateurs
 
 		--Programme
+
+		print("--------------------Bienvenue dans le logiciel de gestion de la Médiathèque-----------------%N");
 			from until quitter loop
-				print("Entrer votre identifiant pour pouvoir vous connecter sur l'application de gestion de la médiathèque : %N")
+				print("Entrer votre identifiant pour pouvoir vous connecter sur l'application de gestion de la médiathèque : (q : quitter) %N")
 				io.flush
 				io.read_line
 				identifiant := io.last_string
+				--Vérification de l'existance de l'utilisateur
 				from index := 0 until index > liste_utilisateurs.count-1 or quitter = True loop
 					if liste_utilisateurs.item(index).user_connection_ok(identifiant) then
 						user_connected:= liste_utilisateurs.item(index)
 						connection_autorise := True
-						quitter := False
 					else
 						connection_autorise := False
-						quitter := True
 					end
 					index := index + 1
+				end
+				if connection_autorise = False or identifiant.is_equal("q") then
+					print("L'utilisateur n'est pas valide, vous aller quitter l'application. %N");
+					quitter := True;
+				else
+					from until quitter loop
+						print("Vous êtes connecté à l'application !");
+						print("Veuillez Sélectionner une action dans le menu : %N");
+						print("q - quitter %N");
+						print("1- Importer les utilisateurs du fichier .txt %N");
+						print("2- Importer les médias du fichier .txt %N");
+						print("------------------------------------------------%N");
+						io.flush
+						io.read_line
+						action := io.last_string
+						inspect
+							action
+						when "q" then
+							quitter := True
+						when "1" then
+							lire_fichier_utilisateurs
+						when "2" then
+						--	readfilemedia
+						end
+					end
 				end
 			end
 		end
@@ -178,7 +204,6 @@ feature {ANY}
     from until lecteur.end_of_input loop
       lecteur.read_line
       ligne := lecteur.last_string
-      io.put_string(ligne + "%N")
       nb_mot := ligne.occurrences(';')
       debut_champ := 1
       fin_champ := 0
