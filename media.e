@@ -4,7 +4,7 @@ class MEDIA
 	--
 
 creation {ANY}
-	make
+	make_media
 
 
 feature {ANY}
@@ -12,7 +12,7 @@ feature {ANY}
   titre: STRING
 	nombre : INTEGER
 
-	make is
+	make_media is
 			-- Creation d'un media
 		do
 
@@ -28,7 +28,7 @@ feature {ANY}
 
   set_titre(valeur: STRING) is
   do
-    titre.copy(titre)
+    titre.copy(valeur)
   end
 
 	get_nombre : INTEGER is
@@ -38,7 +38,7 @@ feature {ANY}
 
 	set_nombre(valeur: INTEGER) is
   do
-    nombre.copy(nombre)
+    nombre.copy(valeur)
   end
 
   ---------------------------------------

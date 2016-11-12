@@ -1,10 +1,10 @@
-class DVD
+class DVD inherit MEDIA redefine to_string end
 	--
 	-- Classe décrivant les DVD
 	--
 
 creation {ANY}
-	make
+	make_dvd
 
 feature {}
 
@@ -12,14 +12,29 @@ feature {}
 feature {ANY}
 	--variables
 	annee : STRING
-	acteur : STRING
-	realisateur : STRING
+	acteurs : ARRAY[STRING]
+	realisateurs : ARRAY[STRING]
 	type : STRING
 
-	make_dvd (nv_titre: STRING; nv_annee: STRING; nv_nombre: STRING; nv_acteur: STRING; nv_realisateur: STRING) is
+	make_dvd (nv_titre: STRING; nv_annee: STRING; nv_nombre: INTEGER; nv_acteurs: ARRAY[STRING]; nv_realisateurs: ARRAY[STRING]; nv_type : STRING) is
 			-- Creation d'un DVD
 		do
+			titre := ""
+			annee := ""
+			type := ""
+			-- Initialisation tableaux
+			create realisateurs.with_capacity(0,0)
+			realisateurs.append_collection(nv_realisateurs)
 
+			create acteurs.with_capacity(0,0)
+			acteurs.append_collection(nv_acteurs)
+
+			titre.copy(nv_titre)
+			annee.copy(nv_annee)
+			type.copy(nv_type)
+			nombre.copy(nv_nombre)
+			acteurs.copy(nv_acteurs)
+			realisateurs.copy(nv_realisateurs)
 		end
 
 		---------------------------------------
@@ -32,37 +47,37 @@ feature {ANY}
 
 	  set_annee(valeur: STRING) is
 	  do
-	    annee.copy(annee)
+	    annee.copy(valeur)
 	  end
 
-		get_acteur  : STRING is
+		get_acteurs  : ARRAY[STRING] is
 	  do
-	    Result := acteur
+	    Result := acteurs
 	  end
 
-	  set_acteur(valeur: STRING) is
+	  set_acteurs(valeur: STRING) is
 	  do
-	    acteur.copy(acteur)
+	    acteurs.add_last(valeur)
 	  end
 
-		get_realisateur  : STRING is
+		get_realisateurs  : ARRAY[STRING] is
 	  do
-	    Result := realisateur
+	    Result := realisateurs
 	  end
 
-	  set_realisateur(valeur: STRING) is
+	  set_realisateurs(valeur: STRING) is
 	  do
-	    realisateur.copy(realisateur)
+	    realisateurs.add_last(valeur)
 	  end
 
 		get_type  : STRING is
 	  do
-	    Result := acteur
+	    Result := type
 	  end
 
 	  set_type(valeur: STRING) is
 	  do
-	    type.copy(type)
+	    type.copy(valeur)
 	  end
 
 	  ---------------------------------------
@@ -71,10 +86,11 @@ feature {ANY}
 	  to_string : STRING is
 	  do
 			io.put_string("MEDIA : %N")
-	    io.put_string("Acteur : " + acteur + "%N%N")
-			io.put_string("Realisateur : " + realisateur + "%N%N")
+	    --io.put_string("Acteur : " + acteurs + "%N%N")
+			--io.put_string("Realisateur : " + realisateurs + "%N%N")
 			io.put_string("Type : " + type + "%N%N")
 			io.put_string("Annee : " + annee + "%N%N")
+			io.put_string("------------------------------- %N%N")
 	  end
 
 end -- class DVD
