@@ -45,4 +45,13 @@ feature {ANY}
 	    io.put_string("Auteur : " + auteur + "%N%N")
 	  end
 
+		---------------------------------------
+	              -- LIVRE EXISTE
+	  ---------------------------------------
+	  is_livre_exist(livre: LIVRE) : BOOLEAN is
+	  do
+			Result:= (titre.is_equal(livre.get_titre) and auteur.is_equal(livre.get_auteur))
+	  end
+
+
 end -- class LIVRE

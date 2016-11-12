@@ -26,11 +26,11 @@ feature {ANY}
 			-- Initialisation des Médias et des Utilisateurs
 		do
 			-- Initialisations
-      --create liste_medias.with_capacity(0, 0)
+      create liste_medias.with_capacity(0, 0)
       create liste_utilisateurs.with_capacity(0,0)
 			--readfilemedia
 			lire_fichier_utilisateurs
-			--lister_medias(liste_medias)
+			lister_medias(liste_medias)
 
 		--Programme
 
@@ -60,6 +60,7 @@ feature {ANY}
 						print("q - quitter %N");
 						print("1- Importer les utilisateurs du fichier .txt %N");
 						print("2- Importer les médias du fichier .txt %N");
+						print("3- Lister tous les médias %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -71,7 +72,9 @@ feature {ANY}
 						when "1" then
 							lire_fichier_utilisateurs
 						when "2" then
-						--	readfilemedia
+							readfilemedia
+						when "3" then
+							lister_medias(liste_medias)
 						end
 					end
 				end
@@ -95,16 +98,72 @@ feature {ANY}
 	--AJOUTER LIVRE
 	---------------------------------------
 	ajouter_livre (livre : LIVRE) is
+	local
+		index : INTEGER
+		livre_liste : LIVRE
+		livre_exist : BOOLEAN
 	do
-		liste_medias.add_last(livre)
+		livre_exist := True
+		if liste_medias.count.is_equal(0) then
+			liste_medias.add_last(livre)
+			io.put_string("Livre ajouté avec succès %N")
+		else
+			from index := 0 until index > liste_medias.count-1 loop
+				if {LIVRE}?:= liste_medias.item(index) then
+					livre_liste ::= liste_medias.item(index)
+					if livre.get_auteur.is_equal("Robert Jordan") then
+						io.put_string("Auteur existant : " + livre_liste.get_auteur + "%N%N")
+						io.put_string("Auteur a ajoute : " + livre.get_auteur + "%N%N")
+					end
+					if livre_liste.is_livre_exist(livre) then
+						livre_exist := True
+						index := liste_medias.count + 1
+					else
+						livre_exist := False
+					end
+				end
+				index := index +1
+			end
+			if livre_exist.is_equal(False) then
+				liste_medias.add_last(livre)
+				io.put_string("Livre ajouté avec succès %N")
+			else
+				io.put_string("Livre déjà existant %N")
+			end
+		end
 	end
 
 	---------------------------------------
 	--AJOUTER DVD
 	---------------------------------------
 	ajouter_dvd (dvd : DVD) is
+	local
+		index : INTEGER
+		dvd_liste: DVD
+		dvd_exist : BOOLEAN
 	do
-		liste_medias.add_last(dvd)
+		dvd_exist := False
+		if liste_medias.count.is_equal(0) then
+			liste_medias.add_last(dvd)
+			io.put_string("DVD ajouté avec succès %N")
+		else
+			from index := 0 until index > liste_medias.count-1 loop
+				if {DVD}?:= liste_medias.item(index) then
+					dvd_liste ::= liste_medias.item(index)
+					if dvd_liste.is_dvd_exist(dvd) then
+						dvd_exist := True
+						index := liste_medias.count + 1
+					end
+				end
+				index := index +1
+			end
+			if dvd_exist.is_equal(False) then
+				liste_medias.add_last(dvd)
+				io.put_string("DVD ajouté avec succès %N")
+			else
+				io.put_string("DVD déjà existant %N")
+			end
+		end
 	end
 
 	---------------------------------------

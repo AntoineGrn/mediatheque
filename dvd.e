@@ -86,11 +86,24 @@ feature {ANY}
 	  to_string : STRING is
 	  do
 			io.put_string("MEDIA : %N")
-	    --io.put_string("Acteur : " + acteurs + "%N%N")
-			--io.put_string("Realisateur : " + realisateurs + "%N%N")
+	    --io.put_string("Acteurs : " + acteurs + "%N%N")
+			--io.put_string("Realisateurs : " + realisateurs + "%N%N")
 			io.put_string("Type : " + type + "%N%N")
 			io.put_string("Annee : " + annee + "%N%N")
 			io.put_string("------------------------------- %N%N")
+	  end
+
+		---------------------------------------
+	              -- DVD EXISTE
+	  ---------------------------------------
+	  is_dvd_exist(dvd: DVD) : BOOLEAN is
+	  do
+			Result:= (
+				titre.is_equal(dvd.get_titre)
+				and type.is_equal(dvd.get_type)
+				and annee.is_equal(dvd.get_annee)
+				and type.is_equal(dvd.get_type)
+			)
 	  end
 
 end -- class DVD
