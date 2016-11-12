@@ -28,9 +28,9 @@ feature {ANY}
 			-- Initialisations
       --create liste_medias.with_capacity(0, 0)
       create liste_utilisateurs.with_capacity(0,0)
-			readfilemedia
+			--readfilemedia
 			lire_fichier_utilisateurs
-			lister_medias(liste_medias)
+			--lister_medias(liste_medias)
 
 		--Programme
 
