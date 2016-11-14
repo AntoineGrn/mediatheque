@@ -10,7 +10,6 @@ feature {}
 
 	liste_medias: ARRAY[MEDIA] -- liste des médias
 	liste_utilisateurs: ARRAY[UTILISATEUR] -- liste des utilisateurs
-	--utilisateurs: ARRAY[UTILISATEUR]
 	--path_to_user_file: STRING
 
 feature {ANY}
@@ -61,6 +60,7 @@ feature {ANY}
 						print("1- Importer les utilisateurs du fichier .txt %N");
 						print("2- Importer les médias du fichier .txt %N");
 						print("3- Lister tous les médias %N");
+						print("4- Lister tous les utlisateurs %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -75,6 +75,8 @@ feature {ANY}
 							readfilemedia
 						when "3" then
 							lister_medias(liste_medias)
+						when "4" then
+							lister_les_utilisateurs
 						end
 					end
 				end
@@ -174,7 +176,6 @@ feature {ANY}
 		file : TEXT_FILE_READ
 		line : STRING
 		nbr_separation_inline : INTEGER
-		word : STRING
 		i: INTEGER
 		dvd: DVD
 		livre : LIVRE
@@ -282,7 +283,6 @@ feature {ANY}
 	      ----------------------------
 	lire_fichier_utilisateurs is
   local
-    --lecture_ok= FALSE
     lecteur: TEXT_FILE_READ
     ligne, champ, nom_lu, prenom_lu, id_lu, admin_lu, valeur: STRING
     mot, nb_mot, debut_champ, fin_champ: INTEGER
@@ -291,56 +291,56 @@ feature {ANY}
   do
     create lecteur.connect_to("utilisateurs.txt")
     from until lecteur.end_of_input loop
-      lecteur.read_line
-      ligne := lecteur.last_string
-      nb_mot := ligne.occurrences(';')
-      debut_champ := 1
-      fin_champ := 0
-      champ := ""
-      nom_lu := ""
-      prenom_lu := ""
-      id_lu := ""
-      admin_lu := ""
-      from mot:= 0 until mot > nb_mot loop
-        fin_champ := ligne.index_of(';',debut_champ)
-        if fin_champ = 0 then
-          fin_champ := ligne.count
-        end
-        if(ligne.substring(debut_champ, fin_champ).has_substring("Nom")) then
-          valeur:= ligne.substring(debut_champ, fin_champ)
-          nom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-        end
+		 lecteur.read_line
+		 ligne := lecteur.last_string
+		 nb_mot := ligne.occurrences(';')
+		 debut_champ := 1
+		 fin_champ := 0
+		 champ := ""
+		 nom_lu := ""
+		 prenom_lu := ""
+		 id_lu := ""
+		 admin_lu := ""
+		 from mot:= 0 until mot > nb_mot loop
+			 admin_oui := False
+			 fin_champ := ligne.index_of(';',debut_champ)
+			 if fin_champ = 0 then
+				 fin_champ := ligne.count
+			 end
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Nom")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 nom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
 
-        if(ligne.substring(debut_champ, fin_champ).has_substring("Prenom")) then
-          valeur:= ligne.substring(debut_champ, fin_champ)
-          prenom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-        end
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Prenom")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 prenom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
 
-        if(ligne.substring(debut_champ, fin_champ).has_substring("Identifiant")) then
-          valeur:= ligne.substring(debut_champ, fin_champ)
-          id_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-        end
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Identifiant")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 id_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
 
-        if(ligne.substring(debut_champ, fin_champ).has_substring("Admin")) then
-          valeur:= ligne.substring(debut_champ, fin_champ)
-          admin_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-          if admin_lu.is_equal("OUI") then
-            admin_oui := True
-          end
-        end
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Admin")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 admin_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+				 if admin_lu.is_equal("OUI") then
+					 admin_oui := True
+				 end
+			 end
 
-        champ := ligne.substring(debut_champ, fin_champ)
-        mot := mot+1
-        debut_champ := fin_champ + 1
+			 champ := ligne.substring(debut_champ, fin_champ)
+			 mot := mot+1
+			 debut_champ := fin_champ + 1
 
-      end
+		 end
       create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
       ajouter_un_utilisateur(utilisateur)
 
     end
     lecteur.disconnect
-  --	Result:= TRUE
-		end
+	end
 
 	ajouter_un_utilisateur(user: UTILISATEUR) is
 		local
@@ -363,5 +363,20 @@ feature {ANY}
 				io.put_string("L'utilisateur existe déjà")
 			end
 		end
+
+	---------------------------
+	--LISTER LES UTILISATEURS--
+	---------------------------
+
+	lister_les_utilisateurs is
+	local
+		index : INTEGER
+	do
+		io.put_string("Nombre d'utilisateurs listés : " + liste_utilisateurs.count.to_string + "%N")
+		from index := 0 until index > liste_utilisateurs.count-1 loop
+			io.put_string(liste_utilisateurs.item(index).display_user + "%N");
+			index := index +1
+		end
+	end
 
 end -- class MEDIATHEQUE
