@@ -33,14 +33,14 @@ feature {ANY}
 
 		--Programme
 
-		print("--------------------Bienvenue dans le logiciel de gestion de la Médiathèque-----------------%N");
+		print("--------------------Bienvenue dans le logiciel de gestion de la Mediatheque-----------------%N");
 			from until quitter loop
-				print("Entrer votre identifiant pour pouvoir vous connecter sur l'application de gestion de la médiathèque : (q : quitter) %N")
+				print("Entrez votre identifiant pour pouvoir vous connecter sur l'application de gestion de la mediatheque : (q : quitter) %N")
 				io.flush
 				io.read_line
 				identifiant := io.last_string
 				--Vérification de l'existance de l'utilisateur
-				from index := 0 until index > liste_utilisateurs.count-1 or quitter = True loop
+				from index := 0 until index > liste_utilisateurs.count-1 or quitter = True or connection_autorise = True loop
 					if liste_utilisateurs.item(index).user_connection_ok(identifiant) then
 						user_connected:= liste_utilisateurs.item(index)
 						connection_autorise := True
@@ -54,14 +54,15 @@ feature {ANY}
 					quitter := True;
 				else
 					from until quitter loop
-						print("Vous êtes connecté à l'application !");
-						print("Veuillez Sélectionner une action dans le menu : %N");
-						print("q - quitter %N");
-						print("1- Importer les utilisateurs du fichier .txt %N");
-						print("2- Importer les médias du fichier .txt %N");
-						print("3- Lister tous les médias %N");
-						print("4- Lister tous les utlisateurs %N");
-						--print("5- Créer un utilisateur %N");
+						print("Vous etes connecte a l'application !");
+						print("Veuillez Selectionner une action dans le menu : %N");
+						print("q - Quitter %N");
+						print("1 - Importer les utilisateurs du fichier .txt %N");
+						print("2 - Importer les medias du fichier .txt %N");
+						print("3 - Lister tous les medias %N");
+						print("4 - Lister tous les utlisateurs %N");
+						--print("5 - Creer un utilisateur %N");
+						print("6 - Lister tous les utlisateurs %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -80,6 +81,8 @@ feature {ANY}
 							lister_les_utilisateurs
 						when "5" then
 							creer_un_utilisateur
+						else
+							io.put_string("Fonction inexistante retour au menu %N")
 						end
 					end
 				end
@@ -91,16 +94,28 @@ feature {ANY}
 	lister_medias (liste_all_medias : ARRAY[MEDIA]) is
 	local
 		index : INTEGER
+		livre_media : LIVRE
+		dvd_media : DVD
 	do
-		io.put_string("Nombre de médias listés : " + liste_medias.count.to_string + "%N")
+		io.put_string("Nombre de medias listes : " + liste_medias.count.to_string + "%N")
 		from index := 0 until index > liste_medias.count-1 loop
-			io.put_string("Media n" + (index + 1).to_string + " : " + liste_medias.item(index).titre + " %N")
+			if {LIVRE}?:= liste_medias.item(index) then
+				livre_media ::= liste_medias.item(index)
+				io.put_string("Media [LIVRE] n" + (index + 1).to_string + " : " + liste_medias.item(index).titre + " %N")
+				io.put_string("Auteur : " + livre_media.auteur + " %N%N")
+			end
+			if {DVD}?:= liste_medias.item(index) then
+				dvd_media ::= liste_medias.item(index)
+				io.put_string("Media [DVD] n" + (index + 1).to_string + " : " + liste_medias.item(index).titre + " %N")
+				io.put_string("Annee : " + dvd_media.annee + " %N")
+				io.put_string("Type : " + dvd_media.type + " %N%N")
+			end
 			index := index +1
 		end
 	end
 
 	---------------------------------------
-	--AJOUTER LIVRE
+	-- AJOUTER LIVRE
 	---------------------------------------
 	ajouter_livre (livre : LIVRE) is
 	local
@@ -116,10 +131,7 @@ feature {ANY}
 			from index := 0 until index > liste_medias.count-1 loop
 				if {LIVRE}?:= liste_medias.item(index) then
 					livre_liste ::= liste_medias.item(index)
-					if livre.get_auteur.is_equal("Robert Jordan") then
-						io.put_string("Auteur existant : " + livre_liste.get_auteur + "%N%N")
-						io.put_string("Auteur a ajoute : " + livre.get_auteur + "%N%N")
-					end
+					io.put_string(livre_liste.is_livre_exist(livre).to_string + "%N")
 					if livre_liste.is_livre_exist(livre) then
 						livre_exist := True
 						index := liste_medias.count + 1
@@ -131,9 +143,9 @@ feature {ANY}
 			end
 			if livre_exist.is_equal(False) then
 				liste_medias.add_last(livre)
-				io.put_string("Livre ajouté avec succès %N")
+				io.put_string("Livre ajoute avec succes %N")
 			else
-				io.put_string("Livre déjà existant %N")
+				io.put_string("Livre deja existant %N")
 			end
 		end
 	end
@@ -150,7 +162,7 @@ feature {ANY}
 		dvd_exist := False
 		if liste_medias.count.is_equal(0) then
 			liste_medias.add_last(dvd)
-			io.put_string("DVD ajouté avec succès %N")
+			io.put_string("DVD ajoute avec succes %N")
 		else
 			from index := 0 until index > liste_medias.count-1 loop
 				if {DVD}?:= liste_medias.item(index) then
@@ -164,9 +176,9 @@ feature {ANY}
 			end
 			if dvd_exist.is_equal(False) then
 				liste_medias.add_last(dvd)
-				io.put_string("DVD ajouté avec succès %N")
+				io.put_string("DVD ajoute avec succes %N")
 			else
-				io.put_string("DVD déjà existant %N")
+				io.put_string("DVD deja existant %N")
 			end
 		end
 	end
@@ -244,7 +256,7 @@ feature {ANY}
 						acteurs_dvd.add_last(acteur_dvd)
 					end
 					if (terme.has_substring("Type")) then
-					  type_dvd := terme.substring(5, terme.index_of('>', 1) - 1)
+					  type_dvd := terme.substring(7, terme.index_of('>', 1) - 1)
 					end
 					if (terme.has_substring("Nombre")) then
 					  nombre_dvd := terme.substring(9, terme.index_of('>', 1) - 1).to_integer
@@ -365,9 +377,9 @@ feature {ANY}
 			end
 			if user_find = False then
 				liste_utilisateurs.add_last(user)
-				io.put_string("Utilisateur ajouté.%N")
+				io.put_string("Utilisateur ajoute.%N")
 			else
-				io.put_string("L'utilisateur existe déjà")
+				io.put_string("L'utilisateur existe deja")
 			end
 		end
 
@@ -379,7 +391,7 @@ feature {ANY}
 	local
 		index : INTEGER
 	do
-		io.put_string("Nombre d'utilisateurs listés : " + liste_utilisateurs.count.to_string + "%N")
+		io.put_string("Nombre d'utilisateurs listes : " + liste_utilisateurs.count.to_string + "%N")
 		from index := 0 until index > liste_utilisateurs.count-1 loop
 			io.put_string(liste_utilisateurs.item(index).display_user + "%N");
 			index := index +1
@@ -421,5 +433,5 @@ feature {ANY}
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
 		end
-			
+
 end -- class MEDIATHEQUE
