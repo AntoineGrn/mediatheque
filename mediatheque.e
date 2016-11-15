@@ -61,7 +61,7 @@ feature {ANY}
 						print("2- Importer les médias du fichier .txt %N");
 						print("3- Lister tous les médias %N");
 						print("4- Lister tous les utlisateurs %N");
-						--print("5- Créer un utilisateur %N");
+						print("5- Créer un utilisateur %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -422,5 +422,6 @@ feature {ANY}
 			end
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
+			ajouter_un_utilisateur(utilisateur)
 		end		
 end -- class MEDIATHEQUE
