@@ -399,15 +399,18 @@ feature {ANY}
 			print("Entrer le nom de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			nom := io.last_string
+			nom := ""
+			nom.copy(io.last_string)
 			print("Entrer le prenom de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			prenom := io.last_string
+			prenom := ""
+			prenom.copy(io.last_string)
 			print("Entrer l'identifiant de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			id := io.last_string
+			id := ""
+			id.copy(io.last_string)
 			print("Un administrateur ? True or False: %N");
 			io.flush
 			io.read_line
@@ -417,9 +420,7 @@ feature {ANY}
 			else
 				admin := False
 			end
-			io.put_string(nom);
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
-		end
-			
+		end		
 end -- class MEDIATHEQUE
