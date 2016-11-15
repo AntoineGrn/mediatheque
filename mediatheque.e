@@ -61,8 +61,8 @@ feature {ANY}
 						print("2 - Importer les medias du fichier .txt %N");
 						print("3 - Lister tous les medias %N");
 						print("4 - Lister tous les utlisateurs %N");
-						--print("5 - Creer un utilisateur %N");
-						print("6 - Lister tous les utlisateurs %N");
+						print("5 - Creer un utilisateur %N");
+						--print("6 - Lister tous les utlisateurs %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -411,15 +411,18 @@ feature {ANY}
 			print("Entrer le nom de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			nom := io.last_string
+			nom := ""
+			nom.copy(io.last_string)
 			print("Entrer le prenom de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			prenom := io.last_string
+			prenom := ""
+			prenom.copy(io.last_string)
 			print("Entrer l'identifiant de l'utilisateur : %N");
 			io.flush
 			io.read_line
-			id := io.last_string
+			id := ""
+			id.copy(io.last_string)
 			print("Un administrateur ? True or False: %N");
 			io.flush
 			io.read_line
@@ -429,9 +432,8 @@ feature {ANY}
 			else
 				admin := False
 			end
-			io.put_string(nom);
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
+			ajouter_un_utilisateur(utilisateur)
 		end
-
 end -- class MEDIATHEQUE
