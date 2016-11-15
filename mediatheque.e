@@ -131,7 +131,6 @@ feature {ANY}
 			from index := 0 until index > liste_medias.count-1 loop
 				if {LIVRE}?:= liste_medias.item(index) then
 					livre_liste ::= liste_medias.item(index)
-					io.put_string(livre_liste.is_livre_exist(livre).to_string + "%N")
 					if livre_liste.is_livre_exist(livre) then
 						livre_exist := True
 						index := liste_medias.count + 1
