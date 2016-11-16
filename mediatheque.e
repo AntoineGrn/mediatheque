@@ -62,7 +62,7 @@ feature {ANY}
 						print("3 - Lister tous les medias %N");
 						print("4 - Lister tous les utlisateurs %N");
 						print("5 - Creer un utilisateur %N");
-						--print("6 - Lister tous les utlisateurs %N");
+						print("7 - Ajouter un média %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -81,6 +81,8 @@ feature {ANY}
 							lister_les_utilisateurs
 						when "5" then
 							creer_un_utilisateur
+						when "7" then
+							ajouter_media_manuellement
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -181,6 +183,136 @@ feature {ANY}
 			end
 		end
 	end
+
+	---------------------------------------
+	-- AJOUTER UN MEDIA MANUELLEMENT
+	---------------------------------------
+	ajouter_media_manuellement is
+	local
+		type : STRING
+		new_livre : LIVRE
+		new_dvd : DVD
+		titre_livre : STRING
+		auteur_livre : STRING
+		titre_dvd : STRING
+		annee_dvd : STRING
+		type_dvd : STRING
+		realisateur_dvd : STRING
+		liste_realisateur_dvd : ARRAY[STRING]
+		acteur_dvd : STRING
+		liste_acteur_dvd : ARRAY[STRING]
+		nombre_exemplaire : INTEGER
+		action_type_dvd : STRING
+		action_type_media : STRING
+		test_sortie_acteur : BOOLEAN
+		test_sortie_realisateur : BOOLEAN
+	do
+		create liste_realisateur_dvd.with_capacity(0, 0)
+		create liste_acteur_dvd.with_capacity(0, 0)
+		print("Choisissez le type de média que vous voulez ajouter : %N")
+		print("1. Livre %N")
+		print("2. DVD %N")
+		io.flush
+		io.read_line
+		action_type_media := io.last_string
+		inspect
+			action_type_media
+		when "1" then
+			type := "Livre"
+		when "2" then
+			type := "DVD"
+		else
+			io.put_string("Veuillez saisir un des choix proposés %N")
+		end
+		if type.is_equal("Livre") then
+			print("Saisissez le titre du livre : %N")
+			io.flush
+			io.read_line
+			titre_livre := ""
+			titre_livre.copy(io.last_string)
+			print("Saisissez l'auteur du livre : %N")
+			io.flush
+			io.read_line
+			auteur_livre := ""
+			auteur_livre.copy(io.last_string)
+			print("Saisissez le nombre d'exemplaire ajouté : %N")
+			io.flush
+			io.read_line
+			nombre_exemplaire := 0
+			nombre_exemplaire.copy(io.last_integer)
+			create new_livre.make_livre(titre_livre, auteur_livre, nombre_exemplaire)
+			ajouter_livre(new_livre)
+		elseif type.is_equal("DVD") then
+			-- saisie du titre du DVD
+			print("Saisissez le titre du DVD : %N")
+			io.flush
+			io.read_line
+			titre_dvd := ""
+			titre_dvd.copy(io.last_string)
+			-- saisie de l'annee du DVD
+			print("Saisissez l'annee du DVD : %N")
+			io.flush
+			io.read_line
+			annee_dvd := ""
+			annee_dvd.copy(io.last_string)
+			-- saisie du type de DVD
+			print("Est ce un DVD de type coffret ? %N")
+			print("1. Oui %N")
+			print("2. Non %N")
+			io.flush
+			io.read_line
+			action_type_dvd := io.last_string
+			inspect
+				action_type_dvd
+			when "1" then
+				type_dvd := "Coffret"
+			when "2" then
+				type_dvd := ""
+			else
+				io.put_string("Veuillez saisir un des choix proposés %N")
+			end
+			test_sortie_acteur := False
+			-- saisie des acteurs du DVD
+			from until test_sortie_acteur.is_equal(True) loop
+				io.put_string("Veuillez saisir le nom et prenom d'un acteur puis valider une fois que tous les acteurs ont ete saisis 'v' %N")
+				io.flush
+				io.read_line
+				if io.last_string.is_equal("v") then
+					test_sortie_acteur := True
+				else
+					acteur_dvd := ""
+					acteur_dvd.copy(io.last_string)
+					liste_acteur_dvd.add_last(acteur_dvd)
+				end
+			end
+
+			-- saisie des realisateurs du DVD
+			test_sortie_realisateur := False
+			from until test_sortie_realisateur.is_equal(True) loop
+				io.put_string("Veuillez saisir le nom et prenom d'un realisateur puis valider une fois que tous les realisateurs ont ete saisis 'v' %N")
+				io.flush
+				io.read_line
+				if io.last_string.is_equal("v") then
+					test_sortie_realisateur := True
+				else
+					realisateur_dvd := ""
+					realisateur_dvd.copy(io.last_string)
+					liste_realisateur_dvd.add_last(realisateur_dvd)
+				end
+			end
+			-- saisie du nbr de DVD voulu
+			print("Saisissez le nombre d'exemplaire ajouté : %N")
+			io.flush
+			io.read_line
+			nombre_exemplaire := 0
+			nombre_exemplaire.copy(io.last_integer)
+			create new_dvd.make_dvd(titre_dvd, annee_dvd, nombre_exemplaire, liste_acteur_dvd, liste_realisateur_dvd, type_dvd)
+			ajouter_dvd(new_dvd)
+		else
+			print("Veuillez saisir un type de média valide %N")
+		end
+	end
+
 
 	---------------------------------------
 	-- LIRE FICHIER DES MEDIAS
