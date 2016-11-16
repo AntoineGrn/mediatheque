@@ -87,9 +87,9 @@ feature {ANY}
 			Result:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: " + identifiant + "%N " + "Administrateur? : " + administrateur.to_string
 		end
 	user_connection_ok(id : STRING) : BOOLEAN is
-	do
-		Result := identifiant.is_equal(id)
-	end
+		do
+			Result := identifiant.is_equal(id)
+		end
 
 	search_user(string : STRING) : BOOLEAN is
 		do

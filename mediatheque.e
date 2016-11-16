@@ -10,7 +10,7 @@ feature {}
 
 	liste_medias: ARRAY[MEDIA] -- liste des médias
 	liste_utilisateurs: ARRAY[UTILISATEUR] -- liste des utilisateurs
-	--path_to_user_file: STRING
+	liste_emprunts: ARRAY[EMPRUNT] -- liste des emprunts
 
 feature {ANY}
 	make is
@@ -22,14 +22,14 @@ feature {ANY}
 			index : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
-			-- Initialisation des Médias et des Utilisateurs
 		do
 			-- Initialisations
       create liste_medias.with_capacity(0, 0)
       create liste_utilisateurs.with_capacity(0,0)
-			--readfilemedia
-			lire_fichier_utilisateurs
-			lister_medias(liste_medias)
+		create liste_emprunts.with_capacity(0,0)
+		--readfilemedia
+		lire_fichier_utilisateurs
+		lister_medias(liste_medias)
 
 		--Programme
 
@@ -629,5 +629,33 @@ feature {ANY}
 					creer_un_utilisateur
 				end
 			end
+		end
+
+			----------------------
+			--EMPRUNTER UN MEDIA--
+			----------------------
+	emprunter_media(user_connected : UTILISATEUR) : BOOLEAN is
+		local
+			index_media, nombre_media : INTEGER
+			emprunt : EMPRUNT
+			date_e, date_r : TIME
+			media : MEDIA
+		do
+			--Rechercher un média & récupération de l'indice dans le 
+			--tableau des médias
+			index_media := rechercher_media
+			--trouver le média dans le tableau 
+			media := liste_medias.item(index_media)
+			--on l'ajoute au tableau d'emprunt : media, titre, 
+			--date_emprunt, date_retour
+			date_e.update
+			date_r.update
+			date_r.add_day(15)
+			create emprunt.make_emprunt(media, user_connected, date_e, date_r)
+			liste_emprunts.add_last(emprunt)
+			--on diminue le nombre d'exemplaire dispo
+			nombre_media := media.get_nombre;
+			media.set_nombre(nombre_media - 1);
+			Result := True;
 		end
 end -- class MEDIATHEQUE
