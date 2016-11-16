@@ -18,8 +18,8 @@ feature {ANY}
 
 		local
 			quitter : BOOLEAN
-			identifiant, action, search_user : STRING
-			index, index_user_find : INTEGER
+			identifiant, action : STRING
+			index : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
 			-- Initialisation des Médias et des Utilisateurs
@@ -82,25 +82,7 @@ feature {ANY}
 						when "5" then
 							creer_un_utilisateur
 						when "6" then
-							print("Veuillez entrer l'IDENTIFIANT de l'utilisateur à rechercher %N");
-							io.flush
-							io.read_line
-							search_user := ""
-							search_user.copy(io.last_string)
-							index_user_find := rechercher_utilisateur(search_user);
-							if index_user_find /= -1 then	
-								print("Utilisateur Trouvé ! %N");
-								print(liste_utilisateurs.item(index_user_find).display_user);
-							else
-								print("L'utilisateur n'existe pas, voulez-%
-                              %vous le creer ? O/N %N");
-								io.flush
-								io.read_line
-								action := io.last_string
-								if action.is_equal("O") then
-									creer_un_utilisateur
-								end
-							end
+							rechercher_utilisateur_main
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -474,5 +456,31 @@ feature {ANY}
 				index := index + 1;
 			end
 			Result := resultat
+		end
+
+	rechercher_utilisateur_main is
+		local
+			index_user_find : INTEGER
+			action, search_user : STRING
+		do
+			print("Veuillez entrer l'IDENTIFIANT de l'utilisateur à rechercher %N");
+			io.flush
+			io.read_line
+			search_user := ""
+			search_user.copy(io.last_string)
+			index_user_find := rechercher_utilisateur(search_user);
+			if index_user_find /= -1 then	
+				print("Utilisateur Trouvé ! %N");
+				print(liste_utilisateurs.item(index_user_find).display_user);
+			else
+				print("L'utilisateur n'existe pas, voulez-%
+                              %vous le creer ? O/N %N");
+				io.flush
+				io.read_line
+				action := io.last_string
+				if action.is_equal("O") then
+					creer_un_utilisateur
+				end
+			end
 		end
 end -- class MEDIATHEQUE
