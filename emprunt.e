@@ -1,26 +1,28 @@
 class EMPRUNT
 
 creation {ANY}
-    make
+    make_emprunt
 
 feature {ANY}
 	media: MEDIA
 	user : UTILISATEUR
    date_emprunt: TIME
 	date_retour: TIME
+	date_rendu: TIME
 
 feature {ANY}
-    make (media_param: MEDIA; user_param : UTILISATEUR; date_emprunt : TIME; date_retour : TIME) is
+    make_emprunt (media_e : MEDIA; user_e : UTILISATEUR; date_e : TIME; date_r : TIME) is
     do
-		media := media_param
-		user := user_param
-		date_emprunt.update
+		media := media_e
+		user := user_e
+		date_emprunt := date_e
+		date_retour := date_r
+		date_rendu := date_r
     end
 	
-	   ---------------------------------
-       ------- AFFICHER EMPRUNT
-       -- On retourne une cdc qui contient le titre de l'objet emprunté et l'identifiant de l'emprunteur
-       ---------------------------------
+	    ------------------------
+       -- AFFICHER UN EMPRUNT--
+       ------------------------
 	afficher : STRING is
 	do
 		Result := media.get_titre + " emprunté par " + user.get_identifiant
@@ -28,18 +30,17 @@ feature {ANY}
     ---------------------
     ----- SETTERS -------
     ---------------------
-	set_date_retour is
+	set_date_rendu is
 	do
-		date_retour.update
+		date_rendu.update
 	end
 	
     ---------------------
     ----- GETTERS -------
     ---------------------
-	get_date_retour : TIME is
+	get_date_rendu : TIME is
 	do
-		Result := date_retour
+		Result := date_rendu
 	end
-
 end -- classe REMPRUNT
 

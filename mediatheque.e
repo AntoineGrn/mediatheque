@@ -18,8 +18,8 @@ feature {ANY}
 
 		local
 			quitter : BOOLEAN
-			identifiant, action, search_user : STRING
-			index, index_user_find, index_media_rechercher : INTEGER
+			identifiant, action : STRING
+			index, index_media_rechercher : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
 		do
@@ -67,6 +67,7 @@ feature {ANY}
 						end
 							print("3 - Lister tous les medias %N");
 							print("8 - Rechercher un media %N");
+							print("9 - Emprunter un media %N");
 							print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -101,6 +102,8 @@ feature {ANY}
 							end
 						when "8" then
 							index_media_rechercher := rechercher_media
+						when "9" then
+							emprunter_media(user_connected)
 						when "3" then
 							lister_medias(liste_medias)
 						else
@@ -771,7 +774,7 @@ feature {ANY}
 			----------------------
 			--EMPRUNTER UN MEDIA--
 			----------------------
-	emprunter_media(user_connected : UTILISATEUR) : BOOLEAN is
+	emprunter_media(user_connected : UTILISATEUR) is
 		local
 			index_media, nombre_media : INTEGER
 			emprunt : EMPRUNT
@@ -793,6 +796,5 @@ feature {ANY}
 			--on diminue le nombre d'exemplaire dispo
 			nombre_media := media.get_nombre;
 			media.set_nombre(nombre_media - 1);
-			Result := True;
 		end
 end -- class MEDIATHEQUE
