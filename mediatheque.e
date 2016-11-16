@@ -57,14 +57,16 @@ feature {ANY}
 						print("Vous etes connecte a l'application !");
 						print("Veuillez Selectionner une action dans le menu : %N");
 						print("q - Quitter %N");
-						print("1 - Importer les utilisateurs du fichier .txt %N");
-						print("2 - Importer les medias du fichier .txt %N");
-						print("3 - Lister tous les medias %N");
-						print("4 - Lister tous les utlisateurs %N");
-						print("5 - Creer un utilisateur %N");
-						print("6 - Rechercher un utilisateur %N");
-						print("7 - Ajouter un média %N");
-						print("------------------------------------------------%N");
+						if user_connected.is_admin then
+							print("1 - Importer les utilisateurs du fichier .txt %N");
+							print("2 - Importer les medias du fichier .txt %N");
+							print("4 - Lister tous les utlisateurs %N");
+							print("5 - Creer un utilisateur %N");
+							print("6 - Rechercher un utilisateur %N");
+							print("7 - Ajouter un média %N");
+						end	
+							print("3 - Lister tous les medias %N");
+							print("------------------------------------------------%N");
 						io.flush
 						io.read_line
 						action := io.last_string
@@ -73,19 +75,31 @@ feature {ANY}
 						when "q" then
 							quitter := True
 						when "1" then
-							lire_fichier_utilisateurs
+							if user_connected.is_admin then
+								lire_fichier_utilisateurs
+							end
 						when "2" then
-							readfilemedia
+							if user_connected.is_admin then
+								readfilemedia
+							end
+						when "4" then
+							if user_connected.is_admin then
+								lister_les_utilisateurs
+							end
+						when "5" then
+							if user_connected.is_admin then
+								creer_un_utilisateur
+							end
+						when "7" then
+							if user_connected.is_admin then
+								ajouter_media_manuellement
+							end
+						when "6" then
+							if user_connected.is_admin then
+								rechercher_utilisateur_main
+							end
 						when "3" then
 							lister_medias(liste_medias)
-						when "4" then
-							lister_les_utilisateurs
-						when "5" then
-							creer_un_utilisateur
-						when "7" then
-							ajouter_media_manuellement
-						when "6" then
-							rechercher_utilisateur_main
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
