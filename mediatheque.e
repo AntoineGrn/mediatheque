@@ -57,15 +57,17 @@ feature {ANY}
 						print("Vous etes connecte a l'application !");
 						print("Veuillez Selectionner une action dans le menu : %N");
 						print("q - Quitter %N");
-						print("1 - Importer les utilisateurs du fichier .txt %N");
-						print("2 - Importer les medias du fichier .txt %N");
-						print("3 - Lister tous les medias %N");
-						print("4 - Lister tous les utlisateurs %N");
-						print("5 - Creer un utilisateur %N");
-						print("6 - Rechercher un utilisateur %N");
-						print("7 - Ajouter un media %N");
-						print("8 - Rechercher un media %N");
-						print("------------------------------------------------%N");
+						if user_connected.is_admin then
+							print("1 - Importer les utilisateurs du fichier .txt %N");
+							print("2 - Importer les medias du fichier .txt %N");
+							print("4 - Lister tous les utlisateurs %N");
+							print("5 - Creer un utilisateur %N");
+							print("6 - Rechercher un utilisateur %N");
+							print("7 - Ajouter un média %N");
+						end
+							print("3 - Lister tous les medias %N");
+							print("8 - Rechercher un media %N");
+							print("------------------------------------------------%N");
 						io.flush
 						io.read_line
 						action := io.last_string
@@ -74,39 +76,33 @@ feature {ANY}
 						when "q" then
 							quitter := True
 						when "1" then
-							lire_fichier_utilisateurs
+							if user_connected.is_admin then
+								lire_fichier_utilisateurs
+							end
 						when "2" then
-							readfilemedia
-						when "3" then
-							lister_medias(liste_medias)
+							if user_connected.is_admin then
+								readfilemedia
+							end
 						when "4" then
-							lister_les_utilisateurs
+							if user_connected.is_admin then
+								lister_les_utilisateurs
+							end
 						when "5" then
-							creer_un_utilisateur
+							if user_connected.is_admin then
+								creer_un_utilisateur
+							end
 						when "7" then
-							ajouter_media_manuellement
+							if user_connected.is_admin then
+								ajouter_media_manuellement
+							end
+						when "6" then
+							if user_connected.is_admin then
+								rechercher_utilisateur_main
+							end
 						when "8" then
 							index_media_rechercher := rechercher_media
-						when "6" then
-							print("Veuillez entrer l'IDENTIFIANT de l'utilisateur à rechercher %N");
-							io.flush
-							io.read_line
-							search_user := ""
-							search_user.copy(io.last_string)
-							index_user_find := rechercher_utilisateur(search_user);
-							if index_user_find /= -1 then
-								print("Utilisateur Trouvé ! %N");
-								print(liste_utilisateurs.item(index_user_find).display_user);
-							else
-								print("L'utilisateur n'existe pas, voulez-%
-                              %vous le creer ? O/N %N");
-								io.flush
-								io.read_line
-								action := io.last_string
-								if action.is_equal("O") then
-									creer_un_utilisateur
-								end
-							end
+						when "3" then
+							lister_medias(liste_medias)
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -744,5 +740,31 @@ feature {ANY}
 				index := index + 1;
 			end
 			Result := resultat
+		end
+
+	rechercher_utilisateur_main is
+		local
+			index_user_find : INTEGER
+			action, search_user : STRING
+		do
+			print("Veuillez entrer l'IDENTIFIANT de l'utilisateur à rechercher %N");
+			io.flush
+			io.read_line
+			search_user := ""
+			search_user.copy(io.last_string)
+			index_user_find := rechercher_utilisateur(search_user);
+			if index_user_find /= -1 then
+				print("Utilisateur Trouvé ! %N");
+				print(liste_utilisateurs.item(index_user_find).display_user);
+			else
+				print("L'utilisateur n'existe pas, voulez-%
+                              %vous le creer ? O/N %N");
+				io.flush
+				io.read_line
+				action := io.last_string
+				if action.is_equal("O") then
+					creer_un_utilisateur
+				end
+			end
 		end
 end -- class MEDIATHEQUE
