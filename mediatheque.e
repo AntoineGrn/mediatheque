@@ -10,7 +10,7 @@ feature {}
 
 	liste_medias: ARRAY[MEDIA] -- liste des médias
 	liste_utilisateurs: ARRAY[UTILISATEUR] -- liste des utilisateurs
-	--path_to_user_file: STRING
+	liste_emprunts: ARRAY[EMPRUNT] -- liste des emprunts
 
 feature {ANY}
 	make is
@@ -18,18 +18,18 @@ feature {ANY}
 
 		local
 			quitter : BOOLEAN
-			identifiant, action, search_user : STRING
-			index, index_user_find, index_media_rechercher : INTEGER
+			identifiant, action : STRING
+			index, index_media_rechercher : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
-			-- Initialisation des Médias et des Utilisateurs
 		do
 			-- Initialisations
       create liste_medias.with_capacity(0, 0)
       create liste_utilisateurs.with_capacity(0,0)
-			--readfilemedia
-			lire_fichier_utilisateurs
-			lister_medias(liste_medias)
+		create liste_emprunts.with_capacity(0,0)
+		--readfilemedia
+		lire_fichier_utilisateurs
+		lister_medias(liste_medias)
 
 		--Programme
 
@@ -54,20 +54,22 @@ feature {ANY}
 					quitter := True;
 				else
 					from until quitter loop
-						print("Vous etes connecte a l'application !");
-						print("Veuillez Selectionner une action dans le menu : %N");
-						print("q - Quitter %N");
+						print("======================================================%N")
+						print("|Vous etes connecte a l'application !                |%N");
+						print("|Veuillez Selectionner une action dans le menu :     |%N");
+						print("|q - Quitter                                         |%N");
 						if user_connected.is_admin then
-							print("1 - Importer les utilisateurs du fichier .txt %N");
-							print("2 - Importer les medias du fichier .txt %N");
-							print("4 - Lister tous les utlisateurs %N");
-							print("5 - Creer un utilisateur %N");
-							print("6 - Rechercher un utilisateur %N");
-							print("7 - Ajouter un média %N");
+							print("|1 - Importer les utilisateurs du fichier .txt       |%N");
+							print("|2 - Importer les medias du fichier .txt             |%N");
+							print("|4 - Lister tous les utlisateurs                     |%N");
+							print("|5 - Creer un utilisateur                            |%N");
+							print("|6 - Rechercher un utilisateur                       |%N");
+							print("|7 - Ajouter un média                                |%N");
 						end
-							print("3 - Lister tous les medias %N");
-							print("8 - Rechercher un media %N");
-							print("------------------------------------------------%N");
+							print("|3 - Lister tous les medias                          |%N");
+							print("|8 - Rechercher un media                             |%N");
+							print("|9 - Emprunter un media                              |%N");
+							print("======================================================%N");
 						io.flush
 						io.read_line
 						action := io.last_string
@@ -101,6 +103,8 @@ feature {ANY}
 							end
 						when "8" then
 							index_media_rechercher := rechercher_media
+						when "9" then
+							emprunter_media(user_connected)
 						when "3" then
 							lister_medias(liste_medias)
 						else
@@ -110,9 +114,9 @@ feature {ANY}
 				end
 			end
 		end
-	---------------------------------------
-	-- LISTER LES MEDIAS
-	---------------------------------------
+	-----------------------
+	-- LISTER LES MEDIAS --
+	-----------------------
 	lister_medias (liste_all_medias : ARRAY[MEDIA]) is
 	local
 		index : INTEGER
@@ -770,5 +774,32 @@ feature {ANY}
 					creer_un_utilisateur
 				end
 			end
+		end
+
+			----------------------
+			--EMPRUNTER UN MEDIA--
+			----------------------
+	emprunter_media(user_connected : UTILISATEUR) is
+		local
+			index_media, nombre_media : INTEGER
+			emprunt : EMPRUNT
+			date_e, date_r : TIME
+			media : MEDIA
+		do
+			--Rechercher un média & récupération de l'indice dans le 
+			--tableau des médias
+			index_media := rechercher_media
+			--trouver le média dans le tableau 
+			media := liste_medias.item(index_media)
+			--on l'ajoute au tableau d'emprunt : media, titre, 
+			--date_emprunt, date_retour
+			date_e.update
+			date_r.update
+			date_r.add_day(15)
+			create emprunt.make_emprunt(media, user_connected, date_e, date_r)
+			liste_emprunts.add_last(emprunt)
+			--on diminue le nombre d'exemplaire dispo
+			nombre_media := media.get_nombre;
+			media.set_nombre(nombre_media - 1);
 		end
 end -- class MEDIATHEQUE
