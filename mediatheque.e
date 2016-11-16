@@ -54,21 +54,22 @@ feature {ANY}
 					quitter := True;
 				else
 					from until quitter loop
-						print("Vous etes connecte a l'application !");
-						print("Veuillez Selectionner une action dans le menu : %N");
-						print("q - Quitter %N");
+						print("======================================================%N")
+						print("|Vous etes connecte a l'application !                |%N");
+						print("|Veuillez Selectionner une action dans le menu :     |%N");
+						print("|q - Quitter                                         |%N");
 						if user_connected.is_admin then
-							print("1 - Importer les utilisateurs du fichier .txt %N");
-							print("2 - Importer les medias du fichier .txt %N");
-							print("4 - Lister tous les utlisateurs %N");
-							print("5 - Creer un utilisateur %N");
-							print("6 - Rechercher un utilisateur %N");
-							print("7 - Ajouter un média %N");
+							print("|1 - Importer les utilisateurs du fichier .txt       |%N");
+							print("|2 - Importer les medias du fichier .txt             |%N");
+							print("|4 - Lister tous les utlisateurs                     |%N");
+							print("|5 - Creer un utilisateur                            |%N");
+							print("|6 - Rechercher un utilisateur                       |%N");
+							print("|7 - Ajouter un média                                |%N");
 						end
-							print("3 - Lister tous les medias %N");
-							print("8 - Rechercher un media %N");
-							print("9 - Emprunter un media %N");
-							print("------------------------------------------------%N");
+							print("|3 - Lister tous les medias                          |%N");
+							print("|8 - Rechercher un media                             |%N");
+							print("|9 - Emprunter un media                              |%N");
+							print("======================================================%N");
 						io.flush
 						io.read_line
 						action := io.last_string
@@ -113,9 +114,9 @@ feature {ANY}
 				end
 			end
 		end
-	---------------------------------------
-	-- LISTER LES MEDIAS
-	---------------------------------------
+	-----------------------
+	-- LISTER LES MEDIAS --
+	-----------------------
 	lister_medias (liste_all_medias : ARRAY[MEDIA]) is
 	local
 		index : INTEGER
