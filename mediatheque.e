@@ -18,8 +18,8 @@ feature {ANY}
 
 		local
 			quitter : BOOLEAN
-			identifiant, action : STRING
-			index : INTEGER
+			identifiant, action, search_user : STRING
+			index, index_user_find, index_media_rechercher : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
 		do
@@ -64,8 +64,9 @@ feature {ANY}
 							print("5 - Creer un utilisateur %N");
 							print("6 - Rechercher un utilisateur %N");
 							print("7 - Ajouter un média %N");
-						end	
+						end
 							print("3 - Lister tous les medias %N");
+							print("8 - Rechercher un media %N");
 							print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -98,6 +99,8 @@ feature {ANY}
 							if user_connected.is_admin then
 								rechercher_utilisateur_main
 							end
+						when "8" then
+							index_media_rechercher := rechercher_media
 						when "3" then
 							lister_medias(liste_medias)
 						else
@@ -122,12 +125,14 @@ feature {ANY}
 				livre_media ::= liste_medias.item(index)
 				io.put_string("Media [LIVRE] n" + (index + 1).to_string + " : " + liste_medias.item(index).titre + " %N")
 				io.put_string("Auteur : " + livre_media.auteur + " %N%N")
+				io.put_string("Nbr exemplaire : " + livre_media.nombre.to_string + " %N%N")
 			end
 			if {DVD}?:= liste_medias.item(index) then
 				dvd_media ::= liste_medias.item(index)
 				io.put_string("Media [DVD] n" + (index + 1).to_string + " : " + liste_medias.item(index).titre + " %N")
 				io.put_string("Annee : " + dvd_media.annee + " %N")
 				io.put_string("Type : " + dvd_media.type + " %N%N")
+				io.put_string("Nbr exemplaire : " + dvd_media.nombre.to_string + " %N%N")
 			end
 			index := index +1
 		end
@@ -202,6 +207,137 @@ feature {ANY}
 	end
 
 	---------------------------------------
+	-- RECHERCHER UN MEDIA
+	---------------------------------------
+	rechercher_media : INTEGER is
+	local
+		action_type_media : STRING
+		titre_livre : STRING
+		auteur_livre : STRING
+		titre_dvd : STRING
+		annee_dvd : STRING
+		type : STRING
+	do
+		print("Choisissez le type de média que vous voulez ajouter : %N")
+		print("1. Livre %N")
+		print("2. DVD %N")
+		io.flush
+		io.read_line
+		action_type_media := io.last_string
+		inspect
+			action_type_media
+		when "1" then
+			type := "Livre"
+		when "2" then
+			type := "DVD"
+		else
+			io.put_string("Veuillez saisir un des choix proposés %N")
+		end
+		if type.is_equal("Livre") then
+			print("Saisissez le titre du livre : %N")
+			io.flush
+			io.read_line
+			titre_livre := ""
+			titre_livre.copy(io.last_string)
+			print("Saisissez l'auteur du livre : %N")
+			io.flush
+			io.read_line
+			auteur_livre := ""
+			auteur_livre.copy(io.last_string)
+			Result := recherche_livre(titre_livre, auteur_livre)
+		elseif type.is_equal("DVD") then
+			-- saisie du titre du DVD
+			print("Saisissez le titre du DVD : %N")
+			io.flush
+			io.read_line
+			titre_dvd := ""
+			titre_dvd.copy(io.last_string)
+			-- saisie de l'annee du DVD
+			print("Saisissez l'annee du DVD : %N")
+			io.flush
+			io.read_line
+			annee_dvd := ""
+			annee_dvd.copy(io.last_string)
+			Result := recherche_dvd(titre_dvd, annee_dvd)
+		else
+			print("Veuillez saisir un type de media valide %N")
+		end
+	end
+
+	---------------------------------------
+	-- RECHERCHER LIVRE
+	---------------------------------------
+	recherche_livre(titre_livre : STRING; auteur_livre : STRING) : INTEGER is
+	local
+		index : INTEGER
+		livre_from_liste : LIVRE
+		media_trouve : BOOLEAN
+	do
+		media_trouve := False
+		from index := 0 until index > liste_medias.count - 1 loop
+			if {LIVRE}?:= liste_medias.item(index) then
+				livre_from_liste ::= liste_medias.item(index)
+				if livre_from_liste.get_titre.is_equal(titre_livre) and livre_from_liste.get_auteur.is_equal(auteur_livre) then
+					media_trouve := True
+					Result := index
+					io.put_string("Livre trouvé !  %N")
+					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
+					io.put_string("Auteur : " + livre_from_liste.auteur + " %N%N")
+					io.put_string("Nombre d'exemplaire : " + livre_from_liste.get_nombre.to_string + " %N%N")
+					index := liste_medias.count + 1
+				else
+					io.put_string("Aucun livre trouvé %N")
+				end
+			end
+			index := index +1
+		end
+		if media_trouve.is_equal(False) then
+			io.put_string("Aucun DVD trouve %N%N")
+		end
+	end
+
+	---------------------------------------
+	-- RECHERCHER DVD
+	---------------------------------------
+	recherche_dvd(titre_dvd : STRING; annee_dvd : STRING) : INTEGER is
+	local
+		index, index_realisateur, index_acteur : INTEGER
+		dvd_media : DVD
+		media_trouve : BOOLEAN
+	do
+		media_trouve := False
+		from index := 0 until index > liste_medias.count - 1 loop
+			if {DVD}?:= liste_medias.item(index) then
+				dvd_media ::= liste_medias.item(index)
+				if dvd_media.get_titre.is_equal(titre_dvd) and dvd_media.get_annee.is_equal(annee_dvd) then
+					media_trouve := True
+					Result := index
+					io.put_string("DVD trouvé !  %N")
+					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
+					io.put_string("Annee : " + dvd_media.get_annee + " %N")
+					io.put_string("Realisateurs : ")
+					from index_realisateur := 0 until index_realisateur > dvd_media.get_realisateurs.count - 1 loop
+						io.put_string(dvd_media.get_realisateurs.item(index_realisateur) + "%N")
+						index_realisateur := index_realisateur + 1
+					end
+					io.put_string("Acteurs : ")
+					from index_acteur := 0 until index_acteur > dvd_media.get_acteurs.count - 1 loop
+						io.put_string(dvd_media.get_acteurs.item(index_acteur) + "%N")
+						index_acteur := index_acteur + 1
+					end
+					io.put_string("Type : " + dvd_media.get_type + " %N%N")
+					io.put_string("Nbr exemplaire : " + dvd_media.get_nombre.to_string + " %N%N")
+				end
+			end
+			index := index + 1
+		end
+		if media_trouve.is_equal(False) then
+			io.put_string("Aucun DVD trouve %N%N")
+		end
+	end
+
+
+	---------------------------------------
 	-- AJOUTER UN MEDIA MANUELLEMENT
 	---------------------------------------
 	ajouter_media_manuellement is
@@ -255,7 +391,7 @@ feature {ANY}
 			print("Saisissez le nombre d'exemplaire ajouté : %N")
 			io.flush
 			io.read_line
-			nombre_exemplaire := 0
+			nombre_exemplaire := 1
 			nombre_exemplaire.copy(io.last_integer)
 			create new_livre.make_livre(titre_livre, auteur_livre, nombre_exemplaire)
 			ajouter_livre(new_livre)
@@ -382,6 +518,7 @@ feature {ANY}
 
 			if premier_terme.is_equal("DVD ;") then
 				is_dvd := True
+				nombre_dvd := 1
 				from i := 1 until i > nbr_separation_inline
 				loop
 				  index_point_virgule_suivant := line.index_of(';', index_pointvirguleprecedent)
@@ -616,7 +753,7 @@ feature {ANY}
 			search_user := ""
 			search_user.copy(io.last_string)
 			index_user_find := rechercher_utilisateur(search_user);
-			if index_user_find /= -1 then	
+			if index_user_find /= -1 then
 				print("Utilisateur Trouvé ! %N");
 				print(liste_utilisateurs.item(index_user_find).display_user);
 			else
