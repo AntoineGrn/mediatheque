@@ -91,4 +91,12 @@ feature {ANY}
 		Result := identifiant.is_equal(id)
 	end
 
+	search_user(string : STRING) : BOOLEAN is
+		do
+			if identifiant.as_lower.is_equal(string.as_lower) then
+				Result := True
+			else
+				Result := False
+			end
+		end
 end -- class UTILISATEUR

@@ -18,8 +18,8 @@ feature {ANY}
 
 		local
 			quitter : BOOLEAN
-			identifiant, action : STRING
-			index : INTEGER
+			identifiant, action, search_user : STRING
+			index, index_user_find : INTEGER
 			user_connected : UTILISATEUR
 			connection_autorise : BOOLEAN
 			-- Initialisation des Médias et des Utilisateurs
@@ -62,7 +62,7 @@ feature {ANY}
 						print("3 - Lister tous les medias %N");
 						print("4 - Lister tous les utlisateurs %N");
 						print("5 - Creer un utilisateur %N");
-						--print("6 - Lister tous les utlisateurs %N");
+						print("6 - Rechercher un utilisateur %N");
 						print("------------------------------------------------%N");
 						io.flush
 						io.read_line
@@ -81,6 +81,26 @@ feature {ANY}
 							lister_les_utilisateurs
 						when "5" then
 							creer_un_utilisateur
+						when "6" then
+							print("Veuillez entrer l'IDENTIFIANT de l'utilisateur à rechercher %N");
+							io.flush
+							io.read_line
+							search_user := ""
+							search_user.copy(io.last_string)
+							index_user_find := rechercher_utilisateur(search_user);
+							if index_user_find /= -1 then	
+								print("Utilisateur Trouvé ! %N");
+								print(liste_utilisateurs.item(index_user_find).display_user);
+							else
+								print("L'utilisateur n'existe pas, voulez-%
+                              %vous le creer ? O/N %N");
+								io.flush
+								io.read_line
+								action := io.last_string
+								if action.is_equal("O") then
+									creer_un_utilisateur
+								end
+							end
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -434,5 +454,25 @@ feature {ANY}
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
 			ajouter_un_utilisateur(utilisateur)
+		end
+
+			-----------------------------
+			--RECHERCHER UN UTILISATEUR--
+			-----------------------------
+	rechercher_utilisateur(search: STRING) : INTEGER is
+		local
+			index, resultat : INTEGER
+			find : BOOLEAN
+		do
+			find := False
+			resultat := -1
+			from index := 0 until index > liste_utilisateurs.count-1 or find = True loop
+				if liste_utilisateurs.item(index).search_user(search) then
+					resultat := index
+					find := True;
+				end
+				index := index + 1;
+			end
+			Result := resultat
 		end
 end -- class MEDIATHEQUE
