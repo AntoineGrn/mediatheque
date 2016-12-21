@@ -11,7 +11,7 @@ feature {}
 
 feature {ANY}
 	--variables
-	auteur : STRING
+	auteur: STRING
 
 	make_livre (nv_titre: STRING; nv_auteur: STRING; nv_nombre: INTEGER) is
 			-- Creation d'un livre

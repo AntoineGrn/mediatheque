@@ -358,7 +358,8 @@ feature {ANY}
 		liste_realisateur_dvd : ARRAY[STRING]
 		acteur_dvd : STRING
 		liste_acteur_dvd : ARRAY[STRING]
-		nombre_exemplaire : INTEGER
+		nombre_exemplaire : STRING
+		nb_ex_bis : STRING
 		action_type_dvd : STRING
 		action_type_media : STRING
 		test_sortie_acteur : BOOLEAN
@@ -383,21 +384,17 @@ feature {ANY}
 		end
 		if type.is_equal("Livre") then
 			print("Saisissez le titre du livre : %N")
-			io.flush
 			io.read_line
 			titre_livre := ""
 			titre_livre.copy(io.last_string)
 			print("Saisissez l'auteur du livre : %N")
-			io.flush
 			io.read_line
 			auteur_livre := ""
 			auteur_livre.copy(io.last_string)
 			print("Saisissez le nombre d'exemplaire ajouté : %N")
-			io.flush
 			io.read_line
-			nombre_exemplaire := 1
-			nombre_exemplaire.copy(io.last_integer)
-			create new_livre.make_livre(titre_livre, auteur_livre, nombre_exemplaire)
+			nb_ex_bis:= io.last_string
+			create new_livre.make_livre(titre_livre, auteur_livre, nb_ex_bis.to_integer)
 			ajouter_livre(new_livre)
 		elseif type.is_equal("DVD") then
 			-- saisie du titre du DVD
@@ -461,9 +458,8 @@ feature {ANY}
 			print("Saisissez le nombre d'exemplaire ajouté : %N")
 			io.flush
 			io.read_line
-			nombre_exemplaire := 0
-			nombre_exemplaire.copy(io.last_integer)
-			create new_dvd.make_dvd(titre_dvd, annee_dvd, nombre_exemplaire, liste_acteur_dvd, liste_realisateur_dvd, type_dvd)
+			nombre_exemplaire := io.last_string
+			create new_dvd.make_dvd(titre_dvd, annee_dvd, nombre_exemplaire.to_integer, liste_acteur_dvd, liste_realisateur_dvd, type_dvd)
 			ajouter_dvd(new_dvd)
 		else
 			print("Veuillez saisir un type de média valide %N")
@@ -496,10 +492,10 @@ feature {ANY}
 		realisateur_dvd : STRING
 		annee_dvd : STRING
 		type_dvd : STRING
-		nombre_dvd : INTEGER
+		nombre_dvd : STRING
 		auteur_livre : STRING
 		titre_livre : STRING
-		nombre_livre : INTEGER
+		nombre_livre : STRING
 	do
 		create file.connect_to("medias.txt")
 		from until file.end_of_input
@@ -522,8 +518,8 @@ feature {ANY}
 
 			if premier_terme.is_equal("DVD ;") then
 				is_dvd := True
-				nombre_dvd := 1
-				from i := 1 until i > nbr_separation_inline
+				nombre_dvd := "1"
+			from i := 1 until i > nbr_separation_inline
 				loop
 				  index_point_virgule_suivant := line.index_of(';', index_pointvirguleprecedent)
 					terme := line.substring(index_pointvirguleprecedent, index_point_virgule_suivant)
@@ -547,16 +543,16 @@ feature {ANY}
 					  type_dvd := terme.substring(7, terme.index_of('>', 1) - 1)
 					end
 					if (terme.has_substring("Nombre")) then
-					  nombre_dvd := terme.substring(9, terme.index_of('>', 1) - 1).to_integer
+					  nombre_dvd := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
 					i := i+1
 				end
-				create dvd.make_dvd(titre_dvd, annee_dvd, nombre_dvd, acteurs_dvd, realisateurs_dvd, type_dvd)
+				create dvd.make_dvd(titre_dvd, annee_dvd, nombre_dvd.to_integer, acteurs_dvd, realisateurs_dvd, type_dvd)
 				ajouter_dvd(dvd)
 			end
 			if premier_terme.is_equal("Livre ;") then
 				is_book := True
-				nombre_livre := 1
+				nombre_livre := "1"
 				io.put_string(line)
 				io.put_integer(nbr_separation_inline)
 				from i := 1 until i > nbr_separation_inline
@@ -574,11 +570,11 @@ feature {ANY}
 						auteur_livre := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
 					if (terme.has_substring("Nombre")) then
-					  nombre_livre := terme.substring(9, terme.index_of('>', 1) - 1).to_integer
+					  nombre_livre := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
 					i := i+1
 				end
-				create livre.make_livre(titre_livre, auteur_livre, nombre_livre)
+				create livre.make_livre(titre_livre, auteur_livre, nombre_livre.to_integer)
 				ajouter_livre(livre)
 			end
 
@@ -672,7 +668,7 @@ feature {ANY}
 				liste_utilisateurs.add_last(user)
 				io.put_string("Utilisateur ajoute.%N")
 			else
-				io.put_string("L'utilisateur existe deja")
+				io.put_string("L'utilisateur existe deja%N")
 			end
 		end
 

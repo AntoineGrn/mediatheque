@@ -32,7 +32,7 @@ feature {ANY}
 			titre.copy(nv_titre)
 			annee.copy(nv_annee)
 			type.copy(nv_type)
-			nombre.copy(nv_nombre)
+			nombre := nv_nombre
 			acteurs.copy(nv_acteurs)
 			realisateurs.copy(nv_realisateurs)
 		end
