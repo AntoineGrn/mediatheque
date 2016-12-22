@@ -222,7 +222,7 @@ feature {ANY}
 		annee_dvd : STRING
 		type : STRING
 	do
-		print("Choisissez le type de média que vous voulez ajouter : %N")
+		print("Choisissez le type de média : %N")
 		print("1. Livre %N")
 		print("2. DVD %N")
 		io.flush
@@ -281,10 +281,10 @@ feature {ANY}
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {LIVRE}?:= liste_medias.item(index) then
 				livre_from_liste ::= liste_medias.item(index)
-				if livre_from_liste.get_titre.is_equal(titre_livre) and livre_from_liste.get_auteur.is_equal(auteur_livre) then
+				if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.has_substring(auteur_livre) then
 					media_trouve := True
 					Result := index
-					io.put_string("Livre trouvé !  %N")
+					io.put_string("%NLivre trouvé !  %N")
 					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
 					io.put_string("Auteur : " + livre_from_liste.auteur + " %N%N")
 					io.put_string("Nombre d'exemplaire : " + livre_from_liste.get_nombre.to_string + " %N%N")
@@ -313,10 +313,11 @@ feature {ANY}
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {DVD}?:= liste_medias.item(index) then
 				dvd_media ::= liste_medias.item(index)
-				if dvd_media.get_titre.is_equal(titre_dvd) and dvd_media.get_annee.is_equal(annee_dvd) then
+				print(dvd_media.get_titre)
+				if dvd_media.get_titre.as_lower.has_substring(titre_dvd.as_lower) and dvd_media.get_annee.is_equal(annee_dvd) then
 					media_trouve := True
 					Result := index
-					io.put_string("DVD trouvé !  %N")
+					io.put_string("%NDVD trouvé !  %N")
 					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
 					io.put_string("Annee : " + dvd_media.get_annee + " %N")
 					io.put_string("Realisateurs : ")

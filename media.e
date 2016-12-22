@@ -38,7 +38,7 @@ feature {ANY}
 
 	set_nombre(valeur: INTEGER) is
   do
-    nombre.copy(valeur)
+    nombre := valeur
   end
 
   ---------------------------------------
