@@ -44,7 +44,7 @@ feature {ANY}
   ---------------------------------------
               --TO STRING
   ---------------------------------------
-  to_string : STRING is
+  to_string is
   do
 		io.put_string("MEDIA : %N")
 		io.put_string("Titre : " + titre + "%N%N")

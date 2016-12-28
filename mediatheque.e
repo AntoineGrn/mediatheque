@@ -65,10 +65,13 @@ feature {ANY}
 							print("|5 - Creer un utilisateur                            |%N");
 							print("|6 - Rechercher un utilisateur                       |%N");
 							print("|7 - Ajouter un média                                |%N");
+							print("|10 - Lister les emprunts                            |%N");
 						end
 							print("|3 - Lister tous les medias                          |%N");
 							print("|8 - Rechercher un media                             |%N");
 							print("|9 - Emprunter un media                              |%N");
+							print("|11 - Lister mes emprunts                            |%N");
+							print("|12 - Rendre un media                                |%N");
 							print("======================================================%N");
 						io.flush
 						io.read_line
@@ -107,6 +110,12 @@ feature {ANY}
 							emprunter_media(user_connected)
 						when "3" then
 							lister_medias(liste_medias)
+						when "10" then
+							liste_emprunt
+						when "11" then
+							afficher_medias_emprunter_by_user(user_connected)
+						when"12" then
+							rendre_un_media(user_connected)
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -512,7 +521,6 @@ feature {ANY}
 				create acteurs_dvd.with_capacity(0,0)
 			end
 			nbr_separation_inline := line.occurrences(';')
-
 			index_premier_point_virgule := line.index_of(';', 1)
 			index_pointvirguleprecedent := index_premier_point_virgule
 			premier_terme := line.substring(1, index_premier_point_virgule)
@@ -799,4 +807,77 @@ feature {ANY}
 			nombre_media := media.get_nombre;
 			media.set_nombre(nombre_media - 1);
 		end
+
+	liste_emprunt is
+	local
+		index : INTEGER
+	do
+		io.put_string("Nombre d'emprunts : " + liste_emprunts.count.to_string + "%N")
+		from index := 0 until index > liste_emprunts.count-1 loop
+			io.put_string(liste_emprunts.item(index).afficher + "%N");
+			index := index +1
+		end
+	end
+
+	media_emprunter_by_user(user: UTILISATEUR) : ARRAY[MEDIA] is
+		local
+			index : INTEGER
+			identifiant_user : STRING
+			user_emprunts: ARRAY[MEDIA]
+		do
+			create user_emprunts.with_capacity(0,0);
+			from index := 0 until index > liste_emprunts.count-1 loop
+				identifiant_user:= liste_emprunts.item(index).user.get_identifiant
+				if identifiant_user.is_equal(user.get_identifiant) then
+					user_emprunts.add_last(liste_emprunts.item(index).media);
+				else
+					io.put_string("Vous n'avez rien emprunté !%N")
+				end
+				index := index +1
+			end
+			Result := user_emprunts
+		end
+
+	afficher_medias_emprunter_by_user(user : UTILISATEUR) is
+		local
+			index: INTEGER
+			user_emprunts: ARRAY[MEDIA]
+		do
+			create user_emprunts.with_capacity(0,0);
+			user_emprunts := media_emprunter_by_user(user)
+			if user_emprunts.count > 0 then
+				from index := 0 until index > user_emprunts.count -1 loop
+					user_emprunts.item(index).to_string;
+					index := index +1
+				end
+			end
+		end
+			--rendre media d'un utilisateur
+			--Augmenter dispo du media rendu
+	--dans tableau emprunts mettrea jour date de retour
+	--verifier si date retour est rentrée pour lister les medias 
+	--emprunter du user
+	
+	rendre_un_media(user : UTILISATEUR) is
+	local
+		index : INTEGER
+		tab_emprunts : ARRAY[MEDIA]
+		action : STRING
+	do
+		create tab_emprunts.with_capacity(0,0);
+		tab_emprunts := media_emprunter_by_user(user)
+		if tab_emprunts.count > 0 then
+			io.put_string("Entrer le numéro du média que vous voulez rendre : %N")
+			from index := 0 until index > tab_emprunts.count -1 loop
+				io.put_string(index.to_string+" : ");
+				io.put_string(tab_emprunts.item(index).get_titre + "%N");
+				index := index +1;
+			end
+			io.flush
+			io.read_line
+			action := io.last_string
+			io.put_string("indice du media a rendre : " + tab_emprunts.item(action.to_integer).get_titre)
+			--tab_emprunts.item(action.to_integer)
+		end
+	end
 end -- class MEDIATHEQUE

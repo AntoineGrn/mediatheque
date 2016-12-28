@@ -83,13 +83,13 @@ feature {ANY}
 	  ---------------------------------------
 	              --TO STRING
 	  ---------------------------------------
-	  to_string : STRING is
+	  to_string is
 	  do
-			io.put_string("MEDIA : %N")
-	    --io.put_string("Acteurs : " + acteurs + "%N%N")
+			io.put_string("MEDIA : DVD%N")
+	    	--io.put_string("Acteurs : " + acteurs.to_string + "%N%N")
 			--io.put_string("Realisateurs : " + realisateurs + "%N%N")
-			io.put_string("Type : " + type + "%N%N")
-			io.put_string("Annee : " + annee + "%N%N")
+			io.put_string("Type : " + type + "%N")
+			io.put_string("Annee : " + annee + "%N")
 			io.put_string("------------------------------- %N%N")
 	  end
 
