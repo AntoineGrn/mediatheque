@@ -290,7 +290,7 @@ feature {ANY}
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {LIVRE}?:= liste_medias.item(index) then
 				livre_from_liste ::= liste_medias.item(index)
-				if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.has_substring(auteur_livre) then
+				if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.as_lower.has_substring(auteur_livre.as_lower) then
 					media_trouve := True
 					Result := index
 					io.put_string("%NLivre trouvé !  %N")
