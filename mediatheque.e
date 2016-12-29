@@ -812,7 +812,7 @@ feature {ANY}
 	local
 		index : INTEGER
 	do
-		io.put_string("Nombre d'emprunts : " + liste_emprunts.count.to_string + "%N")
+		--io.put_string("Nombre d'emprunts : " + liste_emprunts.count.to_string + "%N")
 		from index := 0 until index > liste_emprunts.count-1 loop
 			if liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
 				io.put_string(liste_emprunts.item(index).afficher + "%N");
