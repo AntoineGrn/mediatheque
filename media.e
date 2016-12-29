@@ -41,6 +41,10 @@ feature {ANY}
     nombre := valeur
   end
 
+	rendre_media is
+	do
+		nombre := nombre + 1
+	end
   ---------------------------------------
               --TO STRING
   ---------------------------------------

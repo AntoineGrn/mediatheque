@@ -788,7 +788,7 @@ feature {ANY}
 		local
 			index_media, nombre_media : INTEGER
 			emprunt : EMPRUNT
-			date_e, date_r : TIME
+			--date_e, date_r : TIME
 			media : MEDIA
 		do
 			--Rechercher un média & récupération de l'indice dans le 
@@ -798,10 +798,10 @@ feature {ANY}
 			media := liste_medias.item(index_media)
 			--on l'ajoute au tableau d'emprunt : media, titre, 
 			--date_emprunt, date_retour
-			date_e.update
-			date_r.update
-			date_r.add_day(15)
-			create emprunt.make_emprunt(media, user_connected, date_e, date_r)
+			--date_e.update
+			--date_r.update
+			--date_r.add_day(15)
+			create emprunt.make_emprunt(media, user_connected)
 			liste_emprunts.add_last(emprunt)
 			--on diminue le nombre d'exemplaire dispo
 			nombre_media := media.get_nombre;
@@ -814,7 +814,9 @@ feature {ANY}
 	do
 		io.put_string("Nombre d'emprunts : " + liste_emprunts.count.to_string + "%N")
 		from index := 0 until index > liste_emprunts.count-1 loop
-			io.put_string(liste_emprunts.item(index).afficher + "%N");
+			if liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
+				io.put_string(liste_emprunts.item(index).afficher + "%N");
+			end
 			index := index +1
 		end
 	end
@@ -876,8 +878,22 @@ feature {ANY}
 			io.flush
 			io.read_line
 			action := io.last_string
-			io.put_string("indice du media a rendre : " + tab_emprunts.item(action.to_integer).get_titre)
+			tab_emprunts.item(action.to_integer).rendre_media
+			mettre_a_jour_date_retour(tab_emprunts.item(action.to_integer))
+			--io.put_string("indice du media a rendre : " + tab_emprunts.item(action.to_integer).get_titre)
 			--tab_emprunts.item(action.to_integer)
 		end
 	end
+
+	mettre_a_jour_date_retour(media:MEDIA) is
+		local
+			index:INTEGER
+		do
+			from index := 0 until index > liste_emprunts.count - 1 loop
+				if media.get_titre.is_equal(liste_emprunts.item(index).media.get_titre) then
+					liste_emprunts.item(index).set_date_rendu
+				end
+				index := index + 1
+			end
+		end
 end -- class MEDIATHEQUE

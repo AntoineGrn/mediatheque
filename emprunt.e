@@ -11,13 +11,13 @@ feature {ANY}
 	date_rendu: TIME
 
 feature {ANY}
-    make_emprunt (media_e : MEDIA; user_e : UTILISATEUR; date_e : TIME; date_r : TIME) is
+    make_emprunt (media_e : MEDIA; user_e : UTILISATEUR) is
     do
 		media := media_e
 		user := user_e
-		date_emprunt := date_e
-		date_retour := date_r
-		date_rendu := date_r
+		date_emprunt.update
+		--date_retour := date_r
+		--date_rendu := date_r
     end
 	
 	    ------------------------
