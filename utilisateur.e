@@ -84,7 +84,7 @@ feature {ANY}
 
 	display_user : STRING is
 		do
-			Result:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: " + identifiant + "%N " + "Administrateur? : " + administrateur.to_string
+			Result:= "Utilisateur : %N Nom : " + nom + " " + prenom + "%N " + "Identifiant: " + identifiant + "%N " + "Administrateur? : " + administrateur.to_string + "%N"
 		end
 	user_connection_ok(id : STRING) : BOOLEAN is
 		do

@@ -49,9 +49,12 @@ feature {ANY}
 					end
 					index := index + 1
 				end
-				if connection_autorise = False or identifiant.is_equal("q") then
-					print("L'utilisateur n'est pas valide, vous aller quitter l'application. %N");
+				if identifiant.is_equal("q") then
+					print("Au revoir !%N")
 					quitter := True;
+				elseif connection_autorise = False then
+					print("L'identifiant saisi est pas valide. Veuillez rééssayer ! %N");
+					--quitter := True;
 				else
 					from until quitter loop
 						print("======================================================%N")
@@ -562,20 +565,16 @@ feature {ANY}
 			if premier_terme.is_equal("Livre ;") then
 				is_book := True
 				nombre_livre := "1"
-				io.put_string(line)
-				io.put_integer(nbr_separation_inline)
 				from i := 1 until i > nbr_separation_inline
 				loop
 					index_point_virgule_suivant := line.index_of(';', index_pointvirguleprecedent)
 					terme := line.substring(index_pointvirguleprecedent, index_point_virgule_suivant)
-					io.put_string(terme)
 					index_pointvirguleprecedent := index_point_virgule_suivant + 1
 					-- tester chaque attribut de livre et creer livre
 					if (terme.has_substring("Titre")) then
 						titre_livre := terme.substring(8, terme.index_of('>', 1) - 1)
 					end
 					if (terme.has_substring("Auteur")) then
-						io.put_string(terme.substring(9, terme.index_of('>', 1) - 1))
 						auteur_livre := terme.substring(9, terme.index_of('>', 1) - 1)
 					end
 					if (terme.has_substring("Nombre")) then
@@ -588,6 +587,7 @@ feature {ANY}
 			end
 
 		end -- end loop
+	   file.disconnect
 	end -- end readfile do
 
 
@@ -796,28 +796,29 @@ feature {ANY}
 			index_media := rechercher_media
 			--trouver le média dans le tableau 
 			media := liste_medias.item(index_media)
-			--on l'ajoute au tableau d'emprunt : media, titre, 
-			--date_emprunt, date_retour
-			--date_e.update
-			--date_r.update
-			--date_r.add_day(15)
 			create emprunt.make_emprunt(media, user_connected)
 			liste_emprunts.add_last(emprunt)
 			--on diminue le nombre d'exemplaire dispo
 			nombre_media := media.get_nombre;
 			media.set_nombre(nombre_media - 1);
+			print("Votre média à été ajouté à la liste des emprunts avec succès !%N")
 		end
 
 	liste_emprunt is
 	local
 		index : INTEGER
 	do
-		--io.put_string("Nombre d'emprunts : " + liste_emprunts.count.to_string + "%N")
-		from index := 0 until index > liste_emprunts.count-1 loop
-			if liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
-				io.put_string(liste_emprunts.item(index).afficher + "%N");
+		if liste_emprunts.count = 0 then
+			io.put_string("Il n'y a pas d'emprunts en cours actuellement ! %N")
+		else
+			from index := 0 until index > liste_emprunts.count-1 loop
+				if liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
+					io.put_string(liste_emprunts.item(index).afficher + "%N");
+				else
+					io.put_string("Il n'y a pas d'emprunts en cours actuellement ! %N")
+				end
+				index := index +1
 			end
-			index := index +1
 		end
 	end
 
@@ -830,7 +831,7 @@ feature {ANY}
 			create user_emprunts.with_capacity(0,0);
 			from index := 0 until index > liste_emprunts.count-1 loop
 				identifiant_user:= liste_emprunts.item(index).user.get_identifiant
-				if identifiant_user.is_equal(user.get_identifiant) then
+				if identifiant_user.is_equal(user.get_identifiant) and liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
 					user_emprunts.add_last(liste_emprunts.item(index).media);
 				else
 					io.put_string("Vous n'avez rien emprunté !%N")
@@ -854,11 +855,6 @@ feature {ANY}
 				end
 			end
 		end
-			--rendre media d'un utilisateur
-			--Augmenter dispo du media rendu
-	--dans tableau emprunts mettrea jour date de retour
-	--verifier si date retour est rentrée pour lister les medias 
-	--emprunter du user
 	
 	rendre_un_media(user : UTILISATEUR) is
 	local
@@ -880,8 +876,6 @@ feature {ANY}
 			action := io.last_string
 			tab_emprunts.item(action.to_integer).rendre_media
 			mettre_a_jour_date_retour(tab_emprunts.item(action.to_integer))
-			--io.put_string("indice du media a rendre : " + tab_emprunts.item(action.to_integer).get_titre)
-			--tab_emprunts.item(action.to_integer)
 		end
 	end
 
