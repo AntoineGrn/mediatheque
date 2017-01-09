@@ -861,8 +861,10 @@ feature {ANY}
 		index : INTEGER
 		tab_emprunts : ARRAY[MEDIA]
 		action : STRING
+		valid : BOOLEAN
 	do
 		create tab_emprunts.with_capacity(0,0);
+		valid := False
 		tab_emprunts := media_emprunter_by_user(user)
 		if tab_emprunts.count > 0 then
 			io.put_string("Entrer le numéro du média que vous voulez rendre : %N")
@@ -871,11 +873,19 @@ feature {ANY}
 				io.put_string(tab_emprunts.item(index).get_titre + "%N");
 				index := index +1;
 			end
-			io.flush
-			io.read_line
-			action := io.last_string
-			tab_emprunts.item(action.to_integer).rendre_media
-			mettre_a_jour_date_retour(tab_emprunts.item(action.to_integer))
+			from until valid loop
+				io.flush
+				io.read_line
+				action := io.last_string
+				if action.to_integer <= index then
+					tab_emprunts.item(action.to_integer).rendre_media
+					mettre_a_jour_date_retour(tab_emprunts.item(action.to_integer))
+					valid := True
+					print("Media rendu avec succès ! %N")
+				else
+					print("Veuillez entrer un nombre valide%N")
+				end
+			end
 		end
 	end
 
