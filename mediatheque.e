@@ -325,15 +325,17 @@ feature {ANY}
 		index, index_realisateur, index_acteur : INTEGER
 		dvd_media : DVD
 		media_trouve : BOOLEAN
+		retour : INTEGER
 	do
 		media_trouve := False
+		retour := -1
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {DVD}?:= liste_medias.item(index) then
 				dvd_media ::= liste_medias.item(index)
 				--print(dvd_media.get_titre)
 				if dvd_media.get_titre.as_lower.has_substring(titre_dvd.as_lower) and dvd_media.get_annee.is_equal(annee_dvd) then
 					media_trouve := True
-					Result := index
+					retour := index
 					io.put_string("%NDVD trouvé !  %N")
 					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
 					io.put_string("Annee : " + dvd_media.get_annee + " %N")
@@ -351,6 +353,7 @@ feature {ANY}
 					io.put_string("Nbr exemplaire : " + dvd_media.get_nombre.to_string + " %N%N")
 				end
 			end
+			Result := retour
 			index := index + 1
 		end
 		if media_trouve.is_equal(False) then
