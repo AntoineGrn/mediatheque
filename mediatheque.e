@@ -599,17 +599,17 @@ feature {ANY}
 	end -- end readfile do
 
 
-			----------------------------
-	      --FICHIER DES UTILISATEURS--
-	      ----------------------------
+	----------------------------
+	--FICHIER DES UTILISATEURS--
+	----------------------------
 	lire_fichier_utilisateurs is
-  local
-    lecteur: TEXT_FILE_READ
-    ligne, champ, nom_lu, prenom_lu, id_lu, admin_lu, valeur: STRING
-    mot, nb_mot, debut_champ, fin_champ: INTEGER
-    admin_oui: BOOLEAN
-    utilisateur: UTILISATEUR
-  do
+  	local
+		lecteur: TEXT_FILE_READ
+		ligne, champ, nom_lu, prenom_lu, id_lu, admin_lu, valeur: STRING
+		mot, nb_mot, debut_champ, fin_champ: INTEGER
+		admin_oui: BOOLEAN
+		utilisateur: UTILISATEUR
+	do
     create lecteur.connect_to("utilisateurs.txt")
     from until lecteur.end_of_input loop
 		 lecteur.read_line
@@ -661,7 +661,7 @@ feature {ANY}
 
     end
     lecteur.disconnect
-		end
+	end
 
 	--------------------------
 	--AJOUTER UN UTILISATEUR--
@@ -759,9 +759,9 @@ feature {ANY}
 			ajouter_un_utilisateur(utilisateur)
 		end
 
-			-----------------------------
-			--RECHERCHER UN UTILISATEUR--
-			-----------------------------
+	-----------------------------
+	--RECHERCHER UN UTILISATEUR--
+	-----------------------------
 	rechercher_utilisateur(search: STRING) : INTEGER is
 		local
 			index, resultat : INTEGER
@@ -778,6 +778,10 @@ feature {ANY}
 			end
 			Result := resultat
 		end
+
+	----------------------------------
+	--RECHERCHER UN UTILISATEUR (MAIN)
+	----------------------------------
 
 	rechercher_utilisateur_main is
 		local
@@ -805,9 +809,9 @@ feature {ANY}
 			end
 		end
 
-			----------------------
-			--EMPRUNTER UN MEDIA--
-			----------------------
+	----------------------
+	--EMPRUNTER UN MEDIA--
+	----------------------
 	emprunter_media(user_connected : UTILISATEUR) is
 		local
 			index_media, nombre_media : INTEGER
@@ -834,6 +838,10 @@ feature {ANY}
             end
 		end
 
+	-------------------------------
+	--LISTER LES EMPRUNTS EN COURS
+	-------------------------------
+
 	liste_emprunt is
 	local
 		index : INTEGER
@@ -852,6 +860,9 @@ feature {ANY}
 		end
 	end
 
+	---------------------------------------------------------
+	--LISTER LES EMPRUNTS EN COURS DE L'UTILISATEUR CONNECTE
+	---------------------------------------------------------
 	media_emprunter_by_user(user: UTILISATEUR) : ARRAY[MEDIA] is
 		local
 			index : INTEGER
@@ -871,6 +882,10 @@ feature {ANY}
 			Result := user_emprunts
 		end
 
+	--------------------------------------------------
+	--AFFICHER LES EMPRUNTS DE L'UTILISATEUR CONNECTE
+	--------------------------------------------------
+
 	afficher_medias_emprunter_by_user(user : UTILISATEUR) is
 		local
 			index: INTEGER
@@ -885,6 +900,10 @@ feature {ANY}
 				end
 			end
 		end
+
+	-----------------------------
+	--RENDRE UN EMPRUNT DE MEDIA
+	-----------------------------
 	
 	rendre_un_media(user : UTILISATEUR) is
 	local
@@ -919,6 +938,10 @@ feature {ANY}
 		end
 	end
 
+	-----------------------------------------------
+	--METTRE A JOUR LA DATE DE RETOUR DE L'EMPRUNT
+	-----------------------------------------------
+
 	mettre_a_jour_date_retour(media:MEDIA) is
 		local
 			index:INTEGER
@@ -930,4 +953,36 @@ feature {ANY}
 				index := index + 1
 			end
 		end
+
+	------------------------------------------
+	--ENREGISTRER LES EMPRUNTS DANS UN FICHIER
+	------------------------------------------
+
+	enregistrer_les_emprunts_dans_fichier is
+		local
+			index : INTEGER
+			file : TEXT_FILE_WRITE
+			ligne : STRING
+			media : MEDIA
+			type : STRING
+			dvd : DVD
+			livre : LIVRE
+		do
+			create file.connect_to("emprunts.txt")
+			from index := 0 until index > liste_emprunts.count - 1 loop
+				media := liste_emprunts.item(index).media
+				if {LIVRE}?:= media then
+					type := "Livre"
+					livre ::= media
+				elseif {DVD}?:= media then
+					type := "DVD"
+					dvd ::= media
+				end
+				ligne := type + " ; "			
+				file.put_string(ligne)
+				ligne := ""
+				index:= index + 1
+			end
+		end
+
 end -- class MEDIATHEQUE
