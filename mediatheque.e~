@@ -822,7 +822,7 @@ feature {ANY}
 			    --on diminue le nombre d'exemplaire dispo
 			    nombre_media := media.get_nombre;
 			    media.set_nombre(nombre_media - 1);
-			    print("Votre média a été ajouté à la liste des emprunts avec succès !%N")
+			    print("Votre média à été ajouté à la liste des emprunts avec succès !%N")
             else
                 print("Veuillez nous excuser, ce média n'est plus disponnible pour le moment. %N")
             end
