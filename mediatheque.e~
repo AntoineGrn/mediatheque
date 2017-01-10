@@ -292,25 +292,26 @@ feature {ANY}
 		index : INTEGER
 		livre_from_liste : LIVRE
 		media_trouve : BOOLEAN
+        retour : INTEGER
 	do
 		media_trouve := False
+        retour := -1
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {LIVRE}?:= liste_medias.item(index) then
 				livre_from_liste ::= liste_medias.item(index)
 				if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.as_lower.has_substring(auteur_livre.as_lower) then
 					media_trouve := True
-					Result := index
+					retour := index
 					io.put_string("%NLivre trouvé !  %N")
 					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
 					io.put_string("Auteur : " + livre_from_liste.auteur + " %N%N")
 					io.put_string("Nombre d'exemplaire : " + livre_from_liste.get_nombre.to_string + " %N%N")
 					index := liste_medias.count + 1
-				--else
-					--io.put_string("Aucun livre trouvé %N")
 				end
 			end
 			index := index +1
 		end
+        Result := retour
 		if media_trouve.is_equal(False) then
 			io.put_string("Aucun livre trouvé %N%N")
 		end
@@ -814,17 +815,19 @@ feature {ANY}
 			--Rechercher un média & récupération de l'indice dans le 
 			--tableau des médias
 			index_media := rechercher_media
-			--trouver le média dans le tableau 
-			media := liste_medias.item(index_media)
-            if media.get_nombre > 0 then
-			    create emprunt.make_emprunt(media, user_connected)
-			    liste_emprunts.add_last(emprunt)
-			    --on diminue le nombre d'exemplaire dispo
-			    nombre_media := media.get_nombre;
-			    media.set_nombre(nombre_media - 1);
-			    print("Votre média à été ajouté à la liste des emprunts avec succès !%N")
-            else
-                print("Veuillez nous excuser, ce média n'est plus disponnible pour le moment. %N")
+            if index_media /= -1 then 
+			    --trouver le média dans le tableau 
+			    media := liste_medias.item(index_media)
+                if media.get_nombre > 0 then
+			        create emprunt.make_emprunt(media, user_connected)
+			        liste_emprunts.add_last(emprunt)
+			        --on diminue le nombre d'exemplaire dispo
+			        nombre_media := media.get_nombre;
+			        media.set_nombre(nombre_media - 1);
+			        print("Votre média a été ajouté à la liste des emprunts avec succès !%N")
+                else
+                    print("Veuillez nous excuser, ce média n'est plus disponnible pour le moment. %N")
+                end
             end
 		end
 
