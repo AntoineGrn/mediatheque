@@ -41,9 +41,12 @@ feature {ANY}
 	  ---------------------------------------
 	  to_string is
 	  do
-		io.put_string("MEDIA : LIVRE%N")
-		io.put_string("Titre : " + titre + "%N")
-	    io.put_string("Auteur : " + auteur + "%N%N")
+		io.put_string("==================================================================%N")
+		io.put_string("MEDIA                : LIVRE%N")
+		io.put_string("Titre                : " + titre + "%N")
+	    io.put_string("Auteur               : " + auteur + "%N")	
+		io.put_string("Nombre d'exemplaires : " + nombre.to_string + "%N")
+		io.put_string("==================================================================%N%N")
 	  end
 
 		---------------------------------------

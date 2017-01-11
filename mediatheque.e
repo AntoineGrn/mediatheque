@@ -198,7 +198,7 @@ feature {ANY}
 				end
 			else
 				if bool then
-					index_livre := recherche_livre(livre.get_titre, livre.get_auteur)
+					index_livre := recherche_livre(livre.get_titre, livre.get_auteur, "4")
 					if index_livre /= -1 then
 						livre_recherche ::= liste_medias.item(index_livre)
 						livre_recherche.set_nombre(livre_recherche.get_nombre + livre.get_nombre)
@@ -261,6 +261,7 @@ feature {ANY}
 		titre_dvd : STRING
 		annee_dvd : STRING
 		type : STRING
+		mode_recherche : STRING
 	do
 		print("Choisissez le type de média : %N")
 		print("1. Livre %N")
@@ -277,18 +278,49 @@ feature {ANY}
 		else
 			io.put_string("Veuillez saisir un des choix proposés %N")
 		end
+		action_type_media := ""
 		if type.is_equal("Livre") then
-			print("Saisissez le titre du livre : %N")
+			print("Voulez-vous rechercher par : %N")
+			print("1. Titre%N")
+			print("2. Auteur%N")
+			print("3. Titre et Auteur (recherche spécifique)%N")
 			io.flush
 			io.read_line
-			titre_livre := ""
-			titre_livre.copy(io.last_string)
-			print("Saisissez l'auteur du livre : %N")
-			io.flush
-			io.read_line
-			auteur_livre := ""
-			auteur_livre.copy(io.last_string)
-			Result := recherche_livre(titre_livre, auteur_livre)
+			action_type_media := io.last_string
+			inspect
+				action_type_media
+			when "1" then
+				print("Saisissez le titre du livre : %N")
+				io.flush
+				io.read_line
+				titre_livre := ""
+				titre_livre.copy(io.last_string)
+				auteur_livre := ""
+				mode_recherche := "1"
+			when "2" then
+				print("Saisissez l'auteur du livre : %N")
+				io.flush
+				io.read_line
+				auteur_livre := ""
+				auteur_livre.copy(io.last_string)
+				titre_livre := ""
+				mode_recherche := "2"
+			when "3" then
+				print("Saisissez le titre du livre : %N")
+				io.flush
+				io.read_line
+				titre_livre := ""
+				titre_livre.copy(io.last_string)
+				print("Saisissez l'auteur du livre : %N")
+				io.flush
+				io.read_line
+				auteur_livre := ""
+				auteur_livre.copy(io.last_string)
+				mode_recherche := "3"
+			else
+				io.put_string("Veuillez saisir un des choix proposés %N")
+			end
+			Result := recherche_livre(titre_livre, auteur_livre, mode_recherche)
 		elseif type.is_equal("DVD") then
 			-- saisie du titre du DVD
 			print("Saisissez le titre du DVD : %N")
@@ -311,33 +343,98 @@ feature {ANY}
 	---------------------------------------
 	-- RECHERCHER LIVRE
 	---------------------------------------
-	recherche_livre(titre_livre : STRING; auteur_livre : STRING) : INTEGER is
+	recherche_livre(titre_livre : STRING; auteur_livre : STRING; mode_recherche : STRING) : INTEGER is
 	local
 		index : INTEGER
 		livre_from_liste : LIVRE
 		media_trouve : BOOLEAN
         retour : INTEGER
+		tab : ARRAY[LIVRE]
+		index_tab : STRING
 	do
+		create tab.with_capacity(0,0)
 		media_trouve := False
-        retour := -1
+        --retour := -1
 		from index := 0 until index > liste_medias.count - 1 loop
 			if {LIVRE}?:= liste_medias.item(index) then
 				livre_from_liste ::= liste_medias.item(index)
-				if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.as_lower.has_substring(auteur_livre.as_lower) then
-					media_trouve := True
-					retour := index
-					io.put_string("%NLivre trouvé !  %N")
-					io.put_string("Titre : " + liste_medias.item(index).titre + " %N")
-					io.put_string("Auteur : " + livre_from_liste.auteur + " %N%N")
-					io.put_string("Nombre d'exemplaire : " + livre_from_liste.get_nombre.to_string + " %N%N")
-					index := liste_medias.count + 1
+				if mode_recherche.is_equal("1") then
+					if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) then
+						tab.add_last(livre_from_liste)
+					end
+				elseif mode_recherche.is_equal("2") then
+					if livre_from_liste.get_auteur.as_lower.has_substring(auteur_livre.as_lower) then
+						tab.add_last(livre_from_liste)
+					end
+				else
+					if livre_from_liste.get_titre.as_lower.has_substring(titre_livre.as_lower) and livre_from_liste.get_auteur.as_lower.has_substring(auteur_livre.as_lower) then
+						tab.add_last(livre_from_liste)
+					end
 				end
 			end
 			index := index +1
 		end
-        Result := retour
+
+		if tab.count > 1 then
+			from index := 0 until index > tab.count -1 loop
+				io.put_string("%NVoici la liste de(s) Livre(s) trouvé(s) !  %N")
+				io.put_string("Livre N°"+index.to_string+" : %N")
+				io.put_string("Titre : " + tab.item(index).titre + " %N")
+				io.put_string("Auteur : " + tab.item(index).auteur + " %N%N")
+				--io.put_string("Nombre d'exemplaire : " + tab.item(index).get_nombre.to_string + " %N%N")
+				index := index + 1			
+			end
+			if mode_recherche.is_equal("4") then
+				print("Sélectionner le livre que vous voulez ajouter : %N")
+			else
+				print("Veuillez sélectionner le livre qui vous intéresse %N")
+			end
+			io.flush
+			io.read_line
+			index_tab := ""
+			index_tab.copy(io.last_string)	
+			media_trouve := True
+			retour := recherche_livre_dans_medias(tab.item(index_tab.to_integer))
+			print("Voici les informations détaillées du livre : %N")
+			liste_medias.item(retour).to_string
+		elseif tab.count = 1 then
+			retour := recherche_livre_dans_medias(tab.item(0))
+			print("Voici les informations détaillées du livre : %N")
+			liste_medias.item(retour).to_string		
+			media_trouve := True	
+		else
+			media_trouve := False
+		end
+	
+		Result := retour
 		if media_trouve.is_equal(False) then
 			io.put_string("Aucun livre trouvé %N%N")
+		end
+	end
+	
+	recherche_livre_dans_medias(livre : LIVRE) : INTEGER is
+	local
+		index, resultat : INTEGER
+		l : LIVRE
+		trouve : BOOLEAN
+	do
+		trouve := False
+		from index := 0 until index > liste_medias.count - 1 or trouve loop
+			if {LIVRE}?:= liste_medias.item(index) then
+				l ::= liste_medias.item(index)
+				if l.get_titre.as_lower.is_equal(livre.get_titre.as_lower) and l.get_auteur.as_lower.is_equal(livre.get_auteur.as_lower) then
+					trouve := True					
+					resultat := index
+				else
+					resultat := -1
+				end	
+			end
+			index := index + 1
+		end
+		if trouve then
+			Result := resultat
+		else
+			Result := -1
 		end
 	end
 
