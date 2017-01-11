@@ -94,7 +94,8 @@ feature {ANY}
 							end
 						when "2" then
 							if user_connected.is_admin then
-								readfilemedia
+								--readfilemedia
+								lire_fichier_medias
 							end
 						when "4" then
 							if user_connected.is_admin then
@@ -626,52 +627,97 @@ feature {ANY}
 	lire_fichier_medias is
   	local
 		lecteur: TEXT_FILE_READ
-		ligne, champ, titre_lu, nombre_lu, annee_lu, type_lu: STRING
+		ligne, champ, titre_lu, nombre_lu, annee_lu, type_lu, auteur_lu, valeur, real, acteur: STRING
 		mot, nb_mot, debut_champ, fin_champ: INTEGER
 		livre_bool, dvd_bool: BOOLEAN
-		utilisateur: UTILISATEUR
 		acteurs_dvd : ARRAY[STRING]
 		realisateurs_dvd : ARRAY[STRING]
 	do
-    create lecteur.connect_to("medias.txt")
-    from until lecteur.end_of_input loop
-		 lecteur.read_line
-		 ligne := lecteur.last_string
-		 nb_mot := ligne.occurrences(';')
-		 debut_champ := 1
-		 fin_champ := 0
-		 champ := ""
-		 from mot:= 0 until mot > nb_mot loop
-		fin_champ := ligne.index_of(';',debut_champ)
-		if fin_champ = 0 then
-			fin_champ := ligne.count
-		end
-		if(ligne.substring(debut_champ, fin_champ).has_substring("Livre")) then
-			livre_bool := True
-		end
-		if(ligne.substring(debut_champ, fin_champ).has_substring("DVD")) then
-			dvd_bool := True
-			create realisateurs_dvd.with_capacity(0,0)
-			create acteurs_dvd.with_capacity(0,0)
-		end
-		if livre_bool then
-			if(ligne.substring(debut_champ, fin_champ).has_substring("Nom")) then
-				--valeur:= ligne.substring(debut_champ, fin_champ)
-				--nom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+	create lecteur.connect_to("medias.txt")
+	
+		from until lecteur.end_of_input loop
+			lecteur.read_line
+			ligne := lecteur.last_string
+			nb_mot := ligne.occurrences(';')
+			debut_champ := 1
+			fin_champ := 0
+
+			if(ligne.has_substring("Livre")) then
+				from mot:= 0 until mot > nb_mot loop
+					fin_champ := ligne.index_of(';',debut_champ)
+					if fin_champ = 0 then
+						fin_champ := ligne.count
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Livre")) then
+						livre_bool := True
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Titre")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						titre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+						io.put_string(valeur + "%N")
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Auteur")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						auteur_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+						io.put_string(valeur + "%N")
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Nombre")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						nombre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+						io.put_string(valeur + "%N")
+					end
+					champ := ligne.substring(debut_champ, fin_champ)
+					mot := mot+1
+					debut_champ := fin_champ + 1
+				end
 			end
-		elseif dvd_bool then
-			
+
+			if(ligne.has_substring("DVD")) then
+				from mot:= 0 until mot > nb_mot loop
+					fin_champ := ligne.index_of(';',debut_champ)
+					if fin_champ = 0 then
+						fin_champ := ligne.count
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("DVD")) then
+						dvd_bool := True
+						create realisateurs_dvd.with_capacity(0,0)
+						create acteurs_dvd.with_capacity(0,0)
+					end				
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Titre")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						titre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Annee")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						annee_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Realisateur")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						real:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+						realisateurs_dvd.add_last(real)
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Acteur")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						acteur := (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+						acteurs_dvd.add_last(acteur)
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Type")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						type_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+					end
+					if(ligne.substring(debut_champ, fin_champ).has_substring("Nombre")) then
+						valeur:= ligne.substring(debut_champ, fin_champ)
+						nombre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+					end
+					champ := ligne.substring(debut_champ, fin_champ)
+					mot := mot+1
+					debut_champ := fin_champ + 1
+				end
+			end		
+		  --create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
+		  --ajouter_un_utilisateur(utilisateur, False)
 		end
-
-			champ := ligne.substring(debut_champ, fin_champ)
-			mot := mot+1
-			debut_champ := fin_champ + 1
-
-		 end
-      create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
-      ajouter_un_utilisateur(utilisateur, False)
-    end
-    lecteur.disconnect
+		lecteur.disconnect
 	end
 
 
