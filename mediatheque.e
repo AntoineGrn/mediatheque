@@ -90,6 +90,7 @@ feature {ANY}
 						when "1" then
 							if user_connected.is_admin then
 								lire_fichier_utilisateurs
+								print("Les utilisateurs ont été ajoutés à la base")
 							end
 						when "2" then
 							if user_connected.is_admin then
@@ -163,7 +164,7 @@ feature {ANY}
 	---------------------------------------
 	-- AJOUTER LIVRE
 	---------------------------------------
-	ajouter_livre (livre : LIVRE) is
+	ajouter_livre (livre : LIVRE; bool : BOOLEAN) is
 	local
 		index : INTEGER
 		livre_liste : LIVRE
@@ -174,7 +175,9 @@ feature {ANY}
 		livre_exist := True
 		if liste_medias.count.is_equal(0) then
 			liste_medias.add_last(livre)
-			io.put_string("Livre ajouté avec succès %N")
+			if bool then
+				io.put_string("Livre ajouté avec succès %N")
+			end
 		else
 			from index := 0 until index > liste_medias.count-1 loop
 				if {LIVRE}?:= liste_medias.item(index) then
@@ -190,15 +193,19 @@ feature {ANY}
 			end
 			if livre_exist.is_equal(False) then
 				liste_medias.add_last(livre)
-				io.put_string("Livre ajoute avec succes %N")
-			else
-				index_livre := recherche_livre(livre.get_titre, livre.get_auteur)
-				if index_livre /= -1 then
-					livre_recherche ::= liste_medias.item(index_livre)
-					livre_recherche.set_nombre(livre_recherche.get_nombre + livre.get_nombre)
-					io.put_string("Nous avons ajouté le nombre d'exemplaires %N")
+				if bool then
+					io.put_string("Livre ajoute avec succes %N")
 				end
-				io.put_string("Livre déjà existant %N")
+			else
+				if bool then
+					index_livre := recherche_livre(livre.get_titre, livre.get_auteur)
+					if index_livre /= -1 then
+						livre_recherche ::= liste_medias.item(index_livre)
+						livre_recherche.set_nombre(livre_recherche.get_nombre + livre.get_nombre)
+						io.put_string("Nous avons ajouté le nombre d'exemplaires %N")
+					end
+					io.put_string("Livre déjà existant %N")
+				end
 			end
 		end
 	end
@@ -206,7 +213,7 @@ feature {ANY}
 	---------------------------------------
 	--AJOUTER DVD
 	---------------------------------------
-	ajouter_dvd (dvd : DVD) is
+	ajouter_dvd (dvd : DVD; bool : BOOLEAN) is
 	local
 		index : INTEGER
 		dvd_liste: DVD
@@ -215,7 +222,9 @@ feature {ANY}
 		dvd_exist := False
 		if liste_medias.count.is_equal(0) then
 			liste_medias.add_last(dvd)
-			io.put_string("DVD ajoute avec succes %N")
+			if bool then
+				io.put_string("DVD ajoute avec succes %N")
+			end
 		else
 			from index := 0 until index > liste_medias.count-1 loop
 				if {DVD}?:= liste_medias.item(index) then
@@ -227,11 +236,13 @@ feature {ANY}
 				end
 				index := index +1
 			end
-			if dvd_exist.is_equal(False) then
-				liste_medias.add_last(dvd)
-				io.put_string("DVD ajoute avec succes %N")
-			else
-				io.put_string("DVD deja existant %N")
+			if bool then
+				if dvd_exist.is_equal(False) then
+					liste_medias.add_last(dvd)
+					io.put_string("DVD ajoute avec succes %N")
+				else
+					io.put_string("DVD deja existant %N")
+				end
 			end
 		end
 	end
@@ -426,7 +437,7 @@ feature {ANY}
 			io.read_line
 			nb_ex_bis:= io.last_string
 			create new_livre.make_livre(titre_livre, auteur_livre, nb_ex_bis.to_integer)
-			ajouter_livre(new_livre)
+			ajouter_livre(new_livre, True)
 		elseif type.is_equal("DVD") then
 			-- saisie du titre du DVD
 			print("Saisissez le titre du DVD : %N")
@@ -491,7 +502,7 @@ feature {ANY}
 			io.read_line
 			nombre_exemplaire := io.last_string
 			create new_dvd.make_dvd(titre_dvd, annee_dvd, nombre_exemplaire.to_integer, liste_acteur_dvd, liste_realisateur_dvd, type_dvd)
-			ajouter_dvd(new_dvd)
+			ajouter_dvd(new_dvd, True)
 		else
 			print("Veuillez saisir un type de média valide %N")
 		end
@@ -578,7 +589,7 @@ feature {ANY}
 					i := i+1
 				end
 				create dvd.make_dvd(titre_dvd, annee_dvd, nombre_dvd.to_integer, acteurs_dvd, realisateurs_dvd, type_dvd)
-				ajouter_dvd(dvd)
+				ajouter_dvd(dvd, False)
 			end
 			if premier_terme.is_equal("Livre ;") then
 				is_book := True
@@ -601,12 +612,67 @@ feature {ANY}
 					i := i+1
 				end
 				create livre.make_livre(titre_livre, auteur_livre, nombre_livre.to_integer)
-				ajouter_livre(livre)
+				ajouter_livre(livre, False)
 			end
 
 		end -- end loop
 	   file.disconnect
 	end -- end readfile do
+
+
+	----------------------------
+	--FICHIER DES MEDIAS--
+	----------------------------
+	lire_fichier_medias is
+  	local
+		lecteur: TEXT_FILE_READ
+		ligne, champ, titre_lu, nombre_lu, annee_lu, type_lu: STRING
+		mot, nb_mot, debut_champ, fin_champ: INTEGER
+		livre_bool, dvd_bool: BOOLEAN
+		utilisateur: UTILISATEUR
+		acteurs_dvd : ARRAY[STRING]
+		realisateurs_dvd : ARRAY[STRING]
+	do
+    create lecteur.connect_to("medias.txt")
+    from until lecteur.end_of_input loop
+		 lecteur.read_line
+		 ligne := lecteur.last_string
+		 nb_mot := ligne.occurrences(';')
+		 debut_champ := 1
+		 fin_champ := 0
+		 champ := ""
+		 from mot:= 0 until mot > nb_mot loop
+		fin_champ := ligne.index_of(';',debut_champ)
+		if fin_champ = 0 then
+			fin_champ := ligne.count
+		end
+		if(ligne.substring(debut_champ, fin_champ).has_substring("Livre")) then
+			livre_bool := True
+		end
+		if(ligne.substring(debut_champ, fin_champ).has_substring("DVD")) then
+			dvd_bool := True
+			create realisateurs_dvd.with_capacity(0,0)
+			create acteurs_dvd.with_capacity(0,0)
+		end
+		if livre_bool then
+			if(ligne.substring(debut_champ, fin_champ).has_substring("Nom")) then
+				--valeur:= ligne.substring(debut_champ, fin_champ)
+				--nom_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			end
+		elseif dvd_bool then
+			
+		end
+
+			champ := ligne.substring(debut_champ, fin_champ)
+			mot := mot+1
+			debut_champ := fin_champ + 1
+
+		 end
+      create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
+      ajouter_un_utilisateur(utilisateur, False)
+    end
+    lecteur.disconnect
+	end
 
 
 	----------------------------
@@ -667,8 +733,7 @@ feature {ANY}
 
 		 end
       create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
-      ajouter_un_utilisateur(utilisateur)
-
+      ajouter_un_utilisateur(utilisateur, False)
     end
     lecteur.disconnect
 	end
@@ -677,7 +742,7 @@ feature {ANY}
 	--AJOUTER UN UTILISATEUR--
 	--------------------------
 
-	ajouter_un_utilisateur(user: UTILISATEUR) is
+	ajouter_un_utilisateur(user: UTILISATEUR; bool : BOOLEAN) is
 		local
 			index: INTEGER
 			user_exist, user_find: BOOLEAN
@@ -693,9 +758,13 @@ feature {ANY}
 			end
 			if user_find = False then
 				liste_utilisateurs.add_last(user)
-				io.put_string("Utilisateur ajoute.%N")
+				if bool then
+					io.put_string("Utilisateur ajoute.%N")
+				end
 			else
-				io.put_string("L'utilisateur existe deja%N")
+				if bool then
+					io.put_string("L'utilisateur existe deja%N")
+				end
 			end
 		end
 
@@ -766,7 +835,7 @@ feature {ANY}
             end
 			create utilisateur.make_utilisateur(nom, prenom, id, admin);
 			io.put_string(utilisateur.display_user + "%N");
-			ajouter_un_utilisateur(utilisateur)
+			ajouter_un_utilisateur(utilisateur, True)
 		end
 
 	-----------------------------
@@ -855,15 +924,19 @@ feature {ANY}
 	liste_emprunt is
 	local
 		index : INTEGER
+		display_msg : BOOLEAN
 	do
+		display_msg := True
 		if liste_emprunts.count = 0 then
 			io.put_string("Il n'y a pas d'emprunts en cours actuellement ! %N")
 		else
 			from index := 0 until index > liste_emprunts.count-1 loop
 				if liste_emprunts.item(index).get_date_rendu.hash_code = 0 then
 					io.put_string(liste_emprunts.item(index).afficher + "%N");
-				else
-					io.put_string("Il n'y a pas d'emprunts en cours actuellement ! %N")
+					display_msg := False
+				end
+				if display_msg then
+					print("Il n'y a pas d'emprunts en cours actuellement ! %N")
 				end
 				index := index +1
 			end

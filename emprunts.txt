@@ -1,2 +1,2 @@
-Livre ; Titre<Vingt mille lieues sous les mers> Utilisateur<anabol> ; Date<1484119193>
-DVD ; Titre<OSS 117, Le Caire nid d'espions> Utilisateur<anabol> ; Date<1484119201>
+Type<Livre> ; Titre<Vingt mille lieues sous les mers> Utilisateur<anabol> ; Date<1484122660>
+Type<Livre> ; Titre<Robinson Crusoe> Utilisateur<anabol> ; Date<1484122709>
