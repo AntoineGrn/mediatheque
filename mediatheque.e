@@ -123,6 +123,8 @@ feature {ANY}
 							afficher_medias_emprunter_by_user(user_connected)
 						when"12" then
 							rendre_un_media(user_connected)
+						when "13" then
+							enregistrer_les_emprunts_dans_fichier
 						else
 							io.put_string("Fonction inexistante retour au menu %N")
 						end
@@ -166,6 +168,8 @@ feature {ANY}
 		index : INTEGER
 		livre_liste : LIVRE
 		livre_exist : BOOLEAN
+		livre_recherche : LIVRE
+		index_livre : INTEGER
 	do
 		livre_exist := True
 		if liste_medias.count.is_equal(0) then
@@ -188,7 +192,13 @@ feature {ANY}
 				liste_medias.add_last(livre)
 				io.put_string("Livre ajoute avec succes %N")
 			else
-				io.put_string("Livre deja existant %N")
+				index_livre := recherche_livre(livre.get_titre, livre.get_auteur)
+				if index_livre /= -1 then
+					livre_recherche ::= liste_medias.item(index_livre)
+					livre_recherche.set_nombre(livre_recherche.get_nombre + livre.get_nombre)
+					io.put_string("Nous avons ajouté le nombre d'exemplaires %N")
+				end
+				io.put_string("Livre déjà existant %N")
 			end
 		end
 	end
@@ -978,11 +988,68 @@ feature {ANY}
 					type := "DVD"
 					dvd ::= media
 				end
-				ligne := type + " ; "			
-				file.put_string(ligne)
-				ligne := ""
+				ligne := "Type<" + type + "> ; Titre<" + media.get_titre + "> Utilisateur<" + liste_emprunts.item(index).user.get_identifiant + "> ; Date<" + liste_emprunts.item(index).get_date_emprunt.hash_code.to_string + ">"
+				file.put_line(ligne)
+				--ligne := ""
 				index:= index + 1
 			end
+			file.disconnect
 		end
+
+	importer_emprunts is 
+  	local
+		lecteur: TEXT_FILE_READ
+		ligne, champ, type_lu, titre_lu, utilisateur_lu, date_lu, valeur: STRING
+		mot, nb_mot, debut_champ, fin_champ: INTEGER
+		utilisateur: UTILISATEUR
+	do
+    create lecteur.connect_to("emprunts.txt")
+    from until lecteur.end_of_input loop
+		 lecteur.read_line
+		 ligne := lecteur.last_string
+		 nb_mot := ligne.occurrences(';')
+		 debut_champ := 1
+		 fin_champ := 0
+		 champ := ""
+		 type_lu := ""
+		 titre_lu := ""
+		 utilisateur_lu := ""
+		 date_lu := ""
+		 from mot:= 0 until mot > nb_mot loop
+			 fin_champ := ligne.index_of(';',debut_champ)
+			 if fin_champ = 0 then
+				 fin_champ := ligne.count
+			 end
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Type")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 type_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
+
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Titre")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 titre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
+
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Utilisateur")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 utilisateur_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
+
+			 if(ligne.substring(debut_champ, fin_champ).has_substring("Date")) then
+				 valeur:= ligne.substring(debut_champ, fin_champ)
+				 date_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
+			 end
+
+			 champ := ligne.substring(debut_champ, fin_champ)
+			 mot := mot+1
+			 debut_champ := fin_champ + 1
+
+		 end
+      --create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
+      --ajouter_un_utilisateur(utilisateur)
+
+    end
+    lecteur.disconnect
+	end
 
 end -- class MEDIATHEQUE

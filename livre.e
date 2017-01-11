@@ -51,7 +51,7 @@ feature {ANY}
 	  ---------------------------------------
 	  is_livre_exist(livre: LIVRE) : BOOLEAN is
 	  do
-			Result:= (titre.is_equal(livre.get_titre) and auteur.is_equal(livre.get_auteur))
+			Result:= (titre.as_lower.is_equal(livre.get_titre.as_lower) and auteur.as_lower.is_equal(livre.get_auteur.as_lower))
 	  end
 
 

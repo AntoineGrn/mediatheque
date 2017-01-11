@@ -16,8 +16,6 @@ feature {ANY}
 		media := media_e
 		user := user_e
 		date_emprunt.update
-		--date_retour := date_r
-		--date_rendu := date_r
     end
 	
 	    ------------------------
@@ -41,6 +39,11 @@ feature {ANY}
 	get_date_rendu : TIME is
 	do
 		Result := date_rendu
+	end
+
+	get_date_emprunt : TIME is
+	do
+		Result := date_emprunt
 	end
 end -- classe REMPRUNT
 

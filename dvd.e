@@ -93,13 +93,13 @@ feature {ANY}
 			io.put_string("------------------------------- %N%N")
 	  end
 
-		---------------------------------------
+	  ---------------------------------------
 	              -- DVD EXISTE
 	  ---------------------------------------
 	  is_dvd_exist(dvd: DVD) : BOOLEAN is
 	  do
 			Result:= (
-				titre.is_equal(dvd.get_titre)
+				titre.as_lower.is_equal(dvd.get_titre.as_lower)
 				and type.is_equal(dvd.get_type)
 				and annee.is_equal(dvd.get_annee)
 				and type.is_equal(dvd.get_type)
