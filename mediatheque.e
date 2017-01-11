@@ -237,11 +237,14 @@ feature {ANY}
 				end
 				index := index +1
 			end
-			if bool then
-				if dvd_exist.is_equal(False) then
-					liste_medias.add_last(dvd)
+			
+			if dvd_exist.is_equal(False) then
+				liste_medias.add_last(dvd)
+				if bool then
 					io.put_string("DVD ajoute avec succes %N")
-				else
+				end
+			else
+				if bool then
 					io.put_string("DVD deja existant %N")
 				end
 			end
@@ -632,6 +635,8 @@ feature {ANY}
 		livre_bool, dvd_bool: BOOLEAN
 		acteurs_dvd : ARRAY[STRING]
 		realisateurs_dvd : ARRAY[STRING]
+		livre : LIVRE
+		dvd : DVD
 	do
 	create lecteur.connect_to("medias.txt")
 	
@@ -648,28 +653,28 @@ feature {ANY}
 					if fin_champ = 0 then
 						fin_champ := ligne.count
 					end
+					nombre_lu:="1"
 					if(ligne.substring(debut_champ, fin_champ).has_substring("Livre")) then
 						livre_bool := True
 					end
 					if(ligne.substring(debut_champ, fin_champ).has_substring("Titre")) then
 						valeur:= ligne.substring(debut_champ, fin_champ)
 						titre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-						io.put_string(valeur + "%N")
 					end
 					if(ligne.substring(debut_champ, fin_champ).has_substring("Auteur")) then
 						valeur:= ligne.substring(debut_champ, fin_champ)
 						auteur_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-						io.put_string(valeur + "%N")
 					end
 					if(ligne.substring(debut_champ, fin_champ).has_substring("Nombre")) then
 						valeur:= ligne.substring(debut_champ, fin_champ)
 						nombre_lu:= (valeur.substring(valeur.first_index_of('<')+1, valeur.first_index_of('>')-1))
-						io.put_string(valeur + "%N")
 					end
 					champ := ligne.substring(debut_champ, fin_champ)
 					mot := mot+1
 					debut_champ := fin_champ + 1
 				end
+				create livre.make_livre(titre_lu, auteur_lu, nombre_lu.to_integer)
+				ajouter_livre(livre, False)
 			end
 
 			if(ligne.has_substring("DVD")) then
@@ -678,6 +683,8 @@ feature {ANY}
 					if fin_champ = 0 then
 						fin_champ := ligne.count
 					end
+					nombre_lu := "1"
+					type_lu := ""
 					if(ligne.substring(debut_champ, fin_champ).has_substring("DVD")) then
 						dvd_bool := True
 						create realisateurs_dvd.with_capacity(0,0)
@@ -713,9 +720,9 @@ feature {ANY}
 					mot := mot+1
 					debut_champ := fin_champ + 1
 				end
+				create dvd.make_dvd(titre_lu, annee_lu, nombre_lu.to_integer, acteurs_dvd, realisateurs_dvd, type_lu)
+				ajouter_dvd(dvd, False)
 			end		
-		  --create utilisateur.make_utilisateur(nom_lu, prenom_lu, id_lu, admin_oui)
-		  --ajouter_un_utilisateur(utilisateur, False)
 		end
 		lecteur.disconnect
 	end
