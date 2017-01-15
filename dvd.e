@@ -84,13 +84,28 @@ feature {ANY}
 	              --TO STRING
 	  ---------------------------------------
 	  to_string is
+	  local 
+		index : INTEGER
 	  do
-			io.put_string("MEDIA : DVD%N")
-	    	--io.put_string("Acteurs : " + acteurs.to_string + "%N%N")
-			--io.put_string("Realisateurs : " + realisateurs + "%N%N")
-			io.put_string("Type : " + type + "%N")
-			io.put_string("Annee : " + annee + "%N")
-			io.put_string("------------------------------- %N%N")
+		io.put_string("==================================================================%N")
+		io.put_string("MEDIA                : DVD%N")
+		io.put_string("Titre                : " + titre + "%N")
+	    io.put_string("Année                : " + annee + "%N")	
+		io.put_string("Nombre d'exemplaires : " + nombre.to_string + "%N")
+		io.put_string("Type                 : " + type + "%N")
+		io.put_string("Acteur(s)            :")
+		from index := 0 until index > acteurs.count - 1 loop
+			io.put_string(acteurs.item(index) + ", ")
+			index := index + 1
+		end
+		io.put_string("%N")
+		io.put_string("Réalisateur(s)       :")
+		from index := 0 until index > realisateurs.count - 1 loop
+			io.put_string(realisateurs.item(index) + ", ")
+			index := index + 1
+		end
+		io.put_string("%N")
+		io.put_string("==================================================================%N%N")
 	  end
 
 	  ---------------------------------------
